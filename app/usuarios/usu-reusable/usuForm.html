@@ -1,0 +1,66 @@
+<form class="needs-validation" name="frmUsers" autocomplete="off" novalidate>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="last_name">Apellidos </label>
+            <input type="text" ng-model="frmData.last_name" ng-pattern="usuFormPtrn[0]" ng-init="frmData.last_name=''" ng-required="frmUsers.$submitted" ng-class="{ 'control': frmData.last_name === '',
+                                                            'is-valid': frmData.last_name !== '' && frmData.last_name !== undefined,
+                                                            'is-invalid': frmData.last_name === undefined}" class="form-control" maxlength="50" id="last_name" placeholder="Ingrese Apellidos">
+            <div class="invalid-feedback">
+                <span>Complete apellidos correctamente.</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="first_name">Nombres</label>
+            <input type="text" ng-model="frmData.first_name" ng-pattern="usuFormPtrn[0]" ng-init="frmData.first_name=''" ng-required="frmUsers.$submitted" ng-class="{ 'control': frmData.first_name === '',
+                                                            'is-valid': frmData.first_name.length >= 2 && frmData.first_name !== undefined,
+                                                            'is-invalid': frmData.first_name === undefined}" class="form-control" maxlength="35" id="first_name" placeholder="Ingrese Nombres">
+            <div class="invalid-feedback">
+                <span>Complete nombres correctamente.</span>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="nro_dni">Nro de DNI</label>
+            <input type="text" ng-model="frmData.nro_dni" ng-pattern="usuFormPtrn[1]" ng-init="frmData.nro_dni=''" ng-class="{ 'is-valid': frmData.nro_dni === '' || frmData.nro_dni.length === 8,
+                                                            'is-invalid': frmData.nro_dni === undefined}" class="form-control" maxlength="8" id="nro_dni" placeholder="Nro Identidad">
+            <div class="invalid-feedback">
+                <span>Ingrese N° de DNI válido.</span>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="nro_carnet">C Extranjeria</label>
+            <input type="text" ng-model="frmData.nro_carnet" ng-pattern="usuFormPtrn[2]" ng-init="frmData.nro_carnet=''" ng-class="{ 'is-valid': frmData.nro_carnet === '' || frmData.nro_carnet.length >= 2,
+                                                            'is-invalid': frmData.nro_carnet === undefined}" class="form-control" maxlength="15" id="nro_carnet" placeholder="Nro Carnet">
+            <div class="invalid-feedback">
+                <span>Ingrese N° de Carnet válido.</span>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label for="nro_contact">Contacto</label>
+            <input type="text" ng-model="frmData.nro_contact" ng-pattern="usuFormPtrn[3]" ng-init="frmData.nro_contact=''
+                                                " ng-class="{ 'is-valid': frmData.nro_contact === '' || frmData.nro_contact.length >= 5,
+                                                            'is-invalid': frmData.nro_contact === undefined}" class="form-control" maxlength="9" id="nro_contact" placeholder="Ingrese Contacto">
+            <div class="invalid-feedback">
+                <span>Ingrese N° de Contacto válido.</span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div ng-if="load_usu0">
+            <button class="btn btn-success" type="button" ng-click="saveUser(frmUsers, frmData)">
+                <span class="feather icon-save"></span> Guardar
+            </button>    
+            <button class="btn btn-danger float-right" type="button" ng-click="cleanUser(frmUsers, frmData)">
+                <span class="feather icon-trash"></span> Limpiar
+            </button>
+        </div>
+
+        <div ng-if="load_usu1">
+            <button class="btn btn-success" type="button" ng-click="saveUser(frmUsers, frmData, idEdit.idUser)">
+                <span class="feather icon-save"></span> Editar
+            </button>
+            <button class="btn btn-danger float-right" type="button" ng-click="cleanUser(frmUsers, frmData, true)">
+                <span class="fas fa-times"></span> Cancelar
+            </button>
+        </div>
+    </div>
+</form>

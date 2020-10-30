@@ -1,0 +1,117 @@
+<div id="usu_view_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="UsuViewModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h5 text-primary">{{ estData.user.apellidos }}, {{ estData.user.nombres }}</h5>
+                <button type="button" ng-click="focusInput('find_user')" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body" >
+                <div class="row mb-3">
+                    <div class="col-sm-6 col-lg-4">
+                        <b>N° Dni :</b>
+                        <span ng-bind="estData.user.ndni === null ? 'S/N DNI' : estData.user.ndni"></span>
+                    </div>
+                    <div class="col-sm-6 col-lg-4">
+                        <b>N° Carnet :</b>
+                        <span ng-bind="estData.user.carnet === null ? 'S/N CARNET' : estData.user.carnet"></span>
+                    </div>
+                    <div class="col-sm-12 col-lg-4">
+                        <b>Contacto :</b>
+                        <span ng-bind="estData.user.contacto === null ? 'S/N CONTACTO' : estData.user.contacto"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body bg-patern-white">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <span>Resoluciones</span>
+                                    </div>
+                                    <div class="col text-right">
+                                        <h2 class="mb-0 text-white" ng-bind="estData.data.length"></h2>
+                                        <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                    </div>
+                                </div>
+                                <div id="customer-chart1"></div>
+                                <div class="row mt-3">
+                                    <h4 class="m-0 text-white">
+                                        <i class="fas fa-circle f-10 m-r-5 text-success"></i>{{ estData.count[0] }}</h4>
+                                    <span class="ml-3">Entregado</span>
+                                </div>
+                                <div class="row mt-3">
+                                    <h4 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-danger"></i>{{ estData.count[1] }}</h4>
+                                    <span class="ml-3">Por Entregar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <input type="text" ng-model="find_res_user" class="form-control mb-3" id="find_res_user" placeholder="Buscar Resolucion">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover m-b-0 text-center">
+                                <thead>
+                                    <tr>
+                                        <th>RES Tipo</th>
+                                        <th>N° RES</th>
+                                        <th>N° PRO</th>
+                                        <th>Oficina</th>
+                                        <th>Motivo</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="det in estData.data | filter:find_res_user as found" class="c-pointer">
+                                        <td>
+                                            <span ng-class="{'hint--right hint--rounded': det.id_institucion !== null}"
+                                                aria-label="IE : {{ ::det.institucion }} / N : {{ ::det.nivel }}"
+                                                ng-bind="::det.id_institucion === null ? 'USUARIO' : 'INSTITUCION'">
+                                            </span>
+                                        </td>
+                                        <td ng-bind="::det.nresolucion"></td>
+                                        <td ng-bind="::det.nproyecto"></td>
+                                        <td>
+                                            <div ng-class="{'hint--top hint--rounded':det.nombre.length > 20}" 
+                                                aria-label="{{ ::det.nombre }}" 
+                                                ng-bind="::det.nombre | stringCut : 20">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div ng-class="{'hint--top hint--rounded':det.descripcion.length > 20}" 
+                                                aria-label="{{ ::det.descripcion }}" 
+                                                ng-bind="::det.descripcion | stringCut : 20 ">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="hint--left hint--rounded badge" 
+                                                aria-label=" C : {{ ::det.f_emision }} / E : {{ ::det.f_entrega }}"
+                                                ng-class="{'badge-danger':det.estado == 0,'badge-success':det.estado == 1}" 
+                                                ng-bind="::det.estado == 0 ? 'Por Entregar' : 'Entregado'"></span>
+                                            
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-center m-t-15" ng-show="estData.data.length === 0">
+                            <span class="feather icon-slash"></span> Aún no tiene resolución.
+                        </p>
+                        <p class="text-center m-t-15" ng-show="found.length === 0 && estData.data.length !== 0">
+                            <span class="feather icon-slash"></span> No se encontro resultados.
+                        </p>
+                        <nav class="mb-3" aria-label="Page navegation" ng-if="estData.data.length > 5">
+                            <ul class="pagination justify-content-center mt-3 mb-0">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="" tabindex="-1">Anterior</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="">Siguiente</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

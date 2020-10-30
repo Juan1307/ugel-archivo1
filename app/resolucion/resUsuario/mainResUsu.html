@@ -1,0 +1,150 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="m-b-10">Resolución para usuarios</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-4" role="tablist">
+                        <li class="nav-item" ng-click="resLoad()">
+                            <a class="nav-link active" data-toggle="pill" href role="tab" aria-controls="pills-add" aria-selected="false">
+                                <span class="feather icon-plus-square"></span> Agregar
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="resLoad(1)">
+                            <a class="nav-link" data-toggle="pill" href role="tab" aria-controls="pills-list" aria-selected="false">
+                                <span class="feather icon-file-text"></span> Listar
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="resLoad(2)">
+                            <a class="nav-link" data-toggle="pill" href role="tab" aria-controls="pills-list" aria-selected="false">
+                                <span class="feather icon-search"></span> Consulta
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- [ Add Res Users ] End -->
+                        <div ng-if="res_load0" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <ul class="nav nav-pills mb-4 justify-content-center" role="tablist">
+                                <li class="nav-item" ng-click="stepView()">
+                                    <a class="nav-link" ng-class="{'active':step}" data-toggle="pill" href role="tab" aria-controls="pills-0" aria-selected="false">
+                                        Paso 1</a>
+                                </li>
+                                <li class="nav-item" ng-click="stepView(false,'find_user')">
+                                    <a class="nav-link" ng-class="{'active':!step}" data-toggle="pill" href role="tab" aria-controls="pills-1" aria-selected="false">
+                                        Paso 2</a>
+                                </li>
+                            </ul>
+                            <div class="page-header">
+                                <div ng-include="'../app/resolucion/resUsuario/addResUsu.html'"></div>
+                            </div>
+                        </div>
+                        <!-- [ Add Res Users ] End -->
+                        <!-- [List Res Users ] Start -->
+                        <div ng-if="res_load1" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <div class="row">
+                                en listar res
+                            </div>
+                        </div>
+                        <!-- [List Res Users ] End -->
+                        <!-- [List Res Users ] Start -->
+                        <div ng-if="res_load2" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <div class="row">
+                                en query res
+                            </div>
+                        </div>
+                        <!-- [List Res Users ] End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>
+<!-- [ DOM RES Content ] Start -->
+<div ng-if="res_load0">
+    <div id="res_det_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-ll" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h5">Lista de Usuarios</h5>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_user')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-3" ng-model="find_usudet" id="find_usudet" placeholder="Buscar Usuario">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover m-b-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="fa fa-trash"></span>
+                                    </th>
+                                    <th>Apellidos</th>
+                                    <th>Nombres</th>
+                                    <th>N° Dni</th>
+                                    <th>N° Carnet</th>
+                                    <th>Contacto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="det in detData | filter:find_usudet as found">
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" 
+                                        ng-click="detFunc.remDet(det.idx)">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </td>
+                                    <td ng-bind="det.apellidos"></td>
+                                    <td ng-bind="det.nombres"></td>
+                                    <td ng-bind="det.ndni === null ? 'S/N DNI': det.ndni"></td>
+                                    <td ng-bind="det.carnet === null ? 'S/N CARNET' : det.carnet"></td>
+                                    <td ng-bind="det.contacto === null ? 'S/N CONTACTO' : det.contacto"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center m-t-15" ng-show="detData.length === 0">
+                        <span class="feather icon-slash"></span> Aún no se asignaron usuarios.
+                    </p>
+                    <p class="text-center m-t-15" ng-show="found.length === 0 && detData.length !== 0">
+                        <span class="feather icon-slash"></span> No se encontró resultados.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" ng-click="focusInput('find_user')">
+                        <span class="fa fa-times"></span> Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="usu_edit_modal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h5" ng-bind=" load_usu1 ? 'Editar Usuario' : 'Agregar Usuario';"></h5>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_user')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div ng-include="'../app/usuarios/usu-reusable/usuForm.html'" ng-controller="usuForm_Ctrl"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
