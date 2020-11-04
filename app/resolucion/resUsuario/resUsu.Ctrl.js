@@ -28,8 +28,9 @@
 			switch (arg) {
 				case 'res_load0': s.stepView(); break;
 				
-				case 'res_load1':
-
+				case 'res_load1': 
+					rs.resusu_load = true;
+					s.focusInput('find_res'); 
 				break;
 				
 				case 'res_load2':

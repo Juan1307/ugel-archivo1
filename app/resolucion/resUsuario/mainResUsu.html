@@ -52,15 +52,13 @@
                                 </li>
                             </ul>
                             <div class="page-header">
-                                <div ng-include="'../app/resolucion/resUsuario/addResUsu.html'"></div>
+                                <div ng-include="'../app/resolucion/resUsuario/templates/addResUsu.html'"></div>
                             </div>
                         </div>
                         <!-- [ Add Res Users ] End -->
                         <!-- [List Res Users ] Start -->
                         <div ng-if="res_load1" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
-                            <div class="row">
-                                en listar res
-                            </div>
+                            <div ng-include="'../app/resolucion/resUsuario/templates/listResUsu.html'"></div>
                         </div>
                         <!-- [List Res Users ] End -->
                         <!-- [List Res Users ] Start -->
@@ -77,6 +75,7 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+
 <!-- [ DOM RES Content ] Start -->
 <div ng-if="res_load0">
     <div id="res_det_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
@@ -103,11 +102,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="det in detData | filter:find_usudet as found">
+                                <tr ng-repeat="det in detData | filter:find_usudet as found track by $index">
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" 
-                                        ng-click="detFunc.remDet(det.idx)">
-                                            <span class="fa fa-trash"></span>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remDet(det.idx)">
+                                            <span class="feather icon-x"></span>
                                         </button>
                                     </td>
                                     <td ng-bind="det.apellidos"></td>

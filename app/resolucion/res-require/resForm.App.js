@@ -46,21 +46,25 @@
 
 			switch (rs.module) {
 				case 'USU':
-					arr = rs.detData.map( e => e.id_usuario);
-					console.log('USU arr_det',arr);					
-					fd.append('data',JSON.stringify({data,arr}));
 
 					switch (flag) {
 						case null:
+							arr = rs.detData.map( e => e.id_usuario);
+							console.log('USU INSERT',arr);					
+							fd.append('data',JSON.stringify({data,arr}));
+
 							RUset.pstRes(fd).then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
 							},e =>{
 								console.error(e.status);
 							});
-
 						break;
+
 						default:
+							console.log('USU INSERT',arr);
+							fd.append('data',JSON.stringify({data,flag}));
+
 							RUset.putRes(fd).then( r => {
 								console.log('res put', r);
     							s.load_res = false;
@@ -73,22 +77,25 @@
 				break;
 				
 				case 'INS':
-					arr = rs.detData.map( e => e.id_institucion);
-					console.log('INS arr_det',arr);					
-					fd.append('data',JSON.stringify({data,arr}));
 
 					switch (flag) {
 						case null:
-
+							arr = rs.detData.map( e => e.id_institucion);
+							console.log('INS INSERT',arr);
+							fd.append('data',JSON.stringify({data,arr}));
+							
 							RIset.pstRes(fd).then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
 							},e =>{
 								console.error(e.status);
 							});
-
 						break;
+
 						default:
+							console.log('INS UPDATE',arr);
+							fd.append('data',JSON.stringify({data,flag}));
+							
 							RIset.pstRes(fd).then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
@@ -98,7 +105,6 @@
 
 						break;
 					}
-
 				break;
 
 				default: 
@@ -163,7 +169,7 @@
 				s.stepView();
 				rs.detData = []; //root vaiable 
 			}
-
+			
 			s.resFiles = []; //de la directiva
 			s.selected.value = undefined;
 			for (let prop in objData) {

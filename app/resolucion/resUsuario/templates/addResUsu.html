@@ -70,12 +70,12 @@
                     </div>
                     <div class="row mt-3 text-center">
                         <div class="col-4 col-md mt-1" ng-repeat="(key, file) in resFiles">
-                            <button class="btn btn-danger btn-sm p-r-25 p-l-25 mb-1" ng-click="removeFile(key)">
+                            <button class="btn btn-danger btn-sm p-r-15 p-l-15 mb-1" ng-click="removeFile(key)">
                                 <span class="fa fa-times"></span>
                             </button>
 
                             <p class="mb-1">
-                                <span class="fa fa-file-pdf f-80"></span>
+                                <span class="fa fa-file-pdf f-52"></span>
                                 <p class="f-10" ng-bind="file.name"></p>
                             </p>
                         </div>
@@ -94,7 +94,7 @@
                         <span class="feather icon-trash"></span> Limpiar
                     </button>
                     <button class="btn btn-success float-right" ng-click="saveRes(resFiles, frmRes, frmResDat)">
-                        <span class="feather icon-arrow-right"></span> Siguiente
+                        <span class="feather icon-chevrons-right"></span> Siguiente
                     </button>
                 </div>      
             </div>
@@ -116,7 +116,6 @@
                 </div>
             </div>
             <div class="form-group col-12 col-lg-10">
-                <label for="find_user">Usuarios</label>
                 <!-- [ List Users ] Start -->
                 <div ng-controller="usuList_Ctrl">
                     <div class="input-group mb-3">
@@ -156,7 +155,7 @@
                             <tbody>
                                 <tr ng-repeat="user in userData">
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="detFunc.addDet(user)">
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="addDet(user)">
                                             <span class="feather icon-plus"></span>
                                         </button>
                                         <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" ng-click="editUser(user.id_usuario)">
@@ -183,9 +182,9 @@
                 </div>
                 <!-- [ List Users ] End -->
             </div>
-            <div class="col-12 mt-2">
+            <div class="col-12">
                 <button class="btn btn-secondary" ng-click="stepView()">
-                    <span class="feather icon-arrow-left"></span> Anterior
+                    <span class="feather icon-chevrons-left"></span> Anterior
                 </button>
                 <button class="btn btn-danger" ng-click="cleanRes(frmRes, frmResDat)">
                     <span class="feather icon-trash"></span> Limpiar

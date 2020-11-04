@@ -41,27 +41,27 @@
 		
 		//root
 		rs.detData = [];
-		rs.detFunc = {
-			addDet: (det) => {
-				console.log('det', det);
-
-				if (det.ndni == null && det.carnet == null) {
-					rs.detData.push({...det, idx:rs.detData.length});
-				}else{
-					rs.detData.some( e => (e.ndni == det.ndni && det.carnet == null) || 
-										  (e.carnet == det.carnet && det.ndni == null) || 
-										  (e.ndni == det.ndni && e.carnet == det.carnet))
-					? s.sweetMsj('¡Ooops Dni ó Carnet!','El usuario ya existe en la lista, porfavor revise.') 
-					: rs.detData.push({...det, idx:rs.detData.length});
-
-				}
-				console.log('det rs', rs.detData);
-				s.focusInput('find_user');
-			},
-			remDet: (key) => {
-				rs.detData = rs.detData.filter( e => e.idx !== key);
-				s.focusInput('find_usudet');
+		const addIndex = (arrdet) => {
+			for (let p in arrdet) {
+				arrdet[p].idx = p;
 			}
+			rs.detData = arrdet;
+		};
+		//root
+		rs.addDet = (det) => {
+			if (det.ndni == null && det.carnet == null) {
+				rs.detData.push(det); addIndex(rs.detData);
+			}else{
+				rs.detData.some( e => (e.ndni == det.ndni && det.carnet == null) || (e.carnet == det.carnet && det.ndni == null) || 
+									  (e.ndni == det.ndni && e.carnet == det.carnet))
+					? s.sweetMsj('¡Ooops Dni ó Carnet!','El usuario ya existe en la lista, porfavor revise.') 
+					: rs.detData.push(det); addIndex(rs.detData);
+			}
+			s.focusInput('find_user');
+		};
+		//root
+		rs.remDet = (key) => {
+			rs.detData.splice(key, 1); addIndex(rs.detData);
 		};
 		//root
 		rs.allUsers = () => {
@@ -73,8 +73,8 @@
 			s.focusInput('find_user');
 		};
 
-		//root
 		s.addUser = () => {
+			//root
 			rs.load_usu1 = false; rs.load_usu0 = true;
 				
 				s.idEdit.idUser = ''; 
@@ -88,8 +88,8 @@
 			s.focusInput('last_name');
 		};
 
-		//root
 		s.editUser = (id) => {
+			//root
 			rs.load_usu0 = false; rs.load_usu1 = true;
 
 			if (typeof parseInt(id) !== 'number' ) {
