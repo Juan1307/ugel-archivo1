@@ -1,7 +1,7 @@
 (function(a) {	
 	'use strict';
 
-	a.module('resUsers_App', []).constant('MOD', 'USU').controller('resUsers_Ctrl', ['$scope','$rootScope','MOD', function(s, rs, M){
+	a.module('resUsers_App', ['resList_App']).constant('MOD', 'USU').controller('resUsers_Ctrl', ['$scope','$rootScope','MOD', function(s, rs, M){
 		console.log('estamos en reolucion - USUARIOS');
 
 		s.navLink(2, true, 0);
@@ -39,6 +39,9 @@
 			}
 		};
 		s.resLoad();
+
+		//FORM STATE 
+		s.frmResDat = {};
 		
 	}]);
 

@@ -63,7 +63,7 @@
 		rs.remDet = (key) => {
 			rs.detData.splice(key, 1); addIndex(rs.detData);
 		};
-		//root
+		
 		rs.allUsers = () => {
 			if (s.paramUser !== undefined && s.paramUser !== '') {
     			getUsers(true, s.paramUser, s.number, s.pagAct);

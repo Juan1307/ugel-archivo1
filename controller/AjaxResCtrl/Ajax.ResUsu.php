@@ -9,10 +9,39 @@
 			switch ($option) {
 				
 				case 'LIS':
+					$pag = $_GET['PAG'] ?? die; $p_pag = $_GET['PPAG'] ?? die;
+					$outdat = false;
 
+					if ((int) $pag > 0 && (int) $p_pag > 0) {
+						settype($pag, "int"); settype($p_pag, "int");
+						$outdat = ResUsu::getData($pag, $p_pag);
+					}
 				break;
 
 				case 'PRM':
+					$pag = $_GET['PAG'] ?? die; $p_pag = $_GET['PPAG'] ?? die;
+					$prm = $_GET['PAR'] ?? die; $str = $_GET['STR'] ?? die;
+					$outdat = false;
+
+					if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $prm >= 0) {
+						settype($pag, "int"); settype($p_pag, "int");
+						settype($prm, "int"); $arr = [$prm, str_replace('/', '-', $str)];
+						$outdat = ResUsu::getDataFind($pag, $p_pag,$arr);
+					}
+				break;
+
+				case 'IDX':
+					$id = $_GET['ID'] ?? die;
+					$outdat = false;
+					
+					if ((int) $id > 0 ) {
+						settype($id, "int");
+
+						$outdat = ResUsu::getDataId($id);
+					}
+				break;
+
+				case 'DET':
 					
 				break;
 
@@ -34,7 +63,6 @@
 		   	}else{
 		   		$outdat = false;
 		   	}
-
 		break;
 
 		case 'PUT':

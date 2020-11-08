@@ -1,0 +1,108 @@
+<div id="res_edit_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-ll" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h5">Editar Resolucion</h5>
+                <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_res')" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div ng-controller="resForm_Ctrl">
+                    <div class="form-row">
+                        <div class="col-12 col-md-8">
+                            <div class="form-row">
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="nro_res">N° Resolucion</label>
+                                    <input type="text" ng-model="frmResDat.nro_res" ng-pattern="resFormPtrn[0]" ng-init="frmResDat.nro_res = ''" ng-class="{'control': frmResDat.nro_res === '',
+                                                      'is-valid': frmResDat.nro_res !== '' && frmResDat.nro_res !== undefined,
+                                                      'is-invalid': frmResDat.nro_res === undefined}" class="form-control text-center" id="nro_res" placeholder="Ingrese Resolucion" maxlength="5">
+                                    <div class="invalid-feedback">
+                                        Ingrese n° resolucion correctamente.
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="nro_pro">N° Proyecto</label>
+                                    <input type="text" ng-model="frmResDat.nro_pro" ng-pattern="resFormPtrn[0]" ng-init="frmResDat.nro_pro = ''" ng-class="{'control': frmResDat.nro_pro === '',
+                                                      'is-valid': frmResDat.nro_pro !== '' && frmResDat.nro_pro !== undefined,
+                                                      'is-invalid': frmResDat.nro_pro === undefined}" class="form-control text-center" id="nro_pro" placeholder="Ingrese Proyecto" maxlength="5">
+                                    <div class="invalid-feedback">
+                                        Ingrese n° proyecto correctamente.
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="res_moti">Motivo</label>
+                                    <ui-select ng-model="selected.value" theme="selectize" id="res_moti">
+                                        <ui-select-match placeholder="Buscar motivo ...">
+                                            <span ng-bind="$select.selected.descripcion"></span>
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="mot in arrMotiv | filter: $select.search">
+                                            <span ng-bind="::mot.descripcion"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <small class="text-danger" ng-show=" (selected.value.id_motivo === undefined && valFrmRes) ? true : false">
+                                        Seleccione un motivo correctamente.
+                                    </small>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="res_area">Oficina</label>
+                                    <select id="res_area" ng-model="frmResDat.res_area" 
+                                        ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
+                                    </select>
+                                    <small class="text-danger" ng-show=" (frmResDat.res_area === undefined && valFrmRes) ? true : false">
+                                        Seleccione una oficina correctamente.
+                                    </small>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <label for="res_fec">Fecha {{ frmResDat.res_fec }}</label>
+                                    <input type="date" ng-model="frmResDat.res_fec" class="form-control text-center" placeholder="yyyy-MM-dd" id="res_fec">
+                                    <small class="text-danger" ng-show=" (frmResDat.res_fec === null && valFrmRes) ? true : false">
+                                        Ingrese fecha correctamente.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label for="files_pdf">Adjuntar Pdf (OPCIONAL).
+                                <span class="fa fa-files"></span>
+                            </label>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="btn btn-outline-primary form-control c-pointer" for="file_res">
+                                        Buscar archivos <span class="feather icon-upload"></span>
+                                    </label>
+                                    <input type="file" id="file_res" class="d-none" select-ng-files ng-model="resFiles" multiple accept=".pdf">
+                                </div>
+                            </div>
+                            <div class="row mt-3 text-center">
+                                <div class="col-4 col-md mt-1" ng-repeat="(key, file) in resFiles">
+                                    <button class="btn btn-danger btn-sm p-r-15 p-l-15 mb-1" ng-click="removeFile(key)">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    <p class="mb-1">
+                                        <span class="fa fa-file-pdf f-52"></span>
+                                        <p class="f-10" ng-bind="file.name"></p>
+                                    </p>
+                                </div>
+                                <div class="col-12">
+                                    <p class="text-center m-t-15" ng-show="resFiles.length === 0 || resFiles === undefined">
+                                        <span class="feather icon-slash"></span>
+                                        No se importaron archivos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12 mt-2">
+                            <button class="btn btn-success" ng-click="cleanRes(frmRes, frmResDat)">
+                                <span class="feather icon-save"></span> Editar
+                            </button>
+                            <button class="btn btn-danger float-right" ng-click="saveRes(resFiles, frmRes, frmResDat)">
+                                <span class="fa fa-times"></span> Cancelar
+                            </button>
+                        </div>      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

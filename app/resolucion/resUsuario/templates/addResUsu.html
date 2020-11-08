@@ -140,7 +140,7 @@
                             <span>Opps este parametro es desconocido</span>
                         </div>
                     </div>
-                    <div ng-class="{'card-load':load_data}" class="table-responsive" style="height: 210px;">
+                    <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
                         <table class="table table-sm table-bordered table-hover m-b-0  text-center" >
                             <thead>
                                 <tr>
@@ -162,7 +162,10 @@
                                             <span class="feather icon-edit"></span>
                                         </button>
                                     </td>
-                                    <td ng-bind="::user.apellidos"></td>
+                                    <td class="c-pointer">
+                                        <div ng-class="{'hint--top hint--rounded':user.apellidos.length > 17}" aria-label="{{ ::user.apellidos }}" ng-bind="::user.apellidos | stringCut : 17">
+                                        </div>
+                                    </td>
                                     <td ng-bind="::user.nombres"></td>
                                     <td ng-bind="::user.ndni === null ? 'S/N DNI': user.ndni"></td>
                                     <td ng-bind="::user.carnet === null ? 'S/N CARNET' : user.carnet"></td>

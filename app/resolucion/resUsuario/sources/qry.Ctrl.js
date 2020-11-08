@@ -4,7 +4,9 @@
 	a.module('resList_App', []).constant('resListPtrn', ['[0-9]{3,5}','[0-9]{3,5}'])
 	.controller('resListUsu_Ctrl', ['$scope','$rootScope','resListPtrn','resGet.Srv','resGet.Fac', function(s, rs, ptrn, Rini, Rget){
 
+		console.log('LISTAR RES USU');
 		s.resListPtrn = ptrn;
+		
 		const getResUsu = (flag, prm, num, p = 1, fpag) => {
 			s.load_data = true;
 			/*Rini.getAllUsu(flag, prm, num, p).then( r => {

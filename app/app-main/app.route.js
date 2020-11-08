@@ -63,6 +63,8 @@
 
                                                  '../app/resolucion/res-require/resForm.App.js',
                                                  '../app/resolucion/resUsuario/resUsu.Ctrl.js',
+                                                 '../app/resolucion/resUsuario/sources/list.Ctrl.js',
+
                         ]);
                     }
                 }

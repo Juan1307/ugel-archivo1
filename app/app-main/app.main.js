@@ -119,6 +119,10 @@
 		return function (num, cont) {
 			return Math.round(num * 100 / cont);
 		};
+	}).filter('dateParse',function () {
+		return function (str) {
+			return moment(str).format('DD[/]MM[/]YYYY');
+		};
 	});
 
 })(angular);

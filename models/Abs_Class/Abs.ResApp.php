@@ -55,5 +55,19 @@ declare(strict_types=1);
 			return $ndata;
 		}
 
+		protected function qryFindData(array $arr) : string
+		{
+			if ($arr[0] == 1) {
+				$prm_arr['cols'] = 'f_emision'; $val = date('Y-m-d',strtotime($arr[1])); 
+			}else{
+				$prm_arr['cols'] = ['nresolucion','nproyecto']; $val = $arr[1];
+			}
+
+			return (is_string($prm_arr['cols']))  ? $prm_arr['cols'] .' LIKE '."'$val'":
+		                                            #aplica para dos campos 
+		                                            $prm_arr['cols'][0] .' LIKE '."'$val%'".' OR '.
+		    										$prm_arr['cols'][1] .' LIKE '."'$val%'";
+		}
+
 	}
  ?>

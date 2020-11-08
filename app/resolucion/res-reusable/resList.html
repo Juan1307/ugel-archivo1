@@ -1,0 +1,74 @@
+<div ng-controller="resListUsu_Ctrl">
+    <div class="input-group mb-3">
+        <input type="text" ng-model="paramRes" ng-pattern="resListPtrn[number]" ng-init="paramRes=''" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control col-sm-12" id="find_res" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Resolucion">
+        <div class="input-group-append">
+            <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ textPrmRes }}
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href ng-click="selectPrm()"> N° Res ó N° Pro </a>
+                <a class="dropdown-item" href ng-click="selectPrm(1)"> Fecha / D-M-A </a>
+            </div>
+            <button type="button" class="btn btn-secondary">
+                <span class="f-w-500 feather icon-refresh-cw"></span>
+            </button>
+        </div>
+        <div class="invalid-feedback">
+            <span>Opps este parametro es desconocido</span>
+        </div>
+    </div>
+    <div ng-class="{'card-load':load_data}" class="table-responsive">
+        <table class="table table-sm table-bordered table-hover m-b-0  text-center">
+            <thead>
+                <tr>
+                    <th>Accion</th>
+                    <th>N° Res</th>
+                    <th>N° Pro</th>
+                    <th>Area  </th>
+                    <th>Motivo</th>
+                    <th>Fecha </th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="res in resData">
+                    <td>
+                        <button class="btn btn-primary btn-sm" ng-click="resusu_load = false">
+                            <span class="feather icon-eye"></span>
+                        </button>
+                        <button class="btn btn-warning btn-sm" ng-click="editRes(res.id_resolucion)">
+                            <span class="feather icon-edit"></span>
+                        </button>
+                        <button class="btn btn-danger btn-sm">
+                            <span class="feather icon-trash"></span>
+                        </button>
+                    </td>
+                    <td ng-bind="::res.nresolucion"></td>
+                    <td ng-bind="::res.nproyecto"></td>
+                    <td class="c-pointer">
+                        <div ng-class="{'hint--top hint--rounded':res.nombre.length > 25}" aria-label="{{ ::res.nombre }}" ng-bind="::res.nombre | stringCut : 25">
+                        </div>
+                    </td>
+                    <td class="c-pointer">
+                        <div ng-class="{'hint--top hint--rounded':res.descripcion.length > 25}" aria-label="{{ ::res.descripcion }}" ng-bind="::res.descripcion | stringCut : 25 ">
+                        </div>
+                    </td>
+                    <td ng-bind="::res.f_emision | dateParse"></td>
+                    <td>
+                        <button class="btn btn-sm" ng-class="{'btn-outline-success p-l-10 p-r-10': res.estado == 1,
+                            'btn-outline-secondary': res.estado == 0}" ng-bind="::res.estado == 1 ? 'Activo' : 'Inactivo'">
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-center m-t-15" ng-show="resData.length === 0">
+            <span class="feather icon-slash"></span>
+            No se encontraron resultados
+        </p>
+        <div ng-show="load_data" class="card-loader">
+            <i class="pct-loader1 anim-rotate"></i>
+        </div>
+    </div>
+    <div ng-include="'../app/app-include/pagination.html'"></div>
+</div>

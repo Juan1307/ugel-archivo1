@@ -22,6 +22,27 @@ declare(strict_types=1);
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
 
+		public function getDataFind(int $pag, int $p_pag, array $arr) : array
+		{
+			$sql_w = Res::qryFindData($arr);
+
+			$qry = "SELECT COUNT(1) FROM tblresolucion WHERE est_tbl = 0 AND $sql_w";
+ 			$s_qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado
+ 											FROM tblresolucion as r INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
+ 											INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 0 AND $sql_w";
+
+ 			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
+		}
+
+		public function getDataId(int $id) : array
+		{
+			$qry = "SELECT id_resolucion, nresolucion, nproyecto, f_emision, id_area, id_motivo 
+										   	FROM tblresolucion WHERE id_resolucion = $id AND est_tbl = 0";
+			$s_qry = "SELECT * FROM tblarchivos WHERE id_resolucion = $id";
+			
+ 			return Config::getConfigRow($qry);
+		}
+
 		public function pstData(array $arr, array $det, $files) : bool
 		{
 			$dat_0 = Res::fullResArr($arr, true);
@@ -47,7 +68,4 @@ declare(strict_types=1);
 		}
 
 	}
-
-	$data = ResUsu::getUsu(0,5);
-	var_export($data);
 ?>

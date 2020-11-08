@@ -17,7 +17,7 @@
 	
 	echo "<hr>";
 
-	$new_date_format = date('d-m-Y', strtotime('2010-07-21'));
+	$new_date_format = date('Y-m-d', strtotime('12-07-2010'));
 	var_export($new_date_format);
 
 

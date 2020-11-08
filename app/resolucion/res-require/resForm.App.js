@@ -21,6 +21,12 @@
 		s.resFormPtrn = ptrn;
 
     	s.selected = {};
+    	
+    	rs.select_m = (id) => {
+    		let mot = s.arrMotiv.filter( e => e.id_motivo == id);
+    		s.selected.value = mot[0];
+    	};
+
 		Rini.then( r => {
 			s.arrMotiv = r.moti;
 			s.arrArea = r.area;

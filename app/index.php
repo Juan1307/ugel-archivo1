@@ -143,12 +143,12 @@
     <!-- Required Plugins -->
     <script src=".assets/apex-charts/apexcharts.min.js"></script>
     <script src=".assets/sweet-alert/sweetalert.min.js"></script>
+    <script src=".assets/moment-js/moment.min.js"></script>
 
     <!-- Required Main -->
     <script src="app-main/app.main.js"></script>
     <script src="app-main/app.route.js"></script>
     <script src="index.js"></script>
-
 
 </body>
 
