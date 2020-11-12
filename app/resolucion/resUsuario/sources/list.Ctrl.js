@@ -51,13 +51,17 @@
 			}
 
 			Rget.getResId(id).then( r => {
-				console.log('res', r);
-				s.frmResDat.nro_res = r.nresolucion;
-				s.frmResDat.nro_pro = r.nproyecto;
-				rs.select_m(r.id_motivo);
-				s.frmResDat.res_area = r.id_area;
-				let d = moment(r.f_emision).format("MM[/]DD[/]YYYY");
+				let dat = r.data;
+
+				s.idEdit.idRes = dat.id_resolucion;
+				s.frmResDat.nro_res = dat.nresolucion;
+				s.frmResDat.nro_pro = dat.nproyecto;
+				rs.select_m(dat.id_motivo);
+				s.frmResDat.res_area = dat.id_area;
+				let d = moment(dat.f_emision).format("MM[/]DD[/]YYYY");
 				s.frmResDat.res_fec = new Date(d);
+				rs.filDat = r.files;
+				
 			},e => {
 				console.error(e.status);
 			});

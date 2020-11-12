@@ -33,9 +33,9 @@
                 controller: 'users_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
-                        return $ocLazyLoad.load(['../app/usuarios/usu-require/usuForm.App.js',
-                                                 '../app/usuarios/usu-require/usuList.App.js',
-                                                 '../app/usuarios/usuarios.Ctrl.js'
+                        return $ocLazyLoad.load(['./usuarios/usu-require/usuForm.App.js',
+                                                 './usuarios/usu-require/usuList.App.js',
+                                                 './usuarios/usuarios.Ctrl.js'
                         ]);
                     }
                 }

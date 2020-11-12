@@ -16,7 +16,7 @@
 		      });
 		    }
 	  };
-	}).controller('resForm_Ctrl', ['$scope','$rootScope','resFormPtrn','iniGet.Srv','resUsuSet.Fac','resInsSet.Fac', function(s, rs, ptrn, Rini, RUset, RIset){
+	}).controller('resForm_Ctrl', ['$scope','$rootScope','resFormPtrn','iniGet.Srv','resSet.Fac', function(s, rs, ptrn, Rini, Rset){
 
 		s.resFormPtrn = ptrn;
 
@@ -55,11 +55,10 @@
 
 					switch (flag) {
 						case null:
-							arr = rs.detData.map( e => e.id_usuario);
 							console.log('USU INSERT',arr);					
-							fd.append('data',JSON.stringify({data,arr}));
+							arr = rs.detData.map( e => e.id_usuario); fd.append('data',JSON.stringify({data,arr}));
 
-							RUset.pstRes(fd).then( r => {
+							Rset.pstRes(fd,'Usu').then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
 							},e =>{
@@ -68,10 +67,9 @@
 						break;
 
 						default:
-							console.log('USU INSERT',arr);
-							fd.append('data',JSON.stringify({data,flag}));
-
-							RUset.putRes(fd).then( r => {
+							console.log('USU UPDATE');
+							fd.append('data',JSON.stringify({data, id: flag}));
+							Rset.putRes(fd,'Usu').then( r => {
 								console.log('res put', r);
     							s.load_res = false;
 							},e =>{
@@ -86,11 +84,10 @@
 
 					switch (flag) {
 						case null:
-							arr = rs.detData.map( e => e.id_institucion);
 							console.log('INS INSERT',arr);
-							fd.append('data',JSON.stringify({data,arr}));
+							arr = rs.detData.map( e => e.id_institucion); fd.append('data',JSON.stringify({data,arr}));
 							
-							RIset.pstRes(fd).then( r => {
+							Rset.pstRes(fd,'Insti').then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
 							},e =>{
@@ -99,11 +96,11 @@
 						break;
 
 						default:
-							console.log('INS UPDATE',arr);
-							fd.append('data',JSON.stringify({data,flag}));
+							console.log('INS UPDATE');
+							fd.append('data',{data,flag});
 							
-							RIset.pstRes(fd).then( r => {
-								console.log('res pst', r);
+							Rset.pstRes(fd,'Insti').then( r => {
+								console.log('res put', r);
     							s.load_res = false;
 							},e =>{
 								console.error(e.status);
@@ -196,32 +193,25 @@
 			console.error(err.status);
 		});
 
-	}]).factory('resUsuSet.Fac', ['$http', function(h){
+	}]).factory('resSet.Fac', ['$http', function(h){
 		const config = { headers:{'Content-Type': undefined},
 					     transformRequest: angular.identity };
 		return {
-			pstRes: (data) => {
-				return h.post('../controller/AjaxResCtrl/Ajax.ResUsu.php', data, config).then(res => {
+			pstRes: (data, uri) => {
+				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PST`, data, config).then(res => {
 					console.log('res http post', res);
 					return res.data;
 				}).catch(err => {
 					console.error(err.status);
 				});
 			},
-			putRes: (data) =>{
-
-			}
-		};
-	}]).factory('resInsSet.Fac', ['$http', function(h){
-		const config = { headers:{'Content-Type': undefined},
-						 transformResponse: angular.identity };
-
-		return {
-			pstRes: (data) => {
-
-			},
-			putRes: (data) =>{
-
+			putRes: (data, uri) =>{
+				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PUT`, data, config).then(res => {
+					console.log('res http put', res);
+					return res.data;
+				}).catch(err => {
+					console.error(err.status);
+				});
 			}
 		};
 	}]);

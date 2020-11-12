@@ -58,15 +58,26 @@
 		    }
 		   	$data = Ajax::valJsonIn($_POST['data']);
 		   	
-		   	if (!isset($arr_fil['error']) && !isset($data['error'])) {   		
-		   		$outdat = ResUsu::pstData($data['data'], $data['arr'], $arr_fil);
+		   	if (!isset($arr_fil['error']) && !isset($data['error'])) {
+		   		$opt = $_GET['OP'] ?? die;
+
+		   		switch ($opt) {
+		   			case 'PST':
+		   				$outdat = ResUsu::pstData($data['data'], $data['arr'], $arr_fil);
+		   			break;
+		   			
+		   			case 'PUT':
+		   				$outdat = false;
+		   				
+		   				if ((int) $data['id'] > 0 ) {
+							$id = $data['id']; settype($id, "int");
+		   					$outdat = ResUsu::putData($data['data'], $id, $arr_fil);
+						}
+		   			break;
+		   		}
 		   	}else{
 		   		$outdat = false;
 		   	}
-		break;
-
-		case 'PUT':
-
 		break;
 			
 		default: die; break;

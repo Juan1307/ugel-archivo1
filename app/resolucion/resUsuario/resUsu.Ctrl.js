@@ -42,6 +42,7 @@
 
 		//FORM STATE 
 		s.frmResDat = {};
+		s.idEdit = {};
 		
 	}]);
 

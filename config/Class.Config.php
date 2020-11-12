@@ -20,6 +20,11 @@ declare(strict_types=1);
 			return $arr;
 		}
 
+		public function getConfigRowsCol(string $qry) : array
+		{
+			return DB::getRowsColumn($qry);
+		}
+
 		protected function getConfigPag(string $qry, string $s_qry, int $pag, int $p_pag) : array
 		{
 			$total = DB::getRowColumn($qry);
@@ -80,6 +85,11 @@ declare(strict_types=1);
 		protected function setConfigRow(string $qry, array $arr) : bool
 		{
 			return DB::setRow($qry, $arr);
+		}
+
+		protected function delConfigRoW(string $qry) : bool
+		{
+			return DB::delRow($qry);
 		}
 
 		protected function setConfigTran(array $qry_0, array $qry_1) : array

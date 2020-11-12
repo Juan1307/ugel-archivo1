@@ -73,6 +73,16 @@ declare(strict_types=1);
 			return $sql->fetchAll();
 		}
 
+		final protected function getRowsColumn(string $query) : array
+		{
+			$con = self::get_Instance();
+
+				$sql = $con->prepare("$query");
+					$sql->execute();
+
+			return $sql->fetchAll(PDO::FETCH_COLUMN);
+		}
+
 		final protected function getRow(string $query) : array
 		{
 			$con = self::get_Instance();
@@ -81,6 +91,14 @@ declare(strict_types=1);
 					$sql->execute();
 
 			return $sql->fetch();
+		}
+
+		final protected function delRow(string $query) : bool
+		{
+			$con = self::get_Instance();
+				$sql = $con->prepare("$query");
+
+			return $sql->execute();
 		}
 
 		final protected function setRow(string $query, array $data) : bool

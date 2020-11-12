@@ -7,6 +7,14 @@
 			$outdat = Res::getAreaMoti();
 
 		break;
+
+		case 'PUT':
+			//PARA CAMBIAR EL ESTADO PARA API
+		break;
+
+		case 'DELETE': 
+			//PARA eLIMINAR uNA RESOLUCION
+		break;
 			
 		default: die; break;
 	}

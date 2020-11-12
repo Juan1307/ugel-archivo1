@@ -79,8 +79,7 @@
 					if (arr_v.length > 10) {
 						let a, b;
 
-						a = arr_n.splice(pag - 1, 5);
-						b = arr_n.splice(arr_n.length - 5, 5);
+						a = arr_n.splice(pag - 1, 5); b = arr_n.splice(arr_n.length - 5, 5);
 						
 						arrMer = [...a, false, ...b];
 						s.arrPag = arrMer;
@@ -94,8 +93,7 @@
 					if (arr_v.length > 10) {
 						let c, d;
 
-						d = arr_n.splice(pag - 5, 5);
-						c = arr_n.splice(0, 5);
+						d = arr_n.splice(pag - 5, 5); c = arr_n.splice(0, 5);
 
 						arrMer = [...c, false, ...d];
 						s.arrPag = arrMer;
@@ -122,6 +120,10 @@
 	}).filter('dateParse',function () {
 		return function (str) {
 			return moment(str).format('DD[/]MM[/]YYYY');
+		};
+	}).filter('fileSize',function () {
+		return function (siz) {
+			return Math.round(siz/1024);
 		};
 	});
 

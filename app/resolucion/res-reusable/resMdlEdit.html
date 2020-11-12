@@ -44,15 +44,14 @@
                                 </div>
                                 <div class="form-group col-12 col-sm-6">
                                     <label for="res_area">Oficina</label>
-                                    <select id="res_area" ng-model="frmResDat.res_area" 
-                                        ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
+                                    <select id="res_area" ng-model="frmResDat.res_area" ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
                                     </select>
                                     <small class="text-danger" ng-show=" (frmResDat.res_area === undefined && valFrmRes) ? true : false">
                                         Seleccione una oficina correctamente.
                                     </small>
                                 </div>
                                 <div class="form-group col-12 col-sm-6">
-                                    <label for="res_fec">Fecha {{ frmResDat.res_fec }}</label>
+                                    <label for="res_fec">Fecha</label>
                                     <input type="date" ng-model="frmResDat.res_fec" class="form-control text-center" placeholder="yyyy-MM-dd" id="res_fec">
                                     <small class="text-danger" ng-show=" (frmResDat.res_fec === null && valFrmRes) ? true : false">
                                         Ingrese fecha correctamente.
@@ -60,46 +59,72 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-4">
-                            <label for="files_pdf">Adjuntar Pdf (OPCIONAL).
-                                <span class="fa fa-files"></span>
-                            </label>
+                        <div class="col-12 col-md-4 ">
                             <div class="row">
+                                <div class="col-12 mt-2" ng-show="(resFiles.length === 0 || resFiles === undefined)  && filDat.length === 0">
+                                    <div class="card bg-c-yellow order-card">
+                                        <div class="card-body">
+                                            <h6 class="text-white">Ooops sin archivos</h6>
+                                            <p class="m-b-0">Si deseas agregar archivos a esta resolución usa el botón con el icono <span class="feather icon-upload"></span> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" ng-show="filDat.length !== 0 && (resFiles.length === 0 || resFiles === undefined)" style="height: 165px;">
+                                    <label> Lista de archivos </label>
+                                    <ul class="list-group m-b-10">
+                                        <li class="list-group-item list-group-item-action pt-2 pb-2" ng-repeat="fil in filDat">
+                                            <small class="c-pointer hint--top hint--rounded" aria-label="{{::fil.nombre_ori}}" 
+                                                   ng-bind="::fil.nombre_sys"></small>
+                                            
+                                            <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium"
+                                                    aria-label="TAMAÑO: {{::fil.tamano | fileSize}}.kb / FECHA : {{::fil.f_creacion | dateParse }}">
+                                                <span class="feather icon-info"></span>
+                                            </button>
+                                            <a class="float-right btn btn-primary btn-sm m-r-5" 
+                                                ng-href="../files/res_users/{{::fil.archivo}}" target="_blank"> 
+                                                <span class="fa fa-file-pdf"></span>
+                                            </a>
+                                        </li>
+                                    </ul>                        
+                                </div>
                                 <div class="col-12">
-                                    <label class="btn btn-outline-primary form-control c-pointer" for="file_res">
-                                        Buscar archivos <span class="feather icon-upload"></span>
+                                    <label for="files_pdf">Adjuntar Pdf (OPCIONAL)
+                                        <button ng-show="filDat.length !== 0 " class="btn btn-outline-warning btn-sm hint--top hint--rounded hint--warning hint--medium" aria-label="¡ADVERTENCIA! - Al subir nuevos archivos, estos se reemplazarán por los archivos existentes.">
+                                            <span class="feather icon-info"></span>
+                                        </button>
                                     </label>
-                                    <input type="file" id="file_res" class="d-none" select-ng-files ng-model="resFiles" multiple accept=".pdf">
-                                </div>
-                            </div>
-                            <div class="row mt-3 text-center">
-                                <div class="col-4 col-md mt-1" ng-repeat="(key, file) in resFiles">
-                                    <button class="btn btn-danger btn-sm p-r-15 p-l-15 mb-1" ng-click="removeFile(key)">
-                                        <span class="fa fa-times"></span>
-                                    </button>
-                                    <p class="mb-1">
-                                        <span class="fa fa-file-pdf f-52"></span>
-                                        <p class="f-10" ng-bind="file.name"></p>
-                                    </p>
-                                </div>
-                                <div class="col-12">
-                                    <p class="text-center m-t-15" ng-show="resFiles.length === 0 || resFiles === undefined">
-                                        <span class="feather icon-slash"></span>
-                                        No se importaron archivos.
-                                    </p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="btn btn-outline-primary form-control c-pointer" for="file_res">
+                                                Buscar archivos <span class="feather icon-upload"></span>
+                                            </label>
+                                            <input type="file" id="file_res" class="d-none" select-ng-files ng-model="resFiles" multiple accept=".pdf">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 text-center">
+                                        <div class="col-4 col-md mt-1" ng-repeat="(key, file) in resFiles">
+                                            <button class="btn btn-danger btn-sm p-r-15 p-l-15 mb-1" ng-click="removeFile(key)">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                            <p class="mb-1">
+                                                <span class="fa fa-file-pdf f-52"></span>
+                                                <p class="f-10" ng-bind="file.name"></p>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-12 mt-2">
-                            <button class="btn btn-success" ng-click="cleanRes(frmRes, frmResDat)">
+                            <button class="btn btn-success" ng-click="saveRes(resFiles, frmRes, frmResDat, idEdit.idRes)">
                                 <span class="feather icon-save"></span> Editar
                             </button>
-                            <button class="btn btn-danger float-right" ng-click="saveRes(resFiles, frmRes, frmResDat)">
+                            <button class="btn btn-danger float-right" ng-click="cleanRes(frmRes, frmResDat, true)">
                                 <span class="fa fa-times"></span> Cancelar
                             </button>
-                        </div>      
+                        </div>
                     </div>
                 </div>
             </div>
