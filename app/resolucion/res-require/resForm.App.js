@@ -19,7 +19,6 @@
 	}).controller('resForm_Ctrl', ['$scope','$rootScope','resFormPtrn','iniGet.Srv','resSet.Fac', function(s, rs, ptrn, Rini, Rset){
 
 		s.resFormPtrn = ptrn;
-
     	s.selected = {};
     	
     	rs.select_m = (id) => {
@@ -35,11 +34,11 @@
     	});
     	
     	const sendRes = (nObj) => {
-    		const frmData = nObj[0];
+    		console.log('nobj', nObj);
 
-			const data = nObj[1];
-			const fils = nObj[2];
-			const flag = nObj[3];
+			const data = nObj[0];
+			const fils = nObj[1];
+			const flag = nObj[2];
 
 			let fd = new FormData();
 			if (fils !== undefined) {
@@ -47,31 +46,34 @@
 					fd.append(`file ${i}`,fils[i]);
 				}
 			}
-			s.load_res = true;
-    		let arr;
+			let arr;
+			s.load_res = true; 
 
 			switch (rs.module) {
 				case 'USU':
 
 					switch (flag) {
 						case null:
-							console.log('USU INSERT',arr);					
 							arr = rs.detData.map( e => e.id_usuario); fd.append('data',JSON.stringify({data,arr}));
 
 							Rset.pstRes(fd,'Usu').then( r => {
-								console.log('res pst', r);
-    							s.load_res = false;
+								//console.log('send post', r);
+								s.load_res = false;
+								r ? ( s.alertMsj('Resolución registrada',' correctamente.'), s.cleanRes() ) : 
+							 	s.sweetMsj('¡Ooops error!','No se pudo registrar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
 							});
 						break;
 
 						default:
-							console.log('USU UPDATE');
 							fd.append('data',JSON.stringify({data, id: flag}));
+
 							Rset.putRes(fd,'Usu').then( r => {
-								console.log('res put', r);
+								//console.log('send put', r);
     							s.load_res = false;
+								r ? ( s.alertMsj('Resolución actualizada',' correctamente.'), s.cleanRes(true), rs.allRes() ) : 
+							 	s.sweetMsj('¡Ooops error!','No se pudo actualizar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
 							});
@@ -111,7 +113,7 @@
 				break;
 
 				default: 
-					s.sweetMsj('¡Ooops error!','Modulo no detectado, porfavor reportelo.','error'); s.cleanRes(frmData,data);  
+					s.sweetMsj('¡Ooops error!','Modulo no detectado, porfavor reportelo.','error'); s.cleanRes();  
 				break;
 			}
     	};
@@ -128,7 +130,7 @@
     		return {...objData, res_moti:r_m, res_area:r_a};
     	};
 
-    	s.saveRes = (arrFiles, formData, objData, idRes = null, next = false) => {
+    	s.saveRes = (arrFiles, objData, idRes = null, next = false) => {
 			//console.log('obj', objData);	
 			s.valFrmRes = true;
     		const parData = parObj(objData);
@@ -153,37 +155,34 @@
 				if (rs.detData.length <= 0) {
 					s.sweetMsj('¡Ooops Info!','Debe asignar 1 o más datos a la lista, porfavor asigne.');
 				} else {
-					sendRes([formData, parData, arrFil, idRes]);
+					sendRes([parData, arrFil, idRes]);
 				}
 			} else {
-				sendRes([formData, parData, arrFil, idRes]);
+				sendRes([parData, arrFil, idRes]);
 			}
 		};
 
 		s.removeFile = (key) => s.resFiles.splice(key, 1);
  
-		s.cleanRes = (formData, objData, mdlRes = false) => {
+		s.cleanRes = (mdlRes = false) => {
 			s.valFrmRes = false;
-			
+
 			if (mdlRes) {
+				rs.filDat = [];
 				$('#res_edit_modal').modal('hide');
 				s.focusInput('find_res');
 			}else{
 				s.stepView();
 				rs.detData = []; //root vaiable 
 			}
-			
+
 			s.resFiles = []; //de la directiva
 			s.selected.value = undefined;
-			for (let prop in objData) {
-				if (!objData.hasOwnProperty(prop)) {
-					return console.error('dont exist key');
-				}else if(prop == 'res_area' || prop == 'res_fec'){
-					objData[prop] = undefined;
-				}else{
-					objData[prop] = '';
-				}
-			}
+
+			s.frmResDat.nro_pro = '';
+			s.frmResDat.nro_res = '';
+			s.frmResDat.res_area = undefined;
+			s.frmResDat.res_fec = null;
 		};
 
 	}]).factory('iniGet.Srv', ['$http', function(h){
@@ -199,16 +198,14 @@
 		return {
 			pstRes: (data, uri) => {
 				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PST`, data, config).then(res => {
-					console.log('res http post', res);
-					return res.data;
+					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);
 				});
 			},
 			putRes: (data, uri) =>{
 				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PUT`, data, config).then(res => {
-					console.log('res http put', res);
-					return res.data;
+					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);
 				});

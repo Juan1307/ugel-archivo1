@@ -87,8 +87,8 @@ declare(strict_types=1);
 		{
 			$arr = ['nombres'  =>[$arr[1], 'STR'],
 					'apellidos'=>[$arr[0], 'STR'],
-					'ndni'     =>[$arr[2], $arr[2] == null ? 'NULL' :'INT'],
-					'carnet'   =>[$arr[3], $arr[3] == null ? 'NULL' :'INT'],
+					'ndni'     =>[$arr[2], $arr[2] == null ? 'NULL' :'STR'],
+					'carnet'   =>[$arr[3], $arr[3] == null ? 'NULL' :'STR'],
 					'contacto' =>[$arr[4], $arr[4] == null ? 'NULL' :'INT'],
 				   ];
 
@@ -101,8 +101,8 @@ declare(strict_types=1);
 		{
 			$arr = ['nombres'   =>[$arr[1], 'STR'],
 					'apellidos' =>[$arr[0], 'STR'],
-					'ndni'      =>[$arr[2], $arr[2] == null ? 'NULL' :'INT'],
-					'carnet'    =>[$arr[3], $arr[3] == null ? 'NULL' :'INT'],
+					'ndni'      =>[$arr[2], $arr[2] == null ? 'NULL' :'STR'],
+					'carnet'    =>[$arr[3], $arr[3] == null ? 'NULL' :'STR'],
 					'contacto'  =>[$arr[4], $arr[4] == null ? 'NULL' :'INT'], 
 					'id_usuario'=>[$id, 'INT'],
 				   ];

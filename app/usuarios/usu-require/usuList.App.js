@@ -23,7 +23,7 @@
 		};
 
 		s.$watch('paramUser', (vn, vo)  => {
-    		
+
     		if (vn !== undefined && vn !== '') {
     			getUsers(true, s.paramUser, s.number);
     		}else if (vn === ''){

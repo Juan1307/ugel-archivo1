@@ -28,7 +28,7 @@
 			}, 800);
 		};
 
-		s.sweetMsj = (tit, txt, icon = 'warning') => swal({ title: tit,text: txt,icon: icon,button: "Aceptar!"});
+		s.sweetMsj = (tit, txt, icon = 'warning') => swal({ title: tit,text: txt,icon: icon,button: "Aceptar"});
 		
 		s.alertMsj = (tit, txt, icon = 'success') => {
 

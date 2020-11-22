@@ -21,12 +21,16 @@
 				case 'PRM':
 					$pag = $_GET['PAG'] ?? die; $p_pag = $_GET['PPAG'] ?? die;
 					$prm = $_GET['PAR'] ?? die; $str = $_GET['STR'] ?? die;
-					$outdat = false;
+					$nstr = Ajax::valJsonIn($str); $outdat = false;
 
-					if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $prm >= 0) {
-						settype($pag, "int"); settype($p_pag, "int");
-						settype($prm, "int"); $arr = [$prm, str_replace('/', '-', $str)];
-						$outdat = ResUsu::getDataFind($pag, $p_pag,$arr);
+					if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $prm >= 0 && !isset($nstr['error'])) {
+						settype($pag, "int"); settype($p_pag, "int"); settype($prm, "int");
+						$varr = Res::valMonthYear([$prm, $nstr]);
+						//var_export($varr);
+
+						if (!isset($val['error'])) {
+							$outdat = ResUsu::getDataFind($pag, $p_pag, [$prm, $varr]);
+						}
 					}
 				break;
 
@@ -42,7 +46,15 @@
 				break;
 
 				case 'DET':
+					$id = $_GET['ID'] ?? die;
+					$outdat = false;
 					
+					if ((int) $id > 0 ) {
+						settype($id, "int");
+
+						$outdat = ResUsu::getDetDataId($id);
+					}
+
 				break;
 
 				default: die; break;
@@ -59,9 +71,9 @@
 		   	$data = Ajax::valJsonIn($_POST['data']);
 		   	
 		   	if (!isset($arr_fil['error']) && !isset($data['error'])) {
-		   		$opt = $_GET['OP'] ?? die;
+		   		$option = $_GET['OP'] ?? die;
 
-		   		switch ($opt) {
+		   		switch ($option) {
 		   			case 'PST':
 		   				$outdat = ResUsu::pstData($data['data'], $data['arr'], $arr_fil);
 		   			break;
@@ -74,10 +86,53 @@
 		   					$outdat = ResUsu::putData($data['data'], $id, $arr_fil);
 						}
 		   			break;
+
+		   			default: die; break;
 		   		}
 		   	}else{
 		   		$outdat = false;
 		   	}
+		break;
+
+
+		case 'DELETE':
+			$option =  $_GET['OP'] ?? die;
+
+			switch ($option) {
+				case 'RES':
+					$id = $_GET['ID'] ?? die;
+					$outdat = false;
+					
+					if ((int) $id > 0 ) {
+						settype($id, "int");
+						$outdat = ResUsu::delData($id, false);
+					}
+				break;
+
+				case 'FIL':
+					$id = $_GET['ID'] ?? die;
+					$outdat = false;
+
+					if ((int) $id > 0 ) {
+						settype($id, "int");
+						$outdat = ResUsu::delFiles($id, false);
+					}
+				break;
+
+				case 'DET':
+					$id = $_GET['ID'] ?? die;
+					$s_id = $_GET['IDD'] ?? die;
+					$outdat = false;
+
+					if ((int) $id > 0 && (int) $s_id > 0) {
+						settype($id, "int"); settype($s_id, "int");
+						
+						$outdat = ResUsu::delDetData($id, $s_id);
+					}
+				break;
+
+				default: die; break;
+			}
 		break;
 			
 		default: die; break;

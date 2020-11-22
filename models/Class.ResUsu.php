@@ -24,7 +24,7 @@ declare(strict_types=1);
 
 		public function getDataFind(int $pag, int $p_pag, array $arr) : array
 		{
-			$sql_w = Res::qryFindData($arr);
+			$sql_w = Res::qryFindData($arr[0], $arr[1]);
 
 			$qry = "SELECT COUNT(1) FROM tblresolucion WHERE est_tbl = 0 AND $sql_w";
  			$s_qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado
@@ -69,7 +69,7 @@ declare(strict_types=1);
 			return true;
 		}
 
-		public function putData(array $arr, int $id, $files)
+		public function putData(array $arr, int $id, $files) : bool
 		{
 			$dat = Res::fullResArr($arr, true);
 			$qry = "UPDATE tblresolucion SET id_motivo=:id_motivo, id_area=:id_area, nresolucion=:nresolucion, nproyecto=:nproyecto, 
@@ -97,6 +97,19 @@ declare(strict_types=1);
 				}
 			}
 			return $data;
+		}
+	}
+
+	class ResDet extends Res
+	{
+		public function getData(int $pag, int $p_pag)
+		{
+			
+		}
+		
+		public function getDataFind(int $pag, int $p_pag) : array
+		{
+			
 		}
 	}
 ?>

@@ -1,12 +1,12 @@
-<div id="res_edit_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
+<div id="res_edit_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-ll" role="document">
-        <div class="modal-content">
+        <div class="modal-content" ng-controller="resForm_Ctrl">
             <div class="modal-header">
                 <h5 class="modal-title h5">Editar Resolucion</h5>
-                <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_res')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="modal" ng-click="cleanRes(true)" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <div ng-controller="resForm_Ctrl">
+                <div>
                     <div class="form-row">
                         <div class="col-12 col-md-8">
                             <div class="form-row">
@@ -71,14 +71,13 @@
                                 </div>
                                 <div class="col-12" ng-show="filDat.length !== 0 && (resFiles.length === 0 || resFiles === undefined)" style="height: 165px;">
                                     <label> Lista de archivos </label>
+                                    <button class="float-right btn btn-danger btn-sm" ng-click="delFil(idEdit.idRes)"><span class="feather icon-trash"></span></button>
                                     <ul class="list-group m-b-10">
                                         <li class="list-group-item list-group-item-action pt-2 pb-2" ng-repeat="fil in filDat">
                                             <small class="c-pointer hint--top hint--rounded" aria-label="{{::fil.nombre_ori}}" 
-                                                   ng-bind="::fil.nombre_sys"></small>
-                                            
-                                            <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium"
-                                                    aria-label="TAMAÑO: {{::fil.tamano | fileSize}}.kb / FECHA : {{::fil.f_creacion | dateParse }}">
-                                                <span class="feather icon-info"></span>
+                                                   ng-bind="::fil.nombre_sys">
+                                            </small>
+                                            <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium m-r-5" aria-label="TAMAÑO: {{::fil.tamano | fileSize}}.kb / FECHA : {{::fil.f_creacion | dateParse }}"> <span class="feather icon-info"></span>
                                             </button>
                                             <a class="float-right btn btn-primary btn-sm m-r-5" 
                                                 ng-href="../files/res_users/{{::fil.archivo}}" target="_blank"> 
@@ -118,10 +117,16 @@
                     </div>
                     <div class="form-row">
                         <div class="col-12 mt-2">
-                            <button class="btn btn-success" ng-click="saveRes(resFiles, frmRes, frmResDat, idEdit.idRes)">
-                                <span class="feather icon-save"></span> Editar
+                            <button class="btn btn-success" type="button" ng-click="saveRes(resFiles, frmResDat, idEdit.idRes)" ng-disabled="load_res">
+                                <span class="spinner-border spinner-border-sm" role="status" ng-style="{'display': !load_res ? 'none' : ''}"></span>
+                                <span class="load-text f-11" ng-style="{'display': !load_res ? 'none' : ''}" >Cargando...</span>
+                                
+                                <span class="btn-text" ng-style="{'display': load_res ? 'none' : ''}" >
+                                    <span class="feather icon-save"></span> Editar
+                                </span>
                             </button>
-                            <button class="btn btn-danger float-right" ng-click="cleanRes(frmRes, frmResDat, true)">
+
+                            <button class="btn btn-danger float-right" ng-click="cleanRes(true)">
                                 <span class="fa fa-times"></span> Cancelar
                             </button>
                         </div>

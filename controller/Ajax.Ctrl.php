@@ -3,8 +3,6 @@
 
 	class Ajax
 	{
-		private $cons = null;
-
 		public static function valJsonIn( $json ) : array
 		{
 			$parse = json_decode($json, true);

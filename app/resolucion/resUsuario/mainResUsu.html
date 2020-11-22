@@ -32,11 +32,6 @@
                                 <span class="feather icon-file-text"></span> Listar
                             </a>
                         </li>
-                        <li class="nav-item" ng-click="resLoad(2)">
-                            <a class="nav-link" data-toggle="pill" href role="tab" aria-controls="pills-list" aria-selected="false">
-                                <span class="feather icon-search"></span> Consulta
-                            </a>
-                        </li>
                     </ul>
                     <div class="tab-content">
                         <!-- [ Add Res Users ] End -->
@@ -61,13 +56,6 @@
                             <div ng-include="'../app/resolucion/resUsuario/templates/listResUsu.html'"></div>
                         </div>
                         <!-- [List Res Users ] End -->
-                        <!-- [List Res Users ] Start -->
-                        <div ng-if="res_load2" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
-                            <div class="row">
-                                en query res
-                            </div>
-                        </div>
-                        <!-- [List Res Users ] End -->
                     </div>
                 </div>
             </div>
@@ -78,12 +66,12 @@
 
 <!-- [ DOM RES Content ] Start -->
 <div ng-if="res_load0">
-    <div id="res_det_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
+    <div id="res_det_modal" class="modal fade bd-example-modal-lg"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-ll" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title h5">Lista de Usuarios</h5>
-                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_user')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_user'); find_usudet = '';" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <input type="text" class="form-control mb-3" ng-model="find_usudet" id="find_usudet" placeholder="Buscar Usuario">
@@ -104,8 +92,8 @@
                             <tbody>
                                 <tr ng-repeat="det in detData | filter:find_usudet as found track by $index">
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remDet(det.idx)">
-                                            <span class="feather icon-x"></span>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remDet(det.idx); focusInput('find_usudet');">
+                                            <span class="feather icon-trash"></span>
                                         </button>
                                     </td>
                                     <td ng-bind="det.apellidos"></td>
@@ -125,7 +113,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" ng-click="focusInput('find_user')">
+                    <button type="button" class="btn btn-danger float-right" data-dismiss="modal" ng-click="focusInput('find_user'); find_usudet = '';">
                         <span class="fa fa-times"></span> Cerrar
                     </button>
                 </div>

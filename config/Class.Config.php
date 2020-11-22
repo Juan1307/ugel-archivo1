@@ -20,7 +20,12 @@ declare(strict_types=1);
 			return $arr;
 		}
 
-		public function getConfigRowsCol(string $qry) : array
+		protected function getConfigRowCol(string $qry) : string
+		{
+			return DB::getRowColumn($qry);
+		}
+
+		protected function getConfigRowsCol(string $qry) : array
 		{
 			return DB::getRowsColumn($qry);
 		}
@@ -86,12 +91,7 @@ declare(strict_types=1);
 		{
 			return DB::setRow($qry, $arr);
 		}
-
-		protected function delConfigRoW(string $qry) : bool
-		{
-			return DB::delRow($qry);
-		}
-
+		
 		protected function setConfigTran(array $qry_0, array $qry_1) : array
 		{
 			return DB::setTransaction($qry_0,$qry_1);
@@ -100,6 +100,11 @@ declare(strict_types=1);
 		protected function setConfigTranRows(array $query_dat) : bool
 		{
 			return DB::setTransactionRows($query_dat);
+		}
+
+		protected function delConfigRoW(string $qry) : bool
+		{
+			return DB::delRow($qry);
 		}
 	}
  ?>	

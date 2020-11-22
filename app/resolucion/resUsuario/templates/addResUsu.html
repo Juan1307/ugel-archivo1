@@ -1,5 +1,5 @@
 <div ng-controller="resForm_Ctrl">
-    <form class="needs-validation" name="frmRes" autocomplete="off" novalidate>
+    <form class="needs-validation" autocomplete="off" novalidate>
         <div ng-show="step">
             <div class="form-row">
                 <div class="col-12 col-md-8">
@@ -90,10 +90,10 @@
             </div>
             <div class="form-row">
                 <div class="col-12 mt-2">
-                    <button class="btn btn-danger" ng-click="cleanRes(frmRes, frmResDat)">
+                    <button class="btn btn-danger" ng-click="cleanRes()">
                         <span class="feather icon-trash"></span> Limpiar
                     </button>
-                    <button class="btn btn-success float-right" ng-click="saveRes(resFiles, frmRes, frmResDat)">
+                    <button class="btn btn-success float-right" ng-click="saveRes(resFiles, frmResDat)">
                         <span class="feather icon-chevrons-right"></span> Siguiente
                     </button>
                 </div>      
@@ -131,8 +131,8 @@
                                 <span class="feather icon-user-plus"></span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
                                 <a class="dropdown-item" href ng-click="selectPrm(1)"> Apellidos ó Nombres</a>
+                                <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
                                 <a class="dropdown-item" href ng-click="selectPrm(2)"> Contacto </a>
                             </div>
                         </div>
@@ -189,11 +189,11 @@
                 <button class="btn btn-secondary" ng-click="stepView()">
                     <span class="feather icon-chevrons-left"></span> Anterior
                 </button>
-                <button class="btn btn-danger" ng-click="cleanRes(frmRes, frmResDat)">
+                <button class="btn btn-danger" ng-click="cleanRes()">
                     <span class="feather icon-trash"></span> Limpiar
                 </button>
-                <button class="btn btn-success event-btn m-2 float-right" type="button" 
-                        ng-click="saveRes(resFiles, frmRes, frmResDat, null, true)" ng-disabled="load_res">
+                <button class="btn btn-success float-right" type="button" 
+                        ng-click="saveRes(resFiles, frmResDat, null, true)" ng-disabled="load_res">
                         <span class="spinner-border spinner-border-sm" role="status" ng-style="{'display': !load_res ? 'none' : ''}"></span>
                         <span class="load-text f-11" ng-style="{'display': !load_res ? 'none' : ''}" >Cargando...</span>
                         

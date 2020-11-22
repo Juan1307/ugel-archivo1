@@ -58,13 +58,13 @@
                 resolve: {
                     module: function($ocLazyLoad) {
                         
-                        return $ocLazyLoad.load(['../app/usuarios/usu-require/usuList.App.js',
-                                                 '../app/usuarios/usu-require/usuForm.App.js',
+                        return $ocLazyLoad.load(['./usuarios/usu-require/usuList.App.js',
+                                                 './usuarios/usu-require/usuForm.App.js',
 
-                                                 '../app/resolucion/res-require/resForm.App.js',
-                                                 '../app/resolucion/resUsuario/resUsu.Ctrl.js',
-                                                 '../app/resolucion/resUsuario/sources/list.Ctrl.js',
-
+                                                 './resolucion/res-require/resForm.App.js',
+                                                 './resolucion/res-require/resList.App.js',
+                                                 './resolucion/resUsuario/resUsu.Ctrl.js',
+                                                 './resolucion/resUsuario/resExt.Ctrl.js'
                         ]);
                     }
                 }

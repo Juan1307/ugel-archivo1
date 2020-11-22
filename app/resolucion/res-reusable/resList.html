@@ -1,21 +1,37 @@
-<div ng-controller="resListUsu_Ctrl">
+<div ng-controller="resList_Ctrl">
     <div class="input-group mb-3">
-        <input type="text" ng-model="paramRes" ng-pattern="resListPtrn[number]" ng-init="paramRes=''" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control col-sm-12" id="find_res" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Resolucion">
-        <div class="input-group-append">
-            <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="col-sm pl-0 pr-0">
+            <input type="text" ng-model="paramRes" ng-pattern="resListPtrn[number]" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control" id="find_res" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Resolucion">
+            <div class="invalid-feedback">
+                <span>Opps este parametro es desconocido</span>
+            </div>
+        </div>
+        <div ng-show="number === 1" ng-class="{'col-sm-12 col-md-3':number === 1}">
+            <div class="row">
+                <select class="form-control col-7 pr-0" ng-model="qrm.month" ng-init="qrm.month = undefined" ng-change="allRes()"
+                ng-options="m.num as m.name for m in qryData.months">
+                    <option style="display:none" value="">Mes</option>
+                </select>
+                <select class="form-control col-5 pr-0" ng-model="qrm.year" ng-init="qrm.year = undefined" ng-change="allRes()" 
+                ng-options="y as y for y in qryData.years">
+                    <option style="display:none" value="">Año</option>
+                </select>
+            </div>
+            <small ng-show="qrm.month === undefined || qrm.year === undefined" class="text-danger">Seleccione la opción correctamente. </small>
+        </div>
+        <div class="input-group-append col-sm col-md-3 pr-0 pl-0">
+            <button class="btn btn-primary dropdown-toggle form-control col-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ textPrmRes }}
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href ng-click="selectPrm()"> N° Res ó N° Pro </a>
-                <a class="dropdown-item" href ng-click="selectPrm(1)"> Fecha / D-M-A </a>
+                <a class="dropdown-item" href ng-click="selectPrm(1)"> Fecha - Mes/Año </a>
             </div>
-            <button type="button" class="btn btn-secondary">
+            <button type="button" class="btn btn-secondary form-control col-2" ng-click="allRes()">
                 <span class="f-w-500 feather icon-refresh-cw"></span>
             </button>
         </div>
-        <div class="invalid-feedback">
-            <span>Opps este parametro es desconocido</span>
-        </div>
+        
     </div>
     <div ng-class="{'card-load':load_data}" class="table-responsive">
         <table class="table table-sm table-bordered table-hover m-b-0  text-center">
@@ -33,13 +49,13 @@
             <tbody>
                 <tr ng-repeat="res in resData">
                     <td>
-                        <button class="btn btn-primary btn-sm" ng-click="resusu_load = false">
-                            <span class="feather icon-eye"></span>
+                        <button class="btn btn-primary btn-sm" ng-click="staPoint(res.id_resolucion);">
+                            <span class="feather icon-eye"></span>{{ resusu_load }}
                         </button>
                         <button class="btn btn-warning btn-sm" ng-click="editRes(res.id_resolucion)">
                             <span class="feather icon-edit"></span>
                         </button>
-                        <button class="btn btn-danger btn-sm">
+                        <button class="btn btn-danger btn-sm" ng-click="deletRes(res.id_resolucion)">
                             <span class="feather icon-trash"></span>
                         </button>
                     </td>
@@ -55,7 +71,7 @@
                     </td>
                     <td ng-bind="::res.f_emision | dateParse"></td>
                     <td>
-                        <button class="btn btn-sm" ng-class="{'btn-outline-success p-l-10 p-r-10': res.estado == 1,
+                        <button class="btn btn-sm" ng-click="stateRes(res.id_resolucion, res.estado)" ng-class="{'btn-outline-success p-l-10 p-r-10': res.estado == 1,
                             'btn-outline-secondary': res.estado == 0}" ng-bind="::res.estado == 1 ? 'Activo' : 'Inactivo'">
                         </button>
                     </td>
