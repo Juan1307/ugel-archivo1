@@ -46,7 +46,8 @@
 		};
 
 		s.focusInput = (elem) => {
-			setTimeout(() => document.getElementById(elem).focus(), 500);
+			console.log('elem',elem);
+			setTimeout(() => document.getElementById(elem).focus(), 700);
 		};
 
 		let arrMer;
@@ -55,11 +56,11 @@
 		s.pagTable = (arr, pag = 1, tot, flag = true) => {
 
 			if (flag) {
-				arrMer = []; p0 = null,p1 = null;
+				arrMer = []; s.arrPag = []; p0 = null,p1 = null;
 			}
 
 			let arr_n = [...arr];
-
+			
 			if (arr.length > 10) {
 				let arr_v = [];
 

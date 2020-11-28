@@ -93,7 +93,7 @@ declare(strict_types=1);
 			return $sql->fetch();
 		}
 
-		final protected function delRow(string $query) : bool
+		final protected function excRow(string $query) : bool
 		{
 			$con = self::get_Instance();
 				$sql = $con->prepare("$query");

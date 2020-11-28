@@ -15,7 +15,7 @@
 		s.qryData = qryd;
 		s.resListPtrn = ptrn;
 
-		const gbl = (rs.module === 'USU') ? 'Usu' : 'Ins';
+		const gbl = (rs.module === 'USU') ? 'USU' : 'INS';
 
 		const getRes = (flag, prm, num, p = 1, fpag) => {
 
@@ -72,14 +72,6 @@
 			s.focusInput('find_res');
 		};
 		s.selectPrm();
-
-		rs.staPoint = (id) => {
-			if (typeof parseInt(id) !== "number") {
-				return console.error('number error')
-			}
-			rs.viewRes(id);
-			rs.resusu_load = false;
-		};
 
 		s.editRes = (id) => {
 			if (typeof parseInt(id) !== 'number' ) {
@@ -202,7 +194,7 @@
 			if (flag) {
 				url = `OP=PRM&PAG=${p}&PPAG=${pp}&PAR=${num}&STR=${prm}`;
 			}
-			return h.get(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?${url}`).then(res => {
+			return h.get(`../controller/AjaxResCtrl/Ajax.ResMod.php?${url}&MOD=${uri}`).then(res => {
 				return res.data;
 			}).catch(err => {
 				console.error(err.status);
@@ -215,7 +207,7 @@
 
 		return {
 			getResId: (uri, id) => {
-				return h.get(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=IDX&ID=${id}`).then(res => {
+				return h.get(`../controller/AjaxResCtrl/Ajax.ResMod.php?OP=IDX&ID=${id}&MOD=${uri}`).then(res => {
 					return res.data;
 				}).catch( err => {
 					console.error(err.status);
@@ -226,14 +218,14 @@
 
 		return {
 			delFil: (uri, id) => {
-				return h.delete(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=FIL&ID=${id}`).then(res => {
+				return h.delete(`../controller/AjaxResCtrl/Ajax.ResMod.php?OP=FIL&ID=${id}&MOD=${uri}`).then(res => {
 					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);
 				});
 			},
 			delRes: (uri, id) => {
-				return h.delete(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=RES&ID=${id}`).then(res => {
+				return h.delete(`../controller/AjaxResCtrl/Ajax.ResMod.php?OP=RES&ID=${id}&MOD=${uri}`).then(res => {
 					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);

@@ -63,10 +63,9 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
-
 <!-- [ DOM RES Content ] Start -->
 <div ng-if="res_load0">
-    <div id="res_det_modal" class="modal fade bd-example-modal-lg"  data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
+    <div id="res_det_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-ll" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,7 +99,7 @@
                                     <td ng-bind="det.nombres"></td>
                                     <td ng-bind="det.ndni === null ? 'S/N DNI': det.ndni"></td>
                                     <td ng-bind="det.carnet === null ? 'S/N CARNET' : det.carnet"></td>
-                                    <td ng-bind="det.contacto === null ? 'S/N CONTACTO' : det.contacto"></td>
+                                    <td ng-bind="det.contacto === null ? 'S/N CEL-TEL' : det.contacto"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -134,7 +133,103 @@
         </div>
     </div>
 </div>
-
 <div ng-if="res_load1">
     <div ng-include="'../app/resolucion/res-reusable/resMdlEdit.html'"></div>
+    <div ng-if="!resusu_load">
+        <div id="usu_det_edit_modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Editar Entrega</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="clnDateRes()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="res_date">Fecha</label>
+                        <input type="date" id="res_date" class="form-control" ng-model="frmDate.dat">
+                        
+                        <small class="text-danger" ng-show=" (frmDate.dat == null && valResDate) ? true : false">
+                            Ingrese fecha correctamente.
+                        </small>
+
+                        <hr>
+                        <button class="btn btn-success" ng-click="chgDateRes(frmDate.idx, frmDate.dat)">
+                            <span class="feather icon-save"></span> Editar</button>
+                        <button class="btn btn-danger float-right" ng-click="clnDateRes()">
+                            <span class="fa fa-times"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="usu_det_add_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuAddModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-ll" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Asignar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="outResDet()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body" ng-if="resadd_load">
+                        <div ng-controller="usuList_Ctrl">
+                            <div class="input-group mb-3">
+                                <input type="text" ng-model="paramUser" ng-pattern="usuListPtrn[number]" ng-init="paramUser=''" ng-class="{'normal': paramUser === '' , 'is-invalid': paramUser === undefined}" class="form-control col-sm-12" id="find_user" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Usuario">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ textPrmUsu }}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href ng-click="selectPrm(1)"> Apellidos ó Nombres</a>
+                                        <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
+                                        <a class="dropdown-item" href ng-click="selectPrm(2)"> Contacto </a>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span>Opps este parametro es desconocido</span>
+                                </div>
+                            </div>
+                            <div ng-class="{'card-load':load_data}" class="table-responsive">
+                                <table class="table table-sm table-bordered table-hover m-b-0  text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Accion</th>
+                                            <th>Apellidos</th>
+                                            <th>Nombres</th>
+                                            <th>N° Dni</th>
+                                            <th>N° Carnet</th>
+                                            <th>Contacto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="user in userData">
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" 
+                                                    ng-click="addResDet(user.id_usuario)">
+                                                    <span class="feather icon-plus"></span>
+                                                </button>
+                                            </td>
+                                            <td class="c-pointer">
+                                                <div ng-class="{'hint--top hint--rounded':user.apellidos.length > 17}" aria-label="{{ ::user.apellidos }}" ng-bind="::user.apellidos | stringCut : 17">
+                                                </div>
+                                            </td>
+                                            <td ng-bind="::user.nombres"></td>
+                                            <td ng-bind="::user.ndni === null ? 'S/N DNI': user.ndni"></td>
+                                            <td ng-bind="::user.carnet === null ? 'S/N CARNET' : user.carnet"></td>
+                                            <td ng-bind="::user.contacto === null ? 'S/N CEL-TEL' : user.contacto"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-center m-t-15" ng-show="userData.length === 0">
+                                    <span class="feather icon-slash"></span>
+                                    No se encontraron resultados
+                                </p>
+                                <div ng-show="load_data" class="card-loader">
+                                    <i class="pct-loader1 anim-rotate"></i>
+                                </div>
+                            </div>
+                            <div ng-include="'../app/app-include/pagination.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -56,7 +56,7 @@
 						case null:
 							arr = rs.detData.map( e => e.id_usuario); fd.append('data',JSON.stringify({data,arr}));
 
-							Rset.pstRes(fd,'Usu').then( r => {
+							Rset.pstRes(fd,'USU').then( r => {
 								//console.log('send post', r);
 								s.load_res = false;
 								r ? ( s.alertMsj('Resolución registrada',' correctamente.'), s.cleanRes() ) : 
@@ -69,7 +69,7 @@
 						default:
 							fd.append('data',JSON.stringify({data, id: flag}));
 
-							Rset.putRes(fd,'Usu').then( r => {
+							Rset.putRes(fd,'USU').then( r => {
 								//console.log('send put', r);
     							s.load_res = false;
 								r ? ( s.alertMsj('Resolución actualizada',' correctamente.'), s.cleanRes(true), rs.allRes() ) : 
@@ -89,7 +89,7 @@
 							console.log('INS INSERT',arr);
 							arr = rs.detData.map( e => e.id_institucion); fd.append('data',JSON.stringify({data,arr}));
 							
-							Rset.pstRes(fd,'Insti').then( r => {
+							Rset.pstRes(fd,'INS').then( r => {
 								console.log('res pst', r);
     							s.load_res = false;
 							},e =>{
@@ -101,7 +101,7 @@
 							console.log('INS UPDATE');
 							fd.append('data',{data,flag});
 							
-							Rset.pstRes(fd,'Insti').then( r => {
+							Rset.pstRes(fd,'INS').then( r => {
 								console.log('res put', r);
     							s.load_res = false;
 							},e =>{
@@ -197,14 +197,14 @@
 					     transformRequest: angular.identity };
 		return {
 			pstRes: (data, uri) => {
-				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PST`, data, config).then(res => {
+				return h.post(`../controller/AjaxResCtrl/Ajax.ResMod.php?OP=PST&MOD=${uri}`, data, config).then(res => {
 					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);
 				});
 			},
 			putRes: (data, uri) =>{
-				return h.post(`../controller/AjaxResCtrl/Ajax.Res${uri}.php?OP=PUT`, data, config).then(res => {
+				return h.post(`../controller/AjaxResCtrl/Ajax.ResMod.php?OP=PUT&MOD=${uri}`, data, config).then(res => {
 					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);

@@ -82,7 +82,7 @@ declare(strict_types=1);
 
 				if (count($s_data) > 0) {
 					$d_data = Res::delResFile($s_data, false);
-					$d_qry = Config::delConfigRow("DELETE FROM tblarchivos WHERE id_resolucion = $id");
+					$d_qry = Config::excConfigRow("DELETE FROM tblarchivos WHERE id_resolucion = $id");
 
 					$flag = (!$d_data || !$d_qry) ? false : true ;
 				}
@@ -100,16 +100,77 @@ declare(strict_types=1);
 		}
 	}
 
-	class ResDet extends Res
+	class ResDetUsu extends Res
 	{
-		public function getData(int $pag, int $p_pag)
+		public function getData(int $pag, int $p_pag, int $id) : array
 		{
-			
+			$qry = "SELECT COUNT(1) FROM tbl_detresolucion AS d INNER JOIN tblresolucion AS r ON d.id_resolucion = r.id_resolucion
+									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL";
+ 			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, u.contacto, d.id_detresolucion, d.f_entrega, d.estado 
+ 									FROM tbl_detresolucion AS d INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario 
+ 									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL ORDER BY d.id_detresolucion DESC";	
+ 			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
 		
-		public function getDataFind(int $pag, int $p_pag) : array
+		public function getDataFind(int $pag, int $p_pag, int $id, array $arr) : array
 		{
+			switch ($arr[0]) {
+				case 0:  $prm_arr['cols'] = ['u.ndni','u.carnet']; break;
+				case 1:  $prm_arr['cols'] = ['u.apellidos','u.nombres']; break;
+				default: $prm_arr['cols'] =  'u.contacto'; break;
+			}
+			$val = $arr[1];
+			$sql_w = (is_string($prm_arr['cols']) )  ?  $prm_arr['cols'] .' LIKE '."'$val%'":
+		                                                #aplica para dos campos 
+		                                                $prm_arr['cols'][0] .' LIKE '."'%$val%'".' OR '.
+		    											$prm_arr['cols'][1] .' LIKE '."'%$val%'";
+
+			$qry = "SELECT COUNT(1) FROM tbl_detresolucion AS d INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario
+									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL AND ($sql_w)";
+
+ 			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, u.contacto, d.id_detresolucion, d.f_entrega, d.estado
+ 									FROM tbl_detresolucion AS d INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario 
+ 									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL AND ($sql_w)";	
+ 			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
+		}
+
+		public function getDataId(int $id) : array 
+		{
+			$qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado FROM tblresolucion as r  						INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
+ 									INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 0 AND r.id_resolucion = $id";
+ 			$s_qry = "SELECT  CONCAT(nombre_sys,tipo) AS archivo, nombre_sys, tamano, f_creacion FROM tblarchivos WHERE id_resolucion = $id";
+ 			$data = Config::getConfigRow($qry); $files = Config::getConfigRows($s_qry);
+
+ 			return ['data' => $data, 'files' => $files];
+		}
+
+		public function pstDataDetId(int $id, string $date) : bool
+		{			
+			$dat = ['f_entrega' => [$date,'STR']];
+			$qry = "UPDATE tbl_detresolucion SET f_entrega=:f_entrega, estado = 1 WHERE id_detresolucion = $id";
 			
+			return Config::setConfigRow($qry, $dat);
+		}
+
+		public function pstDataId(int $id, int $s_id) : bool
+		{
+			$dat = ['id_resolucion' => [$id, 'INT'],'id_usuario' => [$s_id, 'INT']];
+			$qry = "INSERT INTO tbl_detresolucion VALUES (NULL, :id_resolucion, :id_usuario, NULL, NULL, 0)";
+			
+			$data = Config::setConfigRow($qry, $dat);
+		}
+
+		public function chaDetRes(int $id, int $est) : bool
+		{
+			$qry = ($est === 0) ?  "UPDATE tbl_detresolucion SET f_entrega = NOW(), estado = 1 WHERE id_detresolucion = $id" :
+								   "UPDATE tbl_detresolucion SET f_entrega = NULL, estado = 0 WHERE id_detresolucion = $id";
+			return Config::execConfigRow($qry);
+		}
+
+		public function delDetDataId(int $id, int $s_id) : bool
+		{
+			$qry = "DELETE FROM tbl_detresolucion WHERE id_detresolucion = $id AND id_resolucion = $s_id";
+			return Config::execConfigRow($qry);
 		}
 	}
 ?>

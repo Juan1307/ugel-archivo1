@@ -169,7 +169,7 @@
                                     <td ng-bind="::user.nombres"></td>
                                     <td ng-bind="::user.ndni === null ? 'S/N DNI': user.ndni"></td>
                                     <td ng-bind="::user.carnet === null ? 'S/N CARNET' : user.carnet"></td>
-                                    <td ng-bind="::user.contacto === null ? 'S/N CONTACTO' : user.contacto"></td>
+                                    <td ng-bind="::user.contacto === null ? 'S/N CEL-TEL' : user.contacto"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -181,7 +181,7 @@
                             <i class="pct-loader1 anim-rotate"></i>
                         </div>
                     </div>
-                    <div ng-include="'../app/app-include/pagination.html'"></div>
+                    <div  ng-include="'../app/app-include/pagination.html'"></div>
                 </div>
                 <!-- [ List Users ] End -->
             </div>

@@ -1,144 +1,143 @@
-<div ng-controller="resUsersDet_Ctrl">
-    <div class="row">
-        <div class="col-md-12 col-lg-10 m-b-2">
-            <div class="card-ns">
-                <div class="modal-header p-t-10 p-b-10">
-                    <button class="btn btn-primary btn-sm" ng-click="endPoint()">
-                        <span class="feather icon-chevrons-left"></span> Atrás
-                    </button>
-                    <h4 class="text-primary f-16">
-                        Info Resolucion <span class="fa fa-user"></span>
-                    </h4>
-                    <div class="card-header-right">
-                        <button class="btn btn-danger btn-sm">
-                            <span class="fa fa-file-pdf"></span> PDF
-                        </button>
-                        <button class="btn btn-success btn-sm">
-                            <span class="fa fa-file-excel"></span> XLS
+<div class="row" ng-controller="resUsersDet_Ctrl">
+    <div class="col-md-12 col-lg-4" ng-if="!resusu_load">
+        <div class="card bg-patern">
+            <div class="card-header p-b-10 p-t-15">
+                <h4 class="text-primary f-16">
+                    Info Resolucion
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <b>N° Res</b>
+                        <p ng-bind="::objRes.nresolucion"></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <b>N° Pro</b>
+                        <p ng-bind="::objRes.nproyecto"></p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-12">
+                        <b class="d-block">Oficina</b>
+                        <p ng-class="{'hint--top hint--rounded':objRes.nombre.length > 25}" aria-label="{{ ::objRes.nombre }}" ng-bind="::objRes.nombre | stringCut:25"></p>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-12">
+                        <b class="d-block">Motivo</b>
+                        <p ng-class="{'hint--top hint--rounded hint--large':objRes.descripcion.length > 30}" aria-label="{{ ::objRes.descripcion }}" ng-bind="::objRes.descripcion | stringCut:30"></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <b>Fecha</b>
+                        <p ng-bind="objRes.f_emision | dateParse"></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                        <b class="d-block">Estado</b>
+                        <span ng-class="{'badge badge-success': objRes.estado == 1,'badge badge-secondary': objRes.estado == 0}" ng-bind="::objRes.estado == 1 ? 'Activo' : 'Inactivo'">
+                        </span>
                         </button>
                     </div>
+                    <div class="col-lg-12" ng-show="arrFil.length > 0">
+                        <b>ARCHIVOS</b>
+                        <ul class="list-group m-b-10">
+                            <li class="list-group-item list-group-item-action pt-2 pb-2 p-l-10 p-r-10" ng-repeat="fil in arrFil">
+                                <small class="c-pointer hint--top hint--rounded" aria-label="{{ ::fil.nombre_sys }}" ng-bind="::fil.nombre_sys | stringCut:10">
+                                </small>
+                                <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium m-r-5" aria-label="TAMAÑO: {{ ::fil.tamano | fileSize }}.kb / FECHA : {{ ::fil.f_creacion | dateParse }}"> <span class="feather icon-info"></span>
+                                </button>
+                                <a class="float-right btn btn-primary btn-sm m-r-5" ng-href="../files/res_users/{{::fil.archivo}}" target="_blank">
+                                    <span class="fa fa-file-pdf"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-body" style="padding-top: 10px; padding-bottom: 10px;">
-                    <div class="row">
-                        <div class="col-12 col-sm-4 col-md-2">
-                            <b>N° RES</b>
-                            <p>12313</p>
-                            <b>N° PRO</b>
-                            <p>12313</p>
-                        </div>
-                        <div class="col-12 col-sm-8 col-md-5">
-                            <b>AREA</b>
-                            <p>REASDASD ASDADAS ASDASD ..</p>
-                            <b>MOTIVO</b>
-                            <p>ASDASDASDASD ASDASDASDA</p>
-                        </div>
-                        <div class="col-12 col-sm-4 col-md-2">
-                            <b>FECHA</b>
-                            <p>13/07/2000</p>
-                            <b>ESTADO</b>
-                            <p>asdasdsa</p>
-                        </div>
-                        <div class="col-12 col-sm-8 col-md-3">
-                            <b>ARCHIVOS</b>
-                            <div class="row mt-2 text-center">
-                                <div class="col-4 col-sm col-md">
-                                    <p class="m-b-0">
-                                        <span class="fa fa-file-pdf f-50"></span>
-                                        <p class="f-10">asdas</p>
-                                    </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-8">
+        <div class="input-group mb-1">
+            <button class="btn btn-primary" ng-click="backPoint()">
+                <span class="feather icon-chevrons-left"></span>
+            </button>
+            <input type="text" ng-model="prmResDet" ng-pattern="usuDetPtrn[number]" ng-init="prmResDet = null" ng-class="{'normal': prmResDet === '' , 'is-invalid': prmResDet === undefined}" class="form-control col-sm-12" id="find_det_usu" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Usuario">
+            <div class="input-group-append">
+                <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ textPrmDet }}
+                </button>
+                <button type="button" class="btn btn-secondary" ng-click="addResDet()">
+                    <span class="f-w-500 feather icon-user-plus"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href ng-click="selectPrm(1)"> Apellidos ó Nombres</a>
+                    <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
+                    <a class="dropdown-item" href ng-click="selectPrm(2)"> Contacto </a>
+                </div>
+            </div>
+            <div class="invalid-feedback">
+                <span>Opps este parametro es desconocido</span>
+            </div>
+        </div>
+        <div ng-class="{'card-load':load_data}">
+            <div class="row" style="overflow-x: auto; height: 300px;">
+                <div class="col-lg" ng-repeat="det in detData" style="padding: 0px 12px;">
+                    <div class="card m-t-10 m-b-10" style="min-width: 200px;">
+                        <div class="card-body" style="padding: 10px;">
+                            <div class="card-title f-12 m-b-10">
+                                <span class="m-t-5">
+                                    <b ng-class="{'text-success': det.estado == 1,'text-danger': det.estado == 0}" ng-bind="::det.estado == 1 ? 'Entregado' : 'Por entregar'"></b>
+                                    <b ng-if="det.estado == 1" ng-bind="::det.f_entrega | dateParse"></b>
+                                </span>
+                                <div class="float-right">
+                                    <button class="btn btn-outline-warning btn-sm" ng-click="getDateRes(det.id_detresolucion, det.f_entrega)">
+                                        <span class="fas fa-calendar"></span>
+                                    </button>
+                                    <button class="btn btn-sm" ng-class="{'btn-outline-success':det.estado == 1,
+                                                                          'btn-outline-danger':det.estado == 0}" ng-click="chgDetRes(det.id_detresolucion, det.estado)">
+                                        <span class="f-12 fas " ng-class="{'fa-check':det.estado == 1,'fa-exclamation-triangle':det.estado == 0}"></span>
+                                    </button>
                                 </div>
-                                <div class="col-4 col-sm col-md">
-                                    <p class="m-b-0">
-                                        <span class="fa fa-file-pdf f-50"></span>
-                                        <p class="f-10">asdas</p>
-                                    </p>
+                            </div>
+                            <div class="card-text">
+                                <div class="row f-12">
+                                    <div class="col-12 m-b-5">
+                                        <div class="row">
+                                            <button class="btn btn-warning btn-sm col-6"> b </button>
+                                            <button class="btn btn-danger btn-sm col-6"> a </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <b class="d-block">Apellidos</b>
+                                        <p class="f-12 m-b-5" ng-class="{'hint--top hint--rounded':det.apellidos.length > 20}" aria-label="{{ ::det.apellidos }}" ng-bind="::det.apellidos | stringCut : 20"></p>
+                                    </div>
+                                    <div class="col-12">
+                                        <b>Nombres</b>
+                                        <p class="f-12 m-b-5" ng-bind="::det.nombres"></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <b>N° Dni</b>
+                                        <p class="m-b-5" ng-class="{'f-12':det.ndni === null}" ng-bind="::det.ndni === null ? 'S/N DNI': det.ndni"></p>
+                                    </div>
+                                    <div class="col-6">
+                                        <b>N° Carnet</b>
+                                        <p class="m-b-5" ng-class="{'f-12':det.carnet === null}" ng-bind="::det.carnet === null ? 'S/N CARNET': det.carnet"></p>
+                                    </div>
+                                    <div class="col-12">
+                                        <b>N° Contacto</b>
+                                        <p class="m-b-5" ng-class="{'f-12':det.contacto === null}" ng-bind="::det.contacto === null ? 'S/N CEL-TEL': det.contacto"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="d-none d-md-none d-lg-block col-sm-12 col-md-2">
-            <div class="card bg-primary text-white mb-0">
-                <div class="card-body bg-patern-white">
-                    <div class="row">
-                        <div class="col-auto">
-                            <span>Usuarios</span>
-                        </div>
-                        <div class="col text-right">
-                            <h2 class="mb-0 text-white">12</h2>
-                            <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
-                        </div>
-                    </div>
-                    <div id="customer-chart1"></div>
-                    <div class="row">
-                        <h4 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-success"></i>0</h4>
-                        <span class="ml-3 mt-1 f-12">Entregado</span>
-                    </div>
-                    <div class="row">
-                        <h4 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-danger"></i>0</h4>
-                        <span class="ml-3 mt-1 f-12">Por Entregar</span>
-                    </div>
-                </div>
+            <p class="text-center m-t-15" ng-show="detData.length === 0">
+                <span class="feather icon-slash"></span>
+                No se encontraron resultados
+            </p>
+            <div ng-show="load_data" class="card-loader">
+                <i class="pct-loader1 anim-rotate"></i>
             </div>
         </div>
+        <div ng-show="!resadd_load" ng-include="'app-include/pagination.html'"></div>
     </div>
-    <div class="input-group mb-3">
-        <input type="text" ng-model="paramUser" ng-pattern="usuListPtrn[number]" ng-init="paramUser=''" ng-class="{'normal': paramUser === '' , 'is-invalid': paramUser === undefined}" class="form-control col-sm-12" id="find_user" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Usuario">
-        <div class="input-group-append">
-            <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ textPrmUsu }}
-            </button>
-            <button type="button" class="btn btn-secondary" ng-click="allUsers()">
-                <span class="f-w-500 feather icon-refresh-cw"></span>
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
-                <a class="dropdown-item" href ng-click="selectPrm(1)"> Apellidos ó Nombres</a>
-                <a class="dropdown-item" href ng-click="selectPrm(2)"> Contacto </a>
-            </div>
-        </div>
-        <div class="invalid-feedback">
-            <span>Opps este parametro es desconocido</span>
-        </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-sm table-bordered table-hover m-b-0 mt-2 text-center">
-            <thead>
-                <tr>
-                    <th>ACCION</th>
-                    <th>APELLIDOS</th>
-                    <th>NOMBRES</th>
-                    <th>DNI</th>
-                    <th>CARNET</th>
-                    <th>CONTACTO</th>
-                    <th class="bg-dark text-white">FECHA ENTREGA</th>
-                    <th class="bg-dark text-white">ESTADO</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <button class="btn btn-warning btn-sm">
-                            <span class="feather icon-edit"></span>
-                        </button>
-                        <button class="btn btn-danger btn-sm">
-                            <span class="feather icon-trash"></span>
-                        </button>
-                    </td>
-                    <td>ALFRED ME APP</td>
-                    <td>ALFRED ME SURNAME APP</td>
-                    <td>S/N DNI</td>
-                    <td>S/N CARNET</td>
-                    <td>S/N CONTACTO</td>
-                    <td>12/07/9999</td>
-                    <td>
-                        <button class="btn btn-success btn-sm">Entregado</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
+</div>
 </div>

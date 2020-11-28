@@ -18,16 +18,6 @@
     			$outdat = ReS::chaResAll($id, $est);
     		}
 		break;
-
-		case 'DELETE':
-			$id = $_GET['ID'] ?? die;
-			$outdat = false;
-					
-			if ((int) $id > 0 ) {
-				settype($id, "int");
-				$outdat = Res::delFiles($id);
-			}
-		break;
 			
 		default: die; break;
 	}

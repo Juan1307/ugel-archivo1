@@ -35,8 +35,8 @@
     <!-- [ navigation menu ] start -->
     <nav class="pcoded-navbar menupos-fixed menu-light">
         <div class="navbar-wrapper ">
-            <div class="navbar-content scroll-div ">
-                <ul class="nav pcoded-inner-navbar ">
+            <div class="navbar-content scroll-div">
+                <ul class="nav pcoded-inner-navbar">
                     <li class="nav-item pcoded-menu-caption">
                         <label>General</label>
                     </li>

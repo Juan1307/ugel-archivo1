@@ -102,9 +102,9 @@ declare(strict_types=1);
 			return DB::setTransactionRows($query_dat);
 		}
 
-		protected function delConfigRoW(string $qry) : bool
+		protected function execConfigRow(string $qry) : bool
 		{
-			return DB::delRow($qry);
+			return DB::excRow($qry);
 		}
 	}
  ?>	

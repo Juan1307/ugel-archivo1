@@ -35,7 +35,9 @@
 		//FORM STATE 
 		s.frmResDat = {};
 		s.idEdit = {};
-		
+
+		//DET STATE
+		s.frmDate = {};
 	}]);
 
 })(angular);

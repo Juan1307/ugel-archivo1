@@ -8,7 +8,7 @@
         </li> 
         <div ng-repeat="pag in arrPag">
             <li ng-if="pag === pagAct" class="page-item" ng-class="{'active':pag === pagAct}">
-                <span class="page-link" ng-bind="::pag">
+                <span class="page-link" ng-bind="pag">
                     <span class="sr-only">(current)</span>
                 </span>
             </li>
@@ -18,7 +18,7 @@
                 </span>
             </li>
             <li ng-if="pag !== pagAct && pag !== false" class="page-item" ng-click="goToPag(pag)">
-                <a class="page-link" href ng-bind="::pag"></a>
+                <a class="page-link" href ng-bind="pag"></a>
             </li>
         </div>
         <li class="page-item" ng-class="{'disabled': pagAct === totPag}">
