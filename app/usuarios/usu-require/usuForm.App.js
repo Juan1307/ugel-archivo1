@@ -2,10 +2,11 @@
 	'use strict';
 
 	a.module('usuForm_App', []).constant('usuFormPtrn', ['[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{2,60}','[0-9]{8}','[0-9]{2,15}','[0-9]{5,9}'])
-	.controller('usuForm_Ctrl', ['$scope', 'usuFormPtrn', 'usuVal.Ftr', 'usuSet.Ftr', function(s, ptrn, Uval, Uset){
+	.controller('usuForm_Ctrl', ['$scope','$rootScope','usuFormPtrn', 'usuVal.Ftr', 'usuSet.Ftr', function(s, rs, ptrn, Uval, Uset){
 
 		console.log('en formulario usuarios');
 		s.usuFormPtrn = ptrn;
+		rs.det_mod = false;
 
 		const sendUser = (nObj) => {
 			const frmData = nObj[0];
@@ -27,9 +28,18 @@
 				default:
 					Uset.putUser(data, flag).then( r => {
 						//console.log('send put', r);
-						r ? ( s.alertMsj('Usuario actualizado',' correctamente.'), s.cleanUser(frmData,data), s.allUsers(), 
-							  s.focusInput('find_user'), $('#usu_edit_modal').modal('hide')) : 
-							  s.sweetMsj('¡Ooops error!','No se pudo editar el usuario, porfavor reportelo.','error');
+						if (r) {
+							s.alertMsj('Usuario actualizado',' correctamente.'); 	
+							switch (rs.det_mod) {
+								case null: rs.allDetRes();  s.focusInput('find_det_usu'); break;
+								default: s.allUsers();  s.focusInput('find_user'); break;
+							}
+							s.cleanUser(frmData,data);
+							$('#usu_edit_modal').modal('hide');
+						}else{
+							 s.sweetMsj('¡Ooops error!','No se pudo editar el usuario, porfavor reportelo.','error');
+
+						} 
 					},e => {
 						console.error(e.status);
 					});
@@ -82,7 +92,12 @@
 		s.cleanUser = (formData, objData, mdlUsu = false) => {
 			if (mdlUsu) {
 				$('#usu_edit_modal').modal('hide');
-				s.focusInput('find_user');
+				if (rs.det_mod == null) {
+					s.focusInput('find_det_usu');
+				}else{
+					s.focusInput('find_user');
+				}
+				
 			}else{
 				s.focusInput('last_name');
 			}

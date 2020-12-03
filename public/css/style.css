@@ -18613,7 +18613,7 @@ strong {
 }
 
 .pcoded-main-container .page-header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 /* ==========  card css start  =========== */
@@ -26087,7 +26087,7 @@ pre[class*=language-]:before {
 
 /* Hover effect */
 .table-hover tbody tr:hover {
-    background-color: rgb(64 153 255 / 12%);
+    background-color: rgb(64 153 255 / 31%);
 }
 
 /* Table backgrounds */

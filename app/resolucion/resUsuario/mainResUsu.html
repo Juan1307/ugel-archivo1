@@ -9,7 +9,7 @@
             <div class="row align-items-center">
                 <div class="col-md-12">
                     <div class="page-header-title">
-                        <h5 class="m-b-10">Resolución para usuarios</h5>
+                        <h5 class="mb-0">Resolución para Usuarios</h5>
                     </div>
                 </div>
             </div>
@@ -81,11 +81,11 @@
                                     <th>
                                         <span class="fa fa-trash"></span>
                                     </th>
-                                    <th>Apellidos</th>
-                                    <th>Nombres</th>
-                                    <th>N° Dni</th>
-                                    <th>N° Carnet</th>
-                                    <th>Contacto</th>
+                                    <th>APELLIDOS</th>
+                                    <th>NOMBRES</th>
+                                    <th>N° DNI</th>
+                                    <th>N° CARNET</th>
+                                    <th>CONTACTO</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,6 +136,23 @@
 <div ng-if="res_load1">
     <div ng-include="'../app/resolucion/res-reusable/resMdlEdit.html'"></div>
     <div ng-if="!resusu_load">
+        <!-- [ EDIT USER RES ] -->
+        <div id="usu_edit_modal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5"> Editar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_det_usu')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-include="'../app/usuarios/usu-reusable/usuForm.html'" ng-controller="usuForm_Ctrl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ EDIT USER RES ] -->
+        
+        <!-- [ EDIT DATE RES ] -->
         <div id="usu_det_edit_modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
@@ -161,6 +178,9 @@
                 </div>
             </div>
         </div>
+        <!-- [ EDIT DATE RES ] -->
+        
+        <!-- [ ADD USER RES ] -->
         <div id="usu_det_add_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuAddModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-ll" role="document">
                 <div class="modal-content">
@@ -183,26 +203,26 @@
                                     </div>
                                 </div>
                                 <div class="invalid-feedback">
-                                    <span>Opps este parametro es desconocido</span>
+                                    <span>Opps este parámetro es desconocido</span>
                                 </div>
                             </div>
-                            <div ng-class="{'card-load':load_data}" class="table-responsive">
+                            <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
                                 <table class="table table-sm table-bordered table-hover m-b-0  text-center">
                                     <thead>
                                         <tr>
-                                            <th>Accion</th>
-                                            <th>Apellidos</th>
-                                            <th>Nombres</th>
-                                            <th>N° Dni</th>
-                                            <th>N° Carnet</th>
-                                            <th>Contacto</th>
+                                            <th>ACCIÓN</th>
+                                            <th>APELLIDOS</th>
+                                            <th>NOMBRES</th>
+                                            <th>N° DNI</th>
+                                            <th>N° CARNET</th>
+                                            <th>CONTACTO</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="user in userData">
                                             <td>
                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" 
-                                                    ng-click="addResDet(user.id_usuario)">
+                                                    ng-click="addUsuDet(user.id_usuario)">
                                                     <span class="feather icon-plus"></span>
                                                 </button>
                                             </td>
@@ -231,5 +251,6 @@
                 </div>
             </div>
         </div>
+        <!-- [ ADD USER RES ] -->
     </div>
 </div>

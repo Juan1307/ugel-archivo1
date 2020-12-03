@@ -41,13 +41,14 @@
                 }
             }).state('m_institutions', {
                 url: '/instituciones',
-                templateUrl: '../app/instituciones/instituciones.html',
+                templateUrl: './instituciones/instituciones.html',
                 controller: 'instis_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
                         
-                        return $ocLazyLoad.load(['../app/instituciones/source/instituciones.Ctrl.js',
-                                                 '../app/instituciones/source/instituciones.Srv.js'
+                        return $ocLazyLoad.load(['./instituciones/ins-require/insForm.App.js',
+                                                 './instituciones/ins-require/insList.App.js',
+                                                 './instituciones/instituciones.Ctrl.js',
                         ]);
                     }
                 }

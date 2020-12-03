@@ -2,7 +2,7 @@
 declare(strict_types=1);
 	require_once __DIR__.'/../../config/Class.Config.php';
 
-	abstract class ResDet extends Config
+	abstract class Det extends Config
 	{
 		public function pstDataDetId(int $id, string $date) : bool
 		{			

@@ -1,9 +1,9 @@
 <div ng-controller="resList_Ctrl">
     <div class="input-group mb-3">
         <div class="col-sm pl-0 pr-0">
-            <input type="text" ng-model="paramRes" ng-pattern="resListPtrn[number]" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control" id="find_res" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Resolucion">
+            <input type="text" ng-model="paramRes" ng-pattern="resListPtrn[number]" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control" id="find_res" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Resolución">
             <div class="invalid-feedback">
-                <span>Opps este parametro es desconocido</span>
+                <span>Opps este parámetro es desconocido</span>
             </div>
         </div>
         <div ng-show="number === 1" ng-class="{'col-sm-12 col-md-3':number === 1}">
@@ -37,13 +37,13 @@
         <table class="table table-sm table-bordered table-hover m-b-0  text-center">
             <thead>
                 <tr>
-                    <th>Accion</th>
-                    <th>N° Res</th>
-                    <th>N° Pro</th>
-                    <th>Area  </th>
-                    <th>Motivo</th>
-                    <th>Fecha </th>
-                    <th>Estado</th>
+                    <th>ACCIÓN</th>
+                    <th>N° RES</th>
+                    <th>N° PRO</th>
+                    <th>OFICINA</th>
+                    <th>MOTIVO</th>
+                    <th>FECHA</th>
+                    <th>ESTADO</th>
                 </tr>
             </thead>
             <tbody>

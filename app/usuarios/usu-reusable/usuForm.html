@@ -1,7 +1,7 @@
 <form class="needs-validation" name="frmUsers" autocomplete="off" novalidate>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <label for="last_name">Apellidos </label>
+            <label for="last_name">Apellidos</label>
             <input type="text" ng-model="frmData.last_name" ng-pattern="usuFormPtrn[0]" ng-init="frmData.last_name=''" ng-required="frmUsers.$submitted" ng-class="{ 'control': frmData.last_name === '',
                                                             'is-valid': frmData.last_name !== '' && frmData.last_name !== undefined,
                                                             'is-invalid': frmData.last_name === undefined}" class="form-control" maxlength="50" id="last_name" placeholder="Ingrese Apellidos">

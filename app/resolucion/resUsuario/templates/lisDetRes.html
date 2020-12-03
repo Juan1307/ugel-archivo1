@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="invalid-feedback">
-                <span>Opps este parametro es desconocido</span>
+                <span>Opps este parámetro es desconocido</span>
             </div>
         </div>
         <div ng-class="{'card-load':load_data}">
@@ -99,8 +99,12 @@
                                 <div class="row f-12">
                                     <div class="col-12 m-b-5">
                                         <div class="row">
-                                            <button class="btn btn-warning btn-sm col-6"> b </button>
-                                            <button class="btn btn-danger btn-sm col-6"> a </button>
+                                            <button class="btn btn-warning btn-sm col-6" ng-click="editDetUser(det.id_usuario)"> 
+                                                <span class="feather icon-edit"></span>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm col-6" ng-click="delDetUser(det.id_detresolucion)">
+                                                <span class="feather icon-trash"></span>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -139,5 +143,4 @@
         </div>
         <div ng-show="!resadd_load" ng-include="'app-include/pagination.html'"></div>
     </div>
-</div>
 </div>

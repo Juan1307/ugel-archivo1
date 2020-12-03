@@ -59,7 +59,24 @@
 		break;
 
 		case 'POST':
-			# code...
+
+    		$indata = file_get_contents("php://input");
+    		$data = Ajax::valJsonIn($indata);
+
+			$option = $_GET['MOD'] ?? die;
+			$outdat = false;
+
+			if ((int) $data['id'] > 0 && (int) $data['id_r'] > 0) {
+				$id = $data['id']; $id_r= $data['id_r'];
+				settype($id, "int"); settype($id_r, "int");
+				
+				switch ($option) {
+					case 'USU': $outdat = ResDetUsu::pstDetDataId($id, $id_r); break;
+					case 'INS': $outdat = ResDetIns::pstDetDataId($id, $id_r); break;
+					default: die; break;
+				}
+			}
+
 		break;
 
 		case 'PUT':
@@ -75,7 +92,7 @@
 						$id = $data['id']; $est = $data['est'];
 						settype($id, "int"); settype($est, "int");
 						
-						$outdat = ResDetUsu::chaDetRes($id, $est);
+						$outdat = Det::chaDetRes($id, $est);
 					}
 				break;
 
@@ -86,7 +103,7 @@
 						
 						$fec = date('Y-m-d',strtotime($data['fec'])); 
 
-						$outdat = ResDetUsu::pstDataDetId($id, $fec);
+						$outdat = Det::pstDataDetId($id, $fec);
 					}
 				break;
 							
@@ -95,12 +112,12 @@
 		break;
 
 		case 'DELETE':
-			$id = $_GET['ID'] ?? die;
+			$id = $_GET['ID'] ?? die; $s_id = $_GET['IDS'] ?? die;
 			$outdat = false;
 					
 			if ((int) $id > 0 ) {
-				settype($id, "int");
-				$outdat = ResDetUsu::delDataId($id);	
+				settype($id, "int"); settype($s_id, "int");
+				$outdat = Det::delDetDataId($id, $s_id);	
 			}
 		break;
 			

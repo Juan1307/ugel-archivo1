@@ -1,0 +1,43 @@
+<div class="form-row">
+    <div class="form-group col-12">
+        <label for="institute">Institución</label>
+        <input type="text" id="institute" ng-pattern="insFormPtrn[0]" ng-model="frmIns.institute" ng-init="frmIns.institute = ''"
+                ng-class="{ 'control': frmIns.institute === '',
+                            'is-valid': frmIns.institute !== '' && frmIns.institute !== undefined,
+                            'is-invalid': frmIns.institute == undefined || frmIns.institute === '' && valFrmIns}" class="form-control" placeholder="Ingrese Institución">
+        <div class="invalid-feedback">
+            <span>Complete institución correctamente.</span>
+        </div>
+    </div>
+    <div class="form-group col-12">
+        <label for="level">Nivel</label>
+        <select class="form-control" id="level" ng-model="frmIns.level" ng-init="frmIns.level = undefined">
+            <option style="display:none" value="">Seleccione un nivel</option>
+            <option value="0">INICIAL</option>
+            <option value="1">PRIMARIA</option>
+            <option value="2">SECUNDARIA</option>
+        </select>
+        <small class="text-danger" ng-show=" (frmIns.level === undefined && valFrmIns) ? true : false" >Seleccione un nivel correctamente</small>
+    </div>
+    <div class="form-group col-12">
+        <div ng-if="!load_insti">
+            <button class="btn btn-success" ng-click="saveIns(frmIns)">
+                <span class="feather icon-save"></span> Guardar
+            </button>
+
+            <button class="btn btn-danger float-right" ng-click="cleanIns(frmIns)">
+                <span class="feather icon-trash"></span> Limpiar
+            </button>
+        </div>
+
+        <div ng-if="load_insti">
+            <button class="btn btn-success" ng-click="saveIns(frmIns, idEdit.id_ins)">
+                <span class="feather icon-save"></span> Editar
+            </button>
+
+            <button class="btn btn-danger float-right" ng-click="cleanIns(frmIns, true)">
+                <span class="fas fa-times"></span> Cancelar
+            </button>
+        </div>
+    </div>
+</div>

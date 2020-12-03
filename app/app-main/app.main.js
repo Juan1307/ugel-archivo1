@@ -26,6 +26,8 @@
 				setTimeout( () => {
 					$(".loader-bg").fadeOut("slow");
 			}, 800);
+
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		};
 
 		s.sweetMsj = (tit, txt, icon = 'warning') => swal({ title: tit,text: txt,icon: icon,button: "Aceptar"});

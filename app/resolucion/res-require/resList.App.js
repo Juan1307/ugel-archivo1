@@ -10,7 +10,7 @@
 	).controller('resList_Ctrl', ['$scope','$rootScope','resListPtrn','qryData','resGet.Srv','resGet.Fac','resCet.Fac', 
 	  function(s, rs, ptrn, qryd, Rini, Rget, Rcet){
 
-		console.log('LISTAR RES USU');
+		console.log('LISTAR RES');
 		
 		s.qryData = qryd;
 		s.resListPtrn = ptrn;

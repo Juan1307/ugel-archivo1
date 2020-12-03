@@ -47,7 +47,7 @@ declare(strict_types=1);
 
 				if ($flag === null || $flag === true) {
 					$s_qry = "DELETE FROM tblresolucion WHERE id_resolucion = $id AND est_tbl = $s_estt";
-					return (Config::excConfigRow($s_qry)) ? 1 : 0;
+					return (Config::execConfigRow($s_qry)) ? 1 : 0;
 				}else{
 					return 2;//error FILES
 				}
@@ -64,7 +64,7 @@ declare(strict_types=1);
 				if ($d_data) {
 					$s_qry = "DELETE FROM tblarchivos WHERE id_resolucion = $id";
 					
-					return (Config::excConfigRow($s_qry)) ? 1 : 0;
+					return (Config::execConfigRow($s_qry)) ? 1 : 0;
 				} else {
 					return 2;
 				}

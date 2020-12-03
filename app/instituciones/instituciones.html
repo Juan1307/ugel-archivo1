@@ -1,0 +1,208 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="mb-0">Instituciones</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- [ List Institute ] Start -->
+                    <div class="form-row">
+                        <div class="form-group col-lg-5">
+                            <h5 class="f-16 m-b-15">
+                                <div ng-show="!load_insti">
+                                    <span class="feather icon-plus-square"></span> Agregar
+                                </div>
+                                <div ng-show="load_insti">
+                                    <span class="feather icon-edit"></span> Editar
+                                </div>
+                            </h5>
+                            <div class="row">
+                                <!-- [ Add Institute ] Start -->
+                                <div class="col-12">
+                                    <div ng-include="'instituciones/ins-reusable/insForm.html'" ng-controller="insForm_Ctrl"></div>
+                                </div>
+                                <!-- [ Add Institute ] End -->
+                                <div class="d-none d-md-none d-lg-block col-12 mt-3 col-12">
+                                    <div class="card text-white bg-primary">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-white">Recuerda.</h5>
+                                            <p class="card-text">El icono de <b>visualizacion <span class="feather icon-eye"></span></b> es para recopilar el estado general de un registro que interactua con otros datos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-7" ng-controller="insList_Ctrl">
+                            <h5 class="f-16 m-b-15"><span class="feather icon-file-text"></span> Listar</h5>
+                            <label for="find_inst">Listar Usuarios</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" ng-model="paramIns" ng-pattern="insListPtrn[0]" ng-init="paramIns=''" ng-class="{'normal': paramIns === '' , 'is-invalid': paramIns === undefined}" class="form-control col-sm-12" maxlength="50" placeholder="Buscar Institución" id="find_inst">
+                                <button type="button" class="btn btn-secondary" ng-click="allInsti()">
+                                    <span class="f-w-500 feather icon-refresh-cw"></span>
+                                </button>
+                                <div class="invalid-feedback">
+                                    <span>Opps este parametro es desconocido</span>
+                                </div>
+                            </div>
+                            <div ng-class="{'card-load':load_data}" class="table-responsive">
+                                <table class="table table-sm table-bordered text-center table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ACCIÓN</th>
+                                            <th>INSTITUCIÓN</th>
+                                            <th>NIVEL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ins in insData">
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" ng-click="viewInsti(ins.id_institucion, ins)">
+                                                    <span class="feather icon-eye"></span>
+                                                </button>
+                                                <button class="btn btn-warning btn-sm" ng-click="editInsti(ins.id_institucion)">
+                                                    <span class="feather icon-edit"></span>
+                                                </button>
+                                            </td>
+                                            <td ng-bind="::ins.nombre"></td>
+                                            <td ng-bind="::ins.nivel"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-center m-t-15" ng-show="insData.length === 0">
+                                    <span class="feather icon-slash"></span>
+                                    No se encontraron resultados
+                                </p>
+                                <div ng-show="load_data" class="card-loader">
+                                    <i class="pct-loader1 anim-rotate"></i>
+                                </div>
+                            </div>
+                            <div ng-include="'app-include/pagination.html'"></div>
+                        </div>
+                    </div>
+                    <!-- [ List Institute ] End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>
+
+<div id="ins_view_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="InsViewModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h5">Visualizar el estado</h5>
+                <button type="button" ng-click="focusInput('find_inst')" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body" >
+                <div class="row mb-3">
+                    <div class="col-md-12 col-lg-8">
+                        <b>Institución :</b>
+                        <span ng-bind="estData.insti.nombre"></span>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <b>Nivel :</b>
+                        <span ng-bind="estData.insti.nivel"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-2">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body bg-patern-white">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <span>Resoluciones</span>
+                                    </div>
+                                    <div class="col text-right">
+                                        <h2 class="mb-0 text-white" ng-bind="estData.data.length"></h2>
+                                        <span class="text-white">8.2%<i class="feather icon-trending-up ml-1"></i></span>
+                                    </div>
+                                </div>
+                                <div id="customer-chart1"></div>
+                                <div class="row mt-3">
+                                    <h4 class="m-0 text-white">
+                                        <i class="fas fa-circle f-10 m-r-5 text-success"></i>{{ estData.count[1] }}</h4>
+                                    <span class="ml-3">Entregado</span>
+                                </div>
+                                <div class="row mt-3">
+                                    <h4 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-danger"></i>{{ estData.count[0] }}</h4>
+                                    <span class="ml-3">Por Entregar</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <input type="text" ng-model="find_res_ins" class="form-control mb-3" id="find_res_ins" placeholder="Buscar Resolucion">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover m-b-0 text-center">
+                                <thead>
+                                    <tr>
+                                        <th>RECEPTOR</th>
+                                        <th>N° RES</th>
+                                        <th>N° PRO</th>
+                                        <th>Oficina</th>
+                                        <th>Motivo</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="det in estData.data | filter:find_res_ins as found" class="c-pointer">
+                                        <td>
+                                            <span ng-class="{'hint--right hint--rounded': det.id_usuario !== null}"
+                                                aria-label="A: {{ ::det.apellidos }} / N: {{ ::det.nombres }} / 
+                                                            D: {{ ::det.ndni }} / C: {{ ::det.carnet }} "
+                                                ng-bind="::det.id_usuario === null ? 'S/N RECEPTOR' : 'CON RECEPTOR'">
+                                            </span>
+                                        </td>
+                                        <td ng-bind="::det.nresolucion"></td>
+                                        <td ng-bind="::det.nproyecto"></td>
+                                        <td>
+                                            <div ng-class="{'hint--top hint--rounded':det.nombre.length > 20}" 
+                                                aria-label="{{ ::det.nombre }}" 
+                                                ng-bind="::det.nombre | stringCut : 20">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div ng-class="{'hint--top hint--rounded':det.descripcion.length > 20}" 
+                                                aria-label="{{ ::det.descripcion }}" 
+                                                ng-bind="::det.descripcion | stringCut : 20 ">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="hint--left hint--rounded badge" 
+                                                aria-label=" C : {{ ::det.f_emision }} / E : {{ ::det.f_entrega }}"
+                                                ng-class="{'badge-danger':det.estado == 0,'badge-success':det.estado == 1}" 
+                                                ng-bind="::det.estado == 0 ? 'Por Entregar' : 'Entregado'"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-center m-t-15" ng-show="estData.data.length === 0">
+                            <span class="feather icon-slash"></span> Aún no tiene resolución.
+                        </p>
+                        <p class="text-center m-t-15" ng-show="found.length === 0 && estData.data.length !== 0">
+                            <span class="feather icon-slash"></span> No se encontró resultados.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
