@@ -2,7 +2,7 @@
 	'use strict';
 
 	a.module('resUsersDet_App', []).constant('usuResDetPtrn', ['[0-9]{0,15}','[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{0,60}','[0-9]{0,9}'])
-	.controller('resUsersDet_Ctrl', ['$scope','$rootScope','usuResDetPtrn','resDetGet.Srv','resDetSet.Fac','resDetUsu.Fac',
+	.controller('resUsersDet_Ctrl', ['$scope','$rootScope','usuResDetPtrn','resDetUsuGet.Srv','resDetUsuSet.Fac','resDetUsu.Fac',
 		function(s, rs, ptrn, RDini, RDset, RDusu) {
 		console.log('EXTEND RES USU');
 		s.usuDetPtrn = ptrn;
@@ -198,6 +198,7 @@
 			s.id_rd = id; rs.id_rd_ex = id;
 			
 			RDini.getIdx(id).then(r => {
+				console.log('res',r)
 				s.objRes = r.data; s.arrFil = r.files;
 				rs.resusu_load = false;
 			},e => {
@@ -216,7 +217,7 @@
 			}
 		};
 
-	}]).factory('resDetGet.Srv', ['$http', function(h){
+	}]).factory('resDetUsuGet.Srv', ['$http', function(h){
 		const getAll = (id, flag = false, prm = null, num = null, p, pp = 10) => {
 			let url;
 			url = `OP=LIS&PAG=${p}&PPAG=${pp}`;
@@ -224,7 +225,7 @@
 			if (flag) {
 				url = `OP=PRM&PAG=${p}&PPAG=${pp}&PAR=${num}&STR=${prm}`;
 			}
-			return h.get(`../controller/AjaxResCtrl/Ajax.ResDet.php?${url}&ID=${id}`).then(res => {
+			return h.get(`../controller/AjaxResCtrl/Ajax.ResDet.php?${url}&ID=${id}&MOD=USU`).then(res => {
 				return res.data;
 			}).catch(err => {
 				console.error(err.status);
@@ -232,7 +233,7 @@
 		};
 
 		const getIdx = (id) => {
-			return h.get(`../controller/AjaxResCtrl/Ajax.ResDet.php?OP=IDX&ID=${id}`).then(res => {
+			return h.get(`../controller/AjaxResCtrl/Ajax.ResDet.php?OP=IDX&ID=${id}&MOD=USU`).then(res => {
 				return res.data;
 			}).catch(err => {
 				console.error(err.status);
@@ -241,7 +242,7 @@
 
 		return {getAll : getAll, getIdx : getIdx};
 
-	}]).factory('resDetSet.Fac', ['$http', function(h){
+	}]).factory('resDetUsuSet.Fac', ['$http', function(h){
 
 		return {
 			chgDetRes: (data) => {
@@ -271,7 +272,6 @@
 		return {
 			pstDetUsu: (data) => {
 				return h.post(`../controller/AjaxResCtrl/Ajax.ResDet.php?MOD=USU`,data).then(res => {
-					//console.log('res http', res);
 					return JSON.parse(res.data);
 				}).catch(err => {
 					console.error(err.status);

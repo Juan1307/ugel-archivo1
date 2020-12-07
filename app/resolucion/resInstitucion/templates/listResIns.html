@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12">
         <!-- [ View Res Users ] Start -->
-        <div ng-hide="resusu_load">
-            <div ng-include="'../app/resolucion/resUsuario/templates/listDetRes.html'"></div>
+        <div ng-hide="resins_load">
+            <div ng-include="'resolucion/resInstitucion/templates/listDetRes.html'"></div>
         </div>
         <!-- [ View Res Users ] End -->
         
         <!-- [ List Res Users ] Start -->
-        <div ng-show="resusu_load">
-            <div ng-include="'../app/resolucion/res-reusable/resList.html'"></div>
+        <div ng-show="resins_load">
+            <div ng-include="'resolucion/res-reusable/resList.html'"></div>
         </div>
         <!-- [ List Res Users ] End -->
     </div>

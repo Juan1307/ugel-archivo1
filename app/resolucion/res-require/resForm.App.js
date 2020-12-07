@@ -59,7 +59,7 @@
 							Rset.pstRes(fd,'USU').then( r => {
 								//console.log('send post', r);
 								s.load_res = false;
-								r ? ( s.alertMsj('Resolución registrada',' correctamente.'), s.cleanRes() ) : 
+								r ? ( s.alertMsj('Resolución Usuario registrada',' correctamente.'), s.cleanRes() ) : 
 							 	s.sweetMsj('¡Ooops error!','No se pudo registrar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
@@ -72,7 +72,7 @@
 							Rset.putRes(fd,'USU').then( r => {
 								//console.log('send put', r);
     							s.load_res = false;
-								r ? ( s.alertMsj('Resolución actualizada',' correctamente.'), s.cleanRes(true), rs.allRes() ) : 
+								r ? ( s.alertMsj('Resolución Usuario actualizada',' correctamente.'), s.cleanRes(true), rs.allRes() ) : 
 							 	s.sweetMsj('¡Ooops error!','No se pudo actualizar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
@@ -86,24 +86,26 @@
 
 					switch (flag) {
 						case null:
-							console.log('INS INSERT',arr);
 							arr = rs.detData.map( e => e.id_institucion); fd.append('data',JSON.stringify({data,arr}));
 							
 							Rset.pstRes(fd,'INS').then( r => {
-								console.log('res pst', r);
+								//console.log('send post', r);
     							s.load_res = false;
+    							r ? ( s.alertMsj('Resolución Institución registrada',' correctamente.'), s.cleanRes() ) : 
+							 	s.sweetMsj('¡Ooops error!','No se pudo registrar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
 							});
 						break;
 
 						default:
-							console.log('INS UPDATE');
-							fd.append('data',{data,flag});
+							fd.append('data',JSON.stringify({data, id: flag}));
 							
-							Rset.pstRes(fd,'INS').then( r => {
-								console.log('res put', r);
+							Rset.putRes(fd,'INS').then( r => {
+								//console.log('send put', r);
     							s.load_res = false;
+								r ? ( s.alertMsj('Resolución Institución actualizada',' correctamente.'), s.cleanRes(true), rs.allRes() ) : 
+							 	s.sweetMsj('¡Ooops error!','No se pudo actualizar la resolución, porfavor reportelo.','error');
 							},e =>{
 								console.error(e.status);
 							});
@@ -150,7 +152,11 @@
 			const arrFil = (arrFiles === undefined || arrFiles.length === 0) ? undefined : arrFiles;
 
 			if (idRes === null && !next) {
-				s.stepView(false,'find_user');
+				if (rs.module === 'INS') {
+					s.stepView(false,'find_inst');
+				}else{
+					s.stepView(false,'find_user');
+				}
 			} else if (idRes === null && next) {
 				if (rs.detData.length <= 0) {
 					s.sweetMsj('¡Ooops Info!','Debe asignar 1 o más datos a la lista, porfavor asigne.');

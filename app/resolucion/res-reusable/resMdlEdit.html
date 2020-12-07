@@ -11,10 +11,10 @@
                         <div class="col-md-12 col-lg-8">
                             <div class="form-row">
                                 <div class="form-group col-12 col-sm-6">
-                                    <label for="nro_res">N° Resolucion</label>
+                                    <label for="nro_res">N° Resolución</label>
                                     <input type="text" ng-model="frmResDat.nro_res" ng-pattern="resFormPtrn[0]" ng-init="frmResDat.nro_res = ''" ng-class="{'control': frmResDat.nro_res === '',
                                                       'is-valid': frmResDat.nro_res !== '' && frmResDat.nro_res !== undefined,
-                                                      'is-invalid': frmResDat.nro_res === undefined}" class="form-control text-center" id="nro_res" placeholder="Ingrese Resolucion" maxlength="5">
+                                                      'is-invalid': frmResDat.nro_res === undefined}" class="form-control text-center" id="nro_res" placeholder="Ingrese Resolución" maxlength="5">
                                     <div class="invalid-feedback">
                                         Ingrese n° resolución correctamente.
                                     </div>
@@ -80,7 +80,7 @@
                                             <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium m-r-5" aria-label="TAMAÑO: {{::fil.tamano | fileSize}}.kb / FECHA : {{::fil.f_creacion | dateParse }}"> <span class="feather icon-info"></span>
                                             </button>
                                             <a class="float-right btn btn-primary btn-sm m-r-5" 
-                                                ng-href="../files/res_users/{{::fil.archivo}}" target="_blank"> 
+                                                ng-href="../files/{{::fil.archivo}}" target="_blank"> 
                                                 <span class="fa fa-file-pdf"></span>
                                             </a>
                                         </li>

@@ -1,0 +1,51 @@
+<div class="card bg-patern">
+    <div class="card-header p-b-10 p-t-15">
+        <h4 class="text-primary f-16">
+            Info Resolucion
+        </h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <b>N° Res</b>
+                <p ng-bind="::objRes.nresolucion"></p>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <b>N° Pro</b>
+                <p ng-bind="::objRes.nproyecto"></p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-12">
+                <b class="d-block">Oficina</b>
+                <p ng-class="{'hint--top hint--rounded':objRes.nombre.length > 25}" aria-label="{{ ::objRes.nombre }}" ng-bind="::objRes.nombre | stringCut:25"></p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-12">
+                <b class="d-block">Motivo</b>
+                <p ng-class="{'hint--top hint--rounded hint--large':objRes.descripcion.length > 30}" aria-label="{{ ::objRes.descripcion }}" ng-bind="::objRes.descripcion | stringCut:30"></p>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <b>Fecha</b>
+                <p ng-bind="objRes.f_emision | dateParse"></p>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                <b class="d-block">Estado</b>
+                <span ng-class="{'badge badge-success': objRes.estado == 1,'badge badge-secondary': objRes.estado == 0}" ng-bind="::objRes.estado == 1 ? 'Activo' : 'Inactivo'">
+                </span>
+                </button>
+            </div>
+            <div class="col-lg-12" ng-show="arrFil.length > 0">
+                <b>ARCHIVOS</b>
+                <ul class="list-group m-b-10">
+                    <li class="list-group-item list-group-item-action pt-2 pb-2 p-l-10 p-r-10" ng-repeat="fil in arrFil">
+                        <small class="c-pointer hint--top hint--rounded" aria-label="{{ ::fil.nombre_sys }}" ng-bind="::fil.nombre_sys | stringCut:10">
+                        </small>
+                        <button class="float-right btn btn-outline-info btn-sm hint--top hint--rounded hint--info hint--medium m-r-5" aria-label="TAMAÑO: {{ ::fil.tamano | fileSize }}.kb / FECHA : {{ ::fil.f_creacion | dateParse }}"> <span class="feather icon-info"></span>
+                        </button>
+                        <a class="float-right btn btn-primary btn-sm m-r-5" ng-href="../files/{{::fil.archivo}}" target="_blank">
+                            <span class="fa fa-file-pdf"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

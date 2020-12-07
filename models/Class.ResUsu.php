@@ -37,7 +37,7 @@ declare(strict_types=1);
 		public function getDataId(int $id) : array
 		{
 			$qry = "SELECT id_resolucion, nresolucion, nproyecto, f_emision, id_area, id_motivo, estado FROM tblresolucion WHERE id_resolucion = $id AND est_tbl = 0";
-			$s_qry = "SELECT  CONCAT(nombre_sys,tipo) AS archivo, nombre_ori, nombre_sys, tamano, f_creacion FROM tblarchivos WHERE id_resolucion = $id";
+			$s_qry = "SELECT  CONCAT('res_users/',nombre_sys,tipo) AS archivo, nombre_ori, nombre_sys, tamano, f_creacion FROM tblarchivos WHERE id_resolucion = $id";
 			
  			$data = Config::getConfigRow($qry); $files = Config::getConfigRows($s_qry);
 
@@ -46,7 +46,7 @@ declare(strict_types=1);
 
 		public function pstData(array $arr, array $det, $files) : bool
 		{
-			$dat_0 = Res::fullResArr($arr, true);
+			$dat_0 = Res::fullResArr($arr);
 			$dat_1 = [$det,'id_usuario','id_resolucion'];
 			
 			$qry_0 = "INSERT INTO tblresolucion VALUES (NULL, :id_motivo, :id_area, :nresolucion, :nproyecto, :f_emision, 1, 0)";
@@ -71,7 +71,7 @@ declare(strict_types=1);
 
 		public function putData(array $arr, int $id, $files) : bool
 		{
-			$dat = Res::fullResArr($arr, true);
+			$dat = Res::fullResArr($arr);
 			$qry = "UPDATE tblresolucion SET id_motivo=:id_motivo, id_area=:id_area, nresolucion=:nresolucion, nproyecto=:nproyecto, 
 											 f_emision=:f_emision WHERE id_resolucion = $id AND est_tbl = 0";
 			$data = Config::setConfigRow($qry, $dat);
@@ -140,7 +140,7 @@ declare(strict_types=1);
 		{
 			$qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado FROM tblresolucion as r  						INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
  									INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 0 AND r.id_resolucion = $id";
- 			$s_qry = "SELECT  CONCAT(nombre_sys,tipo) AS archivo, nombre_sys, tamano, f_creacion FROM tblarchivos WHERE id_resolucion = $id";
+ 			$s_qry = "SELECT  CONCAT('res_users/',nombre_sys,tipo) AS archivo, nombre_sys, tamano, f_creacion FROM tblarchivos WHERE id_resolucion = $id";
  			$data = Config::getConfigRow($qry); $files = Config::getConfigRows($s_qry);
 
  			return ['data' => $data, 'files' => $files];

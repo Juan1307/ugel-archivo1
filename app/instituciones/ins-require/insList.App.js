@@ -30,6 +30,27 @@
     			getInsti(false);
     		}
   		});
+
+  		//root
+		rs.detData = [];
+		const addIndex = (arrdet) => {
+			for (let p in arrdet) {
+				arrdet[p].idx = p;
+			}
+			rs.detData = arrdet;
+		};
+		//root
+		rs.addDet = (det) => {
+				rs.detData.some( e => e.nombre == det.nombre && e.nivel == det.nivel )
+					? s.sweetMsj('¡Ooops Institución!','La institución ya existe en la lista, porfavor revise.') 
+					: rs.detData.push(det); addIndex(rs.detData);
+			s.focusInput('find_inst');
+		};
+		//root
+		rs.remDet = (key) => {
+			rs.detData.splice(key, 1); addIndex(rs.detData);
+		};
+
 		
 		rs.allInsti = () => {
 			if (s.paramIns !== undefined && s.paramIns !== '') {
@@ -40,19 +61,16 @@
 			s.focusInput('find_inst');
 		};
 
-		s.addUser = () => {
+		s.addInsti = () => {
 			//root
-			rs.load_usu1 = false; rs.load_usu0 = true;
+			rs.load_insti = false;
 				
-				s.idEdit.idUser = ''; 
-				s.frmData.last_name = '';
-				s.frmData.first_name = '';
-				s.frmData.nro_dni = '';
-				s.frmData.nro_carnet = '';
-				s.frmData.nro_contact = '';
-
-			$('#usu_edit_modal').modal('show');
-			s.focusInput('last_name');
+				s.idEdit.id_ins = ''; 
+				s.frmIns.institute = ''; 
+				s.frmIns.level = ''; 
+				
+			$('#ins_edit_modal').modal('show');
+			s.focusInput('institute');
 		};
 
 		s.editInsti = (id) => {
@@ -66,6 +84,7 @@
 				s.frmIns.institute = r.nombre;
 				s.frmIns.level = r.nivel;
 
+				$('#ins_edit_modal').modal('show');
 				rs.load_insti = true;
 				s.focusInput('institute');
 			},e => {
@@ -77,7 +96,6 @@
 			if (typeof parseInt(id) !== 'number' ) {
 				return console.error('number error');
 			}
-			console.log('arr',arr);
 
 			s.estData.insti = {};
 			s.estData.data = [];

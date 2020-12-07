@@ -54,7 +54,7 @@
                 }
             }).state('m_resUsers', {
                 url: '/res-usuario',
-                templateUrl: '../app/resolucion/resUsuario/mainResUsu.html',
+                templateUrl: './resolucion/resUsuario/mainResUsu.html',
                 controller: 'resUsers_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
@@ -71,13 +71,19 @@
                 }
             }).state('m_resInsti', {
                 url: '/res-institucion',
-                templateUrl: '../app/resolucion/resInstitucion/mainResInsti.html',
-                controller: 'resInstis_Ctrl',
+                templateUrl: './resolucion/resInstitucion/mainResInsti.html',
+                controller: 'resInsti_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
                         
-                        return $ocLazyLoad.load(['../app/resolucion/resInstitucion/source/resInsti.Ctrl.js',
-                                                 '../app/resolucion/resInstitucion/source/resInsti.Srv.js'
+                        return $ocLazyLoad.load(['./instituciones/ins-require/insList.App.js',
+                                                 './instituciones/ins-require/insForm.App.js',
+                                                 './usuarios/usu-require/usuList.App.js',
+
+                                                 './resolucion/res-require/resForm.App.js',
+                                                 './resolucion/res-require/resList.App.js',
+                                                 './resolucion/resInstitucion/resIns.Ctrl.js',
+                                                 './resolucion/resInstitucion/resExt.Ctrl.js'
                         ]);
                     }
                 }

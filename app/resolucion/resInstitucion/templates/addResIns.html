@@ -1,0 +1,182 @@
+<div ng-controller="resForm_Ctrl">
+    <form class="needs-validation" autocomplete="off" novalidate>
+        <div ng-show="step">
+            <div class="form-row">
+                <div class="col-12 col-md-8">
+                    <div class="form-row">
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="nro_res">N° Resolución</label>
+                            <input type="text" ng-model="frmResDat.nro_res" ng-pattern="resFormPtrn[0]" ng-init="frmResDat.nro_res = ''" ng-class="{'control': frmResDat.nro_res === '',
+                                                      'is-valid': frmResDat.nro_res !== '' && frmResDat.nro_res !== undefined,
+                                                      'is-invalid': frmResDat.nro_res === undefined}" class="form-control text-center" id="nro_res" placeholder="Ingrese Resolución" maxlength="5">
+                            <div class="invalid-feedback">
+                                Ingrese n° resolución correctamente.
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="nro_pro">N° Proyecto</label>
+                            <input type="text" ng-model="frmResDat.nro_pro" ng-pattern="resFormPtrn[0]" ng-init="frmResDat.nro_pro = ''" ng-class="{'control': frmResDat.nro_pro === '',
+                                                      'is-valid': frmResDat.nro_pro !== '' && frmResDat.nro_pro !== undefined,
+                                                      'is-invalid': frmResDat.nro_pro === undefined}" class="form-control text-center" id="nro_pro" placeholder="Ingrese Proyecto" maxlength="5">
+                            <div class="invalid-feedback">
+                                Ingrese n° proyecto correctamente.
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label for="res_moti">Motivo</label>
+                            <ui-select ng-model="selected.value" theme="selectize" ng-init="selected.value = undefined" id="res_moti">
+                                <ui-select-match placeholder="Buscar motivo ...">
+                                    <span ng-bind="$select.selected.descripcion"></span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="mot in arrMotiv | filter: $select.search">
+                                    <span ng-bind="::mot.descripcion"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <small class="text-danger" ng-show=" (selected.value.id_motivo === undefined && valFrmRes) ? true : false">
+                                Seleccione un motivo correctamente.
+                            </small>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="res_area">Oficina</label>
+                            <select id="res_area" ng-model="frmResDat.res_area" ng-init="frmResDat.res_area = undefined" ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
+                                <option style="display:none" value="">Seleccione una Oficina</option>
+                            </select>
+                            <small class="text-danger" ng-show=" (frmResDat.res_area === undefined && valFrmRes) ? true : false">
+                                Seleccione una oficina correctamente.
+                            </small>
+                        </div>
+                        <div class="form-group col-12 col-sm-6">
+                            <label for="res_fec">Fecha</label>
+                            <input type="date" ng-model="frmResDat.res_fec" class="form-control text-center" placeholder="yyyy-MM-dd" id="res_fec">
+                            <small class="text-danger" ng-show=" (frmResDat.res_fec === null && valFrmRes) ? true : false">
+                                Ingrese fecha correctamente.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <label for="files_pdf">Adjuntar Pdf (OPCIONAL).
+                        <span class="fa fa-files"></span>
+                    </label>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="btn btn-outline-primary form-control c-pointer" for="file_res">
+                                Buscar archivos <span class="feather icon-upload"></span>
+                            </label>
+                            <input type="file" id="file_res" class="d-none" select-ng-files ng-model="resFiles" multiple accept=".pdf">
+                        </div>
+                    </div>
+                    <div class="row mt-3 text-center">
+                        <div class="col-4 col-md mt-1" ng-repeat="(key, file) in resFiles">
+                            <button class="btn btn-danger btn-sm p-r-15 p-l-15 mb-1" ng-click="removeFile(key)">
+                                <span class="fa fa-times"></span>
+                            </button>
+                            <p class="mb-1">
+                                <span class="fa fa-file-pdf f-52"></span>
+                                <p class="f-10" ng-bind="file.name"></p>
+                            </p>
+                        </div>
+                        <div class="col-12">
+                            <p class="text-center m-t-15" ng-show="resFiles.length === 0 || resFiles === undefined">
+                                <span class="feather icon-slash"></span>
+                                No se importaron archivos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12 mt-2">
+                    <button class="btn btn-danger" ng-click="cleanRes()">
+                        <span class="feather icon-trash"></span> Limpiar
+                    </button>
+                    <button class="btn btn-success float-right" ng-click="saveRes(resFiles, frmResDat)">
+                        <span class="feather icon-chevrons-right"></span> Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div ng-hide="step" class="form-row">
+            <div class="form-group col-12 col-lg-3 align-self-center">
+                <div class="text-center">
+                    <div ng-show="detData.length <= 0">
+                        <span class="feather icon-slash"></span>
+                        <p>Aun por asignar Instituciones.</p>
+                    </div>
+                    <div ng-show="detData.length > 0" class="mb-3">
+                        <b>Instituciones asignadas</b>
+                        <h3 class="text-c-blue">{{ detData.length }} <span class="feather icon-users"></span></h3>
+                    </div>
+                    <p>El ícono <span class="feather icon-file-text"></span> nos mostrará la lista de instituciones asignadas.</p>
+                    <p>El ícono <span class="feather icon-plus"></span> es para añadir esa institución a la lista.</p>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-9">
+                <!-- [ List Isntitutes ] Start -->
+                <div ng-controller="insList_Ctrl">
+                    <div class="input-group mb-3">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#res_det_modal" 
+                            ng-click="focusInput('find_insdet')"> <span class="feather icon-file-text"></span>
+                        </button>
+                        <input type="text" class="form-control" ng-model="paramIns" ng-pattern="insListPtrn[0]" ng-init="paramIns=''" ng-class="{'normal': paramIns === '' , 'is-invalid': paramIns === undefined}" class="form-control col-sm-12" maxlength="50" placeholder="Buscar Institución" id="find_inst">
+                        <button type="button" class="btn btn-secondary" ng-click="addInsti()">
+                            <span class="feather icon-plus-square"></span>
+                        </button>
+                        <div class="invalid-feedback">
+                            <span>Opps este parametro es desconocido</span>
+                        </div>
+                    </div>
+                    <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
+                        <table class="table table-sm table-bordered text-center table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ACCIÓN</th>
+                                    <th>INSTITUCIÓN</th>
+                                    <th>NIVEL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="ins in insData">
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" ng-click="addDet(ins)">
+                                            <span class="feather icon-plus"></span>
+                                        </button>
+                                        <button class="btn btn-warning btn-sm" ng-click="editInsti(ins.id_institucion)">
+                                            <span class="feather icon-edit"></span>
+                                        </button>
+                                    </td>
+                                    <td ng-bind="::ins.nombre"></td>
+                                    <td ng-bind="::ins.nivel"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-center m-t-15" ng-show="insData.length === 0">
+                            <span class="feather icon-slash"></span>
+                            No se encontraron resultados
+                        </p>
+                        <div ng-show="load_data" class="card-loader">
+                            <i class="pct-loader1 anim-rotate"></i>
+                        </div>
+                    </div>
+                    <div ng-include="'app-include/pagination.html'"></div>
+                </div>
+                <!-- [ List Isntitutes ] End -->
+            </div>
+                <div class="col-12">
+                    <button class="btn btn-secondary" ng-click="stepView()">
+                        <span class="feather icon-chevrons-left"></span> Anterior
+                    </button>
+                    <button class="btn btn-danger" ng-click="cleanRes()">
+                        <span class="feather icon-trash"></span> Limpiar
+                    </button>
+                    <button class="btn btn-success float-right" type="button" ng-click="saveRes(resFiles, frmResDat, null, true)" ng-disabled="load_res">
+                        <span class="spinner-border spinner-border-sm" role="status" ng-style="{'display': !load_res ? 'none' : ''}"></span>
+                        <span class="load-text f-11" ng-style="{'display': !load_res ? 'none' : ''}">Cargando...</span>
+                        <span class="btn-text" ng-style="{'display': load_res ? 'none' : ''}">
+                            <span class="feather icon-save"></span> Guardar
+                        </span>
+                    </button>
+                </div>
+            </div>
+    </form>
+</div>

@@ -27,7 +27,6 @@
 
 			s.load_data = true;
 			Rini.getAll(gbl, flag, JSON.stringify([prm]), num, p).then( r => {
-				console.log('res',r);
 				s.resData = r.data; 
 				//pagination
 				s.pagAct = r.pag_act;

@@ -1,6 +1,7 @@
 <?php 
 	require_once '../Ajax.Ctrl.php';
 	require_once '../../models/Class.ResUsu.php';
+	require_once '../../models/Class.ResIns.php';
 
 	switch ($_SERVER['REQUEST_METHOD']) {
 		case 'GET':
@@ -14,26 +15,37 @@
 						
 					if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $id > 0) {
 						settype($pag, "int"); settype($p_pag, "int"); settype($id, "int");
-						$outdat = ResDetUsu::getData($pag, $p_pag, $id);
-						/*
+						
 						$_GET['MOD'] ?? die;
 						switch ($_GET['MOD']) {
-							case 'USU': $outdat = ResUsu::getData($pag, $p_pag); break;
-							case 'INS': $outdat = ResIns::getData($pag, $p_pag); break;
+							case 'USU': $outdat = ResDetUsu::getData($pag, $p_pag, $id); break;
+							case 'INS': $outdat = ResDetIns::getData($pag, $p_pag, $id); break;
 							default: die; break;
-						}*/
+						}
 					}
 				break;
 
 				case 'PRM':
 					$pag = $_GET['PAG'] ?? die; $p_pag = $_GET['PPAG'] ?? die;
-					$prm = $_GET['PAR'] ?? die; $str = $_GET['STR'] ?? die;
-					$id  = $_GET['ID'] ?? die; $outdat = false;
-
-					if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $prm >= 0 && (int) $id > 0) {
-						settype($pag, "int"); settype($p_pag, "int"); settype($prm, "int"); settype($id, "int");
-						
-						$outdat = ResDetUsu::getDataFind($pag, $p_pag, $id, [$prm, $str]);
+					$str = $_GET['STR'] ?? die; $id  = $_GET['ID'] ?? die; 
+					$outdat = false;
+					
+					$_GET['MOD'] ?? die;
+					switch ($_GET['MOD']) {
+						case 'USU':
+							$prm = $_GET['PAR'] ?? die; 
+							if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $prm >= 0 && (int) $id > 0) {
+								settype($pag, "int"); settype($p_pag, "int"); settype($prm, "int"); settype($id, "int");
+								$outdat = ResDetUsu::getDataFind($pag, $p_pag, $id, [$prm, $str]);
+							}
+						break;
+						case 'INS':
+							if ((int) $pag > 0 && (int) $p_pag > 0 && (int) $id > 0) {
+								settype($pag, "int"); settype($p_pag, "int"); settype($id, "int");
+								$outdat = ResDetIns::getDataFind($pag, $p_pag, $id, $str);
+							}
+						break;
+						default: die; break;
 					}
 				break;
 
@@ -44,13 +56,12 @@
 					if ((int) $id > 0 ) {
 						settype($id, "int");
 						
-						$outdat = ResDetUsu::getDataId($id);
-						/*$_GET['MOD'] ?? die;
+						$_GET['MOD'] ?? die;
 						switch ($_GET['MOD']) {
-							case 'USU': $outdat = ResUsu::getDataId($id); break;
-							case 'INS': $outdat = ResIns::getDataId($id); break;
+							case 'USU': $outdat = ResDetUsu::getDataId($id); break;
+							case 'INS': $outdat = ResDetIns::getDataId($id); break;
 							default: die; break;
-						}*/
+						}
 					}
 				break;
 
@@ -102,8 +113,33 @@
 						settype($id, "int");
 						
 						$fec = date('Y-m-d',strtotime($data['fec'])); 
-
 						$outdat = Det::pstDataDetId($id, $fec);
+					}
+				break;
+
+				case 'IU':
+					$_GET['SMOD'] ?? die;
+
+					switch ($_GET['SMOD']) {
+						case 'ADD':
+							if ( (int) $data['id_u'] > 0 && (int) $data['id'] > 0 && (int) $data['s_id'] > 0) {
+								$id_u = $data['id_u']; $id = $data['id']; $s_id = $data['s_id'];
+								settype($id_u, "int"); settype($id, "int"); settype($s_id, "int");
+
+								$outdat = ResDetIns::pstUsuDetId($id_u, $id, $s_id);
+							}
+						break;
+						
+						case 'REM':
+							if ( (int) $data['id'] > 0 && (int) $data['s_id'] > 0) {
+								$id = $data['id']; $s_id = $data['s_id'];
+								settype($id, "int"); settype($s_id, "int");
+								
+								$outdat = ResDetIns::delUsuDetId($id, $s_id);
+							}
+						break;
+						
+						default: die; break;
 					}
 				break;
 							

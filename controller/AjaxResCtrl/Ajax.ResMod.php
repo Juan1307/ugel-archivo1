@@ -149,7 +149,7 @@
 						$_GET['MOD'] ?? die;
 						switch ($_GET['MOD']) {
 							case 'USU': $outdat = ResUsu::delData($id, false); break;
-							case 'INS': $outdat = ResIns::delData($id, false); break;
+							case 'INS': $outdat = ResIns::delData($id, true); break;
 							default: die; break;
 						}
 						//$outdat = ResUsu::delData($id, false);
@@ -166,7 +166,7 @@
 						$_GET['MOD'] ?? die;
 						switch ($_GET['MOD']) {
 							case 'USU': $outdat = ResUsu::delFiles($id, false); break;
-							case 'INS': $outdat = ResIns::delFiles($id, false); break;
+							case 'INS': $outdat = ResIns::delFiles($id, true); break;
 							default: die; break;
 						}
 						//$outdat = ResUsu::delFiles($id, false);

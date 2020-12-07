@@ -73,8 +73,8 @@
 			s.focusInput('find_user');
 		};
 
+		//root
 		s.addUser = () => {
-			//root
 			rs.load_usu1 = false; rs.load_usu0 = true;
 				
 				s.idEdit.idUser = ''; 

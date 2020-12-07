@@ -7,6 +7,7 @@
 		console.log('INS FORM');
 		s.insFormPtrn = ptrn;
 		s.focusInput('institute');
+		rs.det_mod = false;
 
 		const sendIns = (nObj) => {
 			const flag = nObj[0];
@@ -16,7 +17,7 @@
 				case null: 
 					Iset.pstIns(data).then(r => {
 						//console.log('pst', r);
-						r ? ( s.alertMsj('Institución registrada',' correctamente.'), s.cleanIns(data), rs.allInsti() ) : 
+						r ? ( s.alertMsj('Institución registrada',' correctamente.'), s.cleanIns(data) ) : 
 							  s.sweetMsj('¡Ooops error!','No se pudo registrar la institución, porfavor reportelo.','error');
 					},e => {
 						console.error(e.status);
@@ -26,8 +27,18 @@
 				default: 					
 					Iset.putIns(data, flag).then(r => {
 						//console.log('put', r);
-						r ? ( s.alertMsj('Institución actualizada',' correctamente.'), s.cleanIns(data, true), rs.allInsti() ) : 
-							  s.sweetMsj('¡Ooops error!','No se pudo actualizar la institución, porfavor reportelo.','error');
+						if (r) {
+							s.alertMsj('Institución actualizada',' correctamente.');
+							
+							switch (rs.det_mod) {
+								case null: rs.allDetRes();  s.focusInput('find_det_ins'); break;
+								default: rs.allInsti();  s.focusInput('find_inst'); break;
+							}
+							s.cleanIns(data, true);
+						}else{
+							 s.sweetMsj('¡Ooops error!','No se pudo editar la institución, porfavor reportelo.','error');
+
+						}
 					},e => {
 						console.error(e.status);
 					}); 
@@ -49,7 +60,7 @@
 
 		s.saveIns = (objDat, idIns = null) => {
 			s.valFrmIns = true;
-			
+			console.log('ibl',objDat);			
 			if (objDat.institute === undefined || objDat.institute == '') {
 				return s.focusInput('institute');
 			}else if (objDat.level === undefined || objDat.level == '') {
@@ -63,7 +74,7 @@
 			s.valFrmIns = false;
 
 			if (fEdit) {
-				s.focusInput('find_inst');
+				$('#ins_edit_modal').modal('hide');
 				rs.load_insti = false;
 				s.idEdit.id_ins = null;
 			}else{

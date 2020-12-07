@@ -97,7 +97,7 @@ declare(strict_types=1);
 			return (!isset($narr['rp'])) ? ['error'=> 'error val date'] : $narr;
 		}
 
-		protected function fullResArr(array $arr, bool $mark) : array
+		protected function fullResArr(array $arr) : array
 		{
 			$arr = ['id_motivo'  =>[$arr['res_moti'], 'INT'],
 					'id_area'    =>[$arr['res_area'], 'INT'],
@@ -105,7 +105,8 @@ declare(strict_types=1);
 					'nproyecto'  =>[$arr['nro_pro'], 'STR'],
 					'f_emision'	 =>[date('Y-m-d',strtotime($arr['res_fec'])), 'STR']
 				   ];
-			return ($mark) ? $arr : array_merge($arr,['est_tbl' => [1,'BOOL']]);
+				   
+			return $arr;
 		}
 
 		protected function saveResFile(int $l_id, array $arr, bool $mark) : array
@@ -157,7 +158,7 @@ declare(strict_types=1);
 				$f_like = '('.COLS[0].' LIKE '."'$rp%'".' OR '.COLS[1].' LIKE '."'$rp%'".') 
 						   AND YEAR(f_emision) = '.$year.' AND MONTH(f_emision) ='.$month;
 			}else{
-				$f_like = COLS[0].' LIKE '."'$rp%'".' OR '.COLS[1].' LIKE '."'$rp%'";
+				$f_like = '('.COLS[0].' LIKE '."'$rp%'".' OR '.COLS[1].' LIKE '."'$rp%'".')';
 			}
 			return $f_like;
 		}

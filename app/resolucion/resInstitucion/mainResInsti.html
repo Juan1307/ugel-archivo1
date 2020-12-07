@@ -1,0 +1,305 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="mb-0">Resolución para Instituciones</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-4" role="tablist">
+                        <li class="nav-item" ng-click="resLoad()">
+                            <a class="nav-link active" data-toggle="pill" href role="tab" aria-controls="pills-add" aria-selected="false">
+                                <span class="feather icon-plus-square"></span> Agregar
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="resLoad(1)">
+                            <a class="nav-link" data-toggle="pill" href role="tab" aria-controls="pills-list" aria-selected="false">
+                                <span class="feather icon-file-text"></span> Listar
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- [ Add Res Users ] End -->
+                        <div ng-if="res_load0" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <ul class="nav nav-pills mb-4 justify-content-center" role="tablist">
+                                <li class="nav-item" ng-click="stepView()">
+                                    <a class="nav-link" ng-class="{'active':step}" data-toggle="pill" href role="tab" aria-controls="pills-0" aria-selected="false">
+                                        Paso 1</a>
+                                </li>
+                                <li class="nav-item" ng-click="stepView(false,'find_inst')">
+                                    <a class="nav-link" ng-class="{'active':!step}" data-toggle="pill" href role="tab" aria-controls="pills-1" aria-selected="false">
+                                        Paso 2</a>
+                                </li>
+                            </ul>
+                            <div class="page-header">
+                                <div ng-include="'resolucion/resInstitucion/templates/addResIns.html'"></div>
+                            </div>
+                        </div>
+                        <!-- [ Add Res Users ] End -->
+                        <!-- [List Res Users ] Start -->
+                        <div ng-if="res_load1" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <div ng-include="'resolucion/resInstitucion/templates/listResIns.html'"></div>
+                        </div>
+                        <!-- [List Res Users ] End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>
+<!-- [ DOM RES Content ] Start -->
+<div ng-if="res_load0">
+    <div id="res_det_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="resDetModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-ll" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h5">Lista de Instituciones</h5>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_inst'); find_insdet = '';" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control mb-3" ng-model="find_insdet" id="find_insdet" placeholder="Buscar Institución">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered table-hover m-b-0 text-center">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span class="fa fa-trash"></span>
+                                    </th>
+                                    <th>INSTITUCIÓN</th>
+                                    <th>NIVEL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="det in detData | filter:find_insdet as found track by $index">
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" ng-click="remDet(det.idx); focusInput('find_insdet');">
+                                            <span class="feather icon-trash"></span>
+                                        </button>
+                                    </td>
+                                    <td ng-bind="det.nombre"></td>
+                                    <td ng-bind="det.nivel"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center m-t-15" ng-show="detData.length === 0">
+                        <span class="feather icon-slash"></span> Aún no se asignaron instituciones.
+                    </p>
+                    <p class="text-center m-t-15" ng-show="found.length === 0 && detData.length !== 0">
+                        <span class="feather icon-slash"></span> No se encontró resultados.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-right" data-dismiss="modal" ng-click="focusInput('find_inst'); find_insdet = '';">
+                        <span class="fa fa-times"></span> Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ins_edit_modal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="InsEditModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h5" ng-bind=" load_insti ? 'Editar Institución' : 'Agregar Institución';"></h5>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_inst')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div ng-include="'instituciones/ins-reusable/insForm.html'" ng-controller="insForm_Ctrl"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="res_load1">
+    <div ng-include="'resolucion/res-reusable/resMdlEdit.html'"></div>
+    <div ng-if="!resins_load">
+        <!-- [ EDIT USER RES ] -->
+        <div id="ins_edit_modal" class="modal fade bd-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="InsEditModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5"> Editar Institucion</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="focusInput('find_det_ins')" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-include="'instituciones/ins-reusable/insForm.html'" ng-controller="insForm_Ctrl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ EDIT USER RES ] -->
+
+        <!-- [ EDIT DATE RES ] -->
+        <div id="ins_det_edit_modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="InsEditModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Editar Entrega</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="clnDateRes()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="res_date">Fecha</label>
+                        <input type="date" id="res_date" class="form-control" ng-model="frmDate.dat">
+                        <small class="text-danger" ng-show=" (frmDate.dat == null && valResDate) ? true : false">
+                            Ingrese fecha correctamente.
+                        </small>
+                        <hr>
+                        <button class="btn btn-success" ng-click="chgDateRes(frmDate.idx, frmDate.dat)">
+                            <span class="feather icon-save"></span> Editar</button>
+                        <button class="btn btn-danger float-right" ng-click="clnDateRes()">
+                            <span class="fa fa-times"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ EDIT DATE RES ] -->
+
+        <!-- [ ADD INS RES ] -->
+        <div id="ins_det_add_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="InsAddModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-ll" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Asignar Institución</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="outResDet()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body" ng-if="resadd_load">
+                        <div ng-controller="insList_Ctrl">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" ng-model="paramIns" ng-pattern="insListPtrn[0]" ng-init="paramIns=''" ng-class="{'normal': paramIns === '' , 'is-invalid': paramIns === undefined}" class="form-control col-sm-12" maxlength="50" placeholder="Buscar Institución" id="find_inst">
+                                <button type="button" class="btn btn-secondary" ng-click="allInsti()">
+                                    <span class="f-w-500 feather icon-refresh-cw"></span>
+                                </button>
+                                <div class="invalid-feedback">
+                                    <span>Opps este parametro es desconocido</span>
+                                </div>
+                            </div>
+                            <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
+                                <table class="table table-sm table-bordered text-center table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ACCIÓN</th>
+                                            <th>INSTITUCIÓN</th>
+                                            <th>NIVEL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="ins in insData">
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" ng-click="addInsDet(ins.id_institucion)">
+                                                    <span class="feather icon-plus"></span>
+                                                </button>
+                                            </td>
+                                            <td ng-bind="::ins.nombre"></td>
+                                            <td ng-bind="::ins.nivel"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-center m-t-15" ng-show="insData.length === 0">
+                                    <span class="feather icon-slash"></span>
+                                    No se encontraron resultados
+                                </p>
+                                <div ng-show="load_data" class="card-loader">
+                                    <i class="pct-loader1 anim-rotate"></i>
+                                </div>
+                            </div>
+                            <div ng-include="'app-include/pagination.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ ADD INS RES ] -->
+
+        <!-- [ ADD USUREC RES ] -->
+        <div id="usu_rec_add_modal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuRecAddModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-ll" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Asignar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="outUsuRec()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body" ng-if="resaddrec_load">
+                        <div ng-controller="usuList_Ctrl">
+                            <div class="input-group mb-3">
+                                <input type="text" ng-model="paramUser" ng-pattern="usuListPtrn[number]" ng-init="paramUser=''" ng-class="{'normal': paramUser === '' , 'is-invalid': paramUser === undefined}" class="form-control col-sm-12" id="find_user" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Usuario">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ textPrmUsu }}
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href ng-click="selectPrm(1)"> Apellidos ó Nombres</a>
+                                        <a class="dropdown-item" href ng-click="selectPrm(0)"> N° Dni ó N° Carnet</a>
+                                        <a class="dropdown-item" href ng-click="selectPrm(2)"> Contacto </a>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback">
+                                    <span>Opps este parámetro es desconocido</span>
+                                </div>
+                            </div>
+                            <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
+                                <table class="table table-sm table-bordered table-hover m-b-0  text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>ACCIÓN</th>
+                                            <th>APELLIDOS</th>
+                                            <th>NOMBRES</th>
+                                            <th>N° DNI</th>
+                                            <th>N° CARNET</th>
+                                            <th>CONTACTO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="user in userData">
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" 
+                                                    ng-click="addRecDet(user.id_usuario)">
+                                                    <span class="feather icon-user-plus"></span>
+                                                </button>
+                                            </td>
+                                            <td class="c-pointer">
+                                                <div ng-class="{'hint--top hint--rounded':user.apellidos.length > 17}" aria-label="{{ ::user.apellidos }}" ng-bind="::user.apellidos | stringCut : 17">
+                                                </div>
+                                            </td>
+                                            <td ng-bind="::user.nombres"></td>
+                                            <td ng-bind="::user.ndni === null ? 'S/N DNI': user.ndni"></td>
+                                            <td ng-bind="::user.carnet === null ? 'S/N CARNET' : user.carnet"></td>
+                                            <td ng-bind="::user.contacto === null ? 'S/N CEL-TEL' : user.contacto"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="text-center m-t-15" ng-show="userData.length === 0">
+                                    <span class="feather icon-slash"></span>
+                                    No se encontraron resultados
+                                </p>
+                                <div ng-show="load_data" class="card-loader">
+                                    <i class="pct-loader1 anim-rotate"></i>
+                                </div>
+                            </div>
+                            <div ng-include="'../app/app-include/pagination.html'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ ADD USUREC RES ] -->
+
+    </div>
+</div>
