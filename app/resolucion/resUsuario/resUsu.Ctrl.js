@@ -2,7 +2,8 @@
 	'use strict';
 
 	a.module('resUsers_App', ['resForm_App','resList_App','resUsersDet_App']).controller('resUsers_Ctrl', ['$scope','$rootScope', function(s, rs){
-		console.log('RES - USUARIOS');
+		console.log('USERS MODULE RESADD');
+
 
 		s.navLink(2, true, 0);
 		rs.module = 'USU';

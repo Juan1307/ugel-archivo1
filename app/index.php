@@ -117,14 +117,14 @@
     </nav>
     <!-- [ navigation menu ] end -->
 
-    <!-- [ Header ] start -->
-    <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-blue">
-        <?php require_once 'app-main/header.php'; ?>
-    </header>
-    <!-- [ Header ] end -->
+    <div ng-controller="Module_Ctrl">
+        <!-- [ Header ] start -->
+        <?php require_once 'app-main/header.php'; ?>        
+        <!-- [ Header ] end -->
+    </div>
 
     <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container" ui-view>
+    <div class="pcoded-main-container" style="margin-top: 5rem;" ui-view>
     </div>
     <!-- [ Main Content ] end -->
    
@@ -148,6 +148,12 @@
     <!-- Required Main -->
     <script src="app-main/app.main.js"></script>
     <script src="app-main/app.route.js"></script>
+    <script src="app-main/app.module.js"></script>
+
+    <!-- Modules Main -->
+    <script src="usuarios/usu-require/usuForm.App.js"></script>
+    <script src="app-main/finder-gbl/finder.Ctrl.js"></script>
+    
     <script src="index.js"></script>
 
 </body>

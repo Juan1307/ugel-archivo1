@@ -2,7 +2,7 @@
 	'use strict';
 
 	a.module('resInsti_App', ['resForm_App','resList_App','resInstiDet_App']).controller('resInsti_Ctrl', ['$scope','$rootScope', function(s, rs){
-		console.log('RES - INSTITUCIONES');
+		console.log('INSTI MODULE RESADD');
 		
 		s.navLink(2, true, 1);
 		rs.module = 'INS';

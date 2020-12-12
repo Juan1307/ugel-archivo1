@@ -3,8 +3,7 @@
 
 	a.module('insForm_App', []).constant('insFormPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# ]{2,70}'])
 	.controller('insForm_Ctrl', ['$scope','$rootScope','insFormPtrn', 'insSet.Fac', function(s, rs, ptrn, Iset){
-		
-		console.log('INS FORM');
+		//console.log('INS FORM');
 		s.insFormPtrn = ptrn;
 		s.focusInput('institute');
 		rs.det_mod = false;
@@ -60,7 +59,6 @@
 
 		s.saveIns = (objDat, idIns = null) => {
 			s.valFrmIns = true;
-			console.log('ibl',objDat);			
 			if (objDat.institute === undefined || objDat.institute == '') {
 				return s.focusInput('institute');
 			}else if (objDat.level === undefined || objDat.level == '') {

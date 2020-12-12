@@ -26533,5 +26533,15 @@ input[type="file"] {
     border: 2px solid rgba(0, 0, 0, 0.125);
     border-radius: 5px;
 }
+
+.finder-bar {
+    position: absolute;
+    z-index: 1;
+    top: 4rem;
+    left: 1rem;
+    right: 1rem;
+    background-color: #e8f0fe;
+    display: none;
+}
 /* image varient End */
 /**====== Authentication css end ======**/

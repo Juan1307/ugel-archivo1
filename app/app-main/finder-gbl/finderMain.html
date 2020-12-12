@@ -1,0 +1,59 @@
+
+<div class="card finder-bar" ng-style="{'display': barFind === true ? 'block' : 'none'}">
+    <div class="card-body">
+        <div ng-class="{'card-load':load_data}" class="table-reponsive">
+            <table class="table table-sm table-bordered table-hover m-b-0 text-center bg-white">
+                <thead>
+                    <tr>
+                        <th>TIPO</th>
+                        <th class="bg-dark text-white">ENTREGA</th>
+                        <th>ACCION</th>
+                        <th class="bg-dark text-white">EMISION</th>
+                        <th>RES</th>
+                        <th>PRO</th>
+                        <th>OFICINA</th>
+                        <th>MOTIVO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="fd in findData">
+                        <td>
+                            <button class="btn btn-warning btn-sm" ng-click="getUsuFind(fd.id_usuario)">
+                                <span class="feather icon-edit"></span>
+                            </button>
+                            <button aria-label="APELLIDOS: {{::fd.apellidos}} -/- NOMBRE: {{::fd.nombres}} -/- DNI: {{::fd.ndni == null ? 'S/N DNI' : fd.ndni}} -/- CARNET: {{ ::fd.carnet == null ? 'S/N CARNET' : fd.carnet }} -/- CONTACTO: {{::fd.contacto}} {{ ::fd.contacto == null ? 'S/N TEL-CEL' : fd.contacto }}" class="btn btn-outline-primary btn-sm hint--right hint--rounded">
+                                <span class="feather icon-user"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <span ng-if="fd.estado == 0"> S/N FECHA</span>
+                            <span ng-if="fd.estado == 1" ng-bind="::fd.f_entrega | dateParse"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-warning btn-sm" ng-click="getDateFind(fd.id_detresolucion, fd.f_entrega)">
+                                <span class="fas fa-calendar"></span>
+                            </button>
+                            <button class="btn btn-sm" ng-click="chgDetFind(fd.id_detresolucion, fd.estado)" 
+                                ng-class="{'btn-outline-danger':fd.estado == 0,'btn-outline-success': fd.estado == 1}">
+                                <span class="fas" ng-class="{'fa-exclamation-triangle':fd.estado == 0,'fa-check': fd.estado == 1}"></span>
+                            </button>
+                        </td>
+                        <td ng-bind="::fd.f_emision | dateParse"></td>
+                        <td><b ng-bind="::fd.nresolucion"></b></td>
+                        <td><b ng-bind="::fd.nproyecto"></b></td>
+                        <td ng-bind="::fd.nombre"></td>
+                        <td ng-bind="::fd.descripcion"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-center m-t-15" ng-show="findData.length === 0" style="color: black;">
+            <span class="feather icon-slash"></span>
+            No se encontraron resultados
+        </p>
+        <div ng-show="load_data" class="card-loader">
+            <i class="pct-loader1 anim-rotate"></i>
+        </div>
+        <div ng-include="'app-include/nxt-pagination.html'"></div>
+    </div>
+</div>

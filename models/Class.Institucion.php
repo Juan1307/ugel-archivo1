@@ -40,7 +40,7 @@ declare(strict_types=1);
 
 		public function getDataEst(int $id) : array
 		{
-			$qry = "SELECT d.id_institucion, u.nombres , u.apellidos, u.ndni, u.carnet, r.nresolucion, r.nproyecto, r.f_emision, d.f_entrega, a.nombre, m.descripcion, d.estado FROM tbl_detresolucion AS d LEFT JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario 
+			$qry = "SELECT d.id_usuario, u.nombres , u.apellidos, u.ndni, u.carnet, r.nresolucion, r.nproyecto, r.f_emision, d.f_entrega, a.nombre, m.descripcion, d.estado FROM tbl_detresolucion AS d LEFT JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario 
 													INNER JOIN tblresolucion AS r ON r.id_resolucion = d.id_resolucion 
 													INNER JOIN tblarea AS a ON a.id_area = r.id_area 
 													INNER JOIN tblmotivo AS m ON m.id_motivo = r.id_motivo WHERE d.id_institucion = $id";
@@ -52,11 +52,11 @@ declare(strict_types=1);
  				foreach ($data as $idx) {
 					$sub_arr = [];
 
-					$sub_arr['id_institucion'] = $idx['id_institucion'];
+					$sub_arr['id_usuario']     = $idx['id_usuario'];
 					$sub_arr['nombres']    	   = $idx['nombres'];
 					$sub_arr['apellidos']      = $idx['apellidos'];
-					$sub_arr['ndni']    	   = $idx['ndni'] === null ? 'S/N Dni' : $idx['ndni'];
-					$sub_arr['carnet']    	   = $idx['carnet'] === null ? 'S/N Carnet' : $idx['carnet'];
+					$sub_arr['ndni']    	   = $idx['ndni'] === null ? 'S/N DNI' : $idx['ndni'];
+					$sub_arr['carnet']    	   = $idx['carnet'] === null ? 'S/N CARNET' : $idx['carnet'];
 					$sub_arr['nresolucion']    = $idx['nresolucion'];
 					$sub_arr['nproyecto']      = $idx['nproyecto'];
 					$sub_arr['f_emision']      = date('d-m-Y', strtotime($idx['f_emision']));

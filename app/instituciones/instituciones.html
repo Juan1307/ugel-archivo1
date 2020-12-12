@@ -165,9 +165,9 @@
                                     <tr ng-repeat="det in estData.data | filter:find_res_ins as found" class="c-pointer">
                                         <td>
                                             <span ng-class="{'hint--right hint--rounded': det.id_usuario !== null}"
-                                                aria-label="A: {{ ::det.apellidos }} / N: {{ ::det.nombres }} / 
-                                                            D: {{ ::det.ndni }} / C: {{ ::det.carnet }} "
-                                                ng-bind="::det.id_usuario === null ? 'S/N RECEPTOR' : 'CON RECEPTOR'">
+                                                aria-label="APELLIDOS: {{ ::det.apellidos }} -/- NOMBRES: {{ ::det.nombres }} -/- 
+                                                            DNI: {{ ::det.ndni }} -/- CARNET: {{ ::det.carnet }} "
+                                                ng-bind="::det.id_usuario == null ? 'S/N RECEPTOR' : 'CON RECEPTOR'">
                                             </span>
                                         </td>
                                         <td ng-bind="::det.nresolucion"></td>
@@ -186,7 +186,7 @@
                                         </td>
                                         <td>
                                             <span class="hint--left hint--rounded badge" 
-                                                aria-label=" C : {{ ::det.f_emision }} / E : {{ ::det.f_entrega }}"
+                                                aria-label="EMISIÓN : {{ ::det.f_emision }} -/- ENTREGA : {{ ::det.f_entrega }}"
                                                 ng-class="{'badge-danger':det.estado == 0,'badge-success':det.estado == 1}" 
                                                 ng-bind="::det.estado == 0 ? 'Por Entregar' : 'Entregado'"></span>
                                         </td>

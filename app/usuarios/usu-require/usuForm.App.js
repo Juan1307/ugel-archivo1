@@ -3,8 +3,7 @@
 
 	a.module('usuForm_App', []).constant('usuFormPtrn', ['[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{2,60}','[0-9]{8}','[0-9]{2,15}','[0-9]{5,9}'])
 	.controller('usuForm_Ctrl', ['$scope','$rootScope','usuFormPtrn', 'usuVal.Ftr', 'usuSet.Ftr', function(s, rs, ptrn, Uval, Uset){
-
-		console.log('en formulario usuarios');
+		console.log('USU FORM');
 		s.usuFormPtrn = ptrn;
 		rs.det_mod = false;
 
@@ -30,8 +29,10 @@
 						//console.log('send put', r);
 						if (r) {
 							s.alertMsj('Usuario actualizado',' correctamente.'); 	
+							console.log('det mod',rs.det_mod);
 							switch (rs.det_mod) {
 								case null: rs.allDetRes();  s.focusInput('find_det_usu'); break;
+								case true: rs.allFind(); $('#usu_find_edit_modal').modal('hide'); s.focusInput('find_gbl'); break;
 								default: s.allUsers();  s.focusInput('find_user'); break;
 							}
 							s.cleanUser(frmData,data);

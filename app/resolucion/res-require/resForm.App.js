@@ -34,7 +34,6 @@
     	});
     	
     	const sendRes = (nObj) => {
-    		console.log('nobj', nObj);
 
 			const data = nObj[0];
 			const fils = nObj[1];
@@ -192,7 +191,7 @@
 		};
 
 	}]).factory('iniGet.Srv', ['$http', function(h){
-		return h.get('../controller/AjaxResCtrl/Ajax.ResApp.php').then(res => {
+		return h.get('../controller/AjaxResCtrl/Ajax.ResApp.php?OP=MOT').then(res => {
 			return res.data;
 		}).catch(err => {
 			console.error(err.status);

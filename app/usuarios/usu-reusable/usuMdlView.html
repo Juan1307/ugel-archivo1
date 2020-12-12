@@ -64,7 +64,7 @@
                                     <tr ng-repeat="det in estData.data | filter:find_res_user as found" class="c-pointer">
                                         <td>
                                             <span ng-class="{'hint--right hint--rounded': det.id_institucion !== null}"
-                                                aria-label="IE : {{ ::det.institucion }} / N : {{ ::det.nivel }}"
+                                                aria-label="INSTITUCIÓN : {{ ::det.institucion }} -/- NIVEL : {{ ::det.nivel }}"
                                                 ng-bind="::det.id_institucion === null ? 'USUARIO' : 'INSTITUCION'">
                                             </span>
                                         </td>
@@ -84,7 +84,7 @@
                                         </td>
                                         <td>
                                             <span class="hint--left hint--rounded badge" 
-                                                aria-label=" C : {{ ::det.f_emision }} / E : {{ ::det.f_entrega }}"
+                                                aria-label=" EMISIÓN : {{ ::det.f_emision }} / ENTREGA : {{ ::det.f_entrega }}"
                                                 ng-class="{'badge-danger':det.estado == 0,'badge-success':det.estado == 1}" 
                                                 ng-bind="::det.estado == 0 ? 'Por Entregar' : 'Entregado'"></span>
                                             

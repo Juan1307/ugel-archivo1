@@ -4,7 +4,6 @@
 	a.module('resUsersDet_App', []).constant('usuResDetPtrn', ['[0-9]{0,15}','[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{0,60}','[0-9]{0,9}'])
 	.controller('resUsersDet_Ctrl', ['$scope','$rootScope','usuResDetPtrn','resDetUsuGet.Srv','resDetUsuSet.Fac','resDetUsu.Fac',
 		function(s, rs, ptrn, RDini, RDset, RDusu) {
-		console.log('EXTEND RES USU');
 		s.usuDetPtrn = ptrn;
 
 		s.backPoint = () => {
@@ -16,7 +15,6 @@
 		const getDet = (id, flag, prm, num, p = 1, fpag) => {
 			s.load_data = true;
 			RDini.getAll(id, flag, prm, num, p).then(r => {
-				console.log('res',r);
 				s.detData = r.data;
 				//pagination
 				s.pagAct = r.pag_act;
@@ -60,8 +58,6 @@
 				s.frmDate.dat = null;
 			}
 			s.frmDate.idx = id;
-
-			console.log('a',s.frmDate);
 
 			$('#usu_det_edit_modal').modal('show');
 			rs.valResDate = false;
@@ -198,7 +194,6 @@
 			s.id_rd = id; rs.id_rd_ex = id;
 			
 			RDini.getIdx(id).then(r => {
-				console.log('res',r)
 				s.objRes = r.data; s.arrFil = r.files;
 				rs.resusu_load = false;
 			},e => {

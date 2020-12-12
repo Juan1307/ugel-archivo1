@@ -1,4 +1,5 @@
 <?php 
+
 	require_once '../Ajax.Ctrl.php';
 	require_once '../../models/Class.ResUsu.php';
 	require_once '../../models/Class.ResIns.php';

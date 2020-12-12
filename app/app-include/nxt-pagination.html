@@ -1,0 +1,21 @@
+<nav aria-label="Page Pagination" ng-if="findData.length > 0">
+    <ul class="pagination flex-wrap justify-content-center mt-3">
+        <li class="page-item" ng-class="{'disabled':pagAct === 1}">
+           <span ng-show="pagAct === 1" class="page-link">
+                Primero <span class="sr-only">(current)</span>
+            </span>
+            <a ng-show="pagAct !== 1" class="page-link text-primary" href ng-click="goToNext(pagA)">Anterior</a>
+        </li> 
+        <li class="page-item active">
+            <span class="page-link" ng-bind="pagAct">
+                <span class="sr-only">(current)</span>
+            </span>
+        </li>
+        <li class="page-item" ng-class="{'disabled':pagAct == totPag}">
+            <span ng-show="pagAct == totPag" class="page-link">
+                Último <span class="sr-only">(current)</span>
+            </span>
+            <a ng-show="pagAct !== totPag" class="page-link text-primary" href ng-click="goToNext(pagS)">Siguiente</a>
+        </li>
+    </ul>
+</nav>

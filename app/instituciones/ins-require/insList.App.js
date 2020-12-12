@@ -3,8 +3,7 @@
 
 	a.module('insList_App', []).constant('insListPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# ]{2,70}'])
 	.controller('insList_Ctrl', ['$scope','$rootScope','insListPtrn','insGet.Srv','insGet.Fac', function(s, rs, ptrn, Iini, Iget){
-		
-		console.log('INS LIST');
+		//console.log('INS LIST');
 		s.insListPtrn = ptrn; 
 
 		const getInsti = (flag, prm, p = 1, fpag) => {
@@ -23,7 +22,6 @@
 		};
 
 		s.$watch('paramIns', (vn, vo)  => {
-
     		if (vn !== undefined && vn !== '') {
     			getInsti(true, s.paramIns);
     		}else if (vn === ''){
@@ -79,7 +77,6 @@
 			}
 			
 			Iget.getInsId(id).then(r => {
-				console.log('res', r);
 				s.idEdit.id_ins = r.id_institucion; 
 				s.frmIns.institute = r.nombre;
 				s.frmIns.level = r.nivel;

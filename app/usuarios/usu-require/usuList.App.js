@@ -3,8 +3,7 @@
 
 	a.module('usuList_App', []).constant('usuListPtrn', ['[0-9]{0,15}','[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{0,60}','[0-9]{0,9}'])
 	.controller('usuList_Ctrl', ['$scope','$rootScope','usuListPtrn','usuGet.Srv','usuGet.Fac', function(s, rs, ptrn, Uini, Uget){
-
-		console.log('en lista usuarios');
+		//console.log('USU LIST');
 		s.usuListPtrn = ptrn; 
 
 		const getUsers = (flag, prm, num, p = 1, fpag) => {

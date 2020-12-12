@@ -4,6 +4,30 @@ declare(strict_types=1);
 
 	abstract class Det extends Config
 	{
+		public function getDataResAll(int $pag, int $p_pag, string $val) : array
+		{
+			$sql_w = 'u.apellidos LIKE '."'%$val%'".' OR u.nombres LIKE '."'%$val%'";
+
+			$qry = "SELECT COUNT(1) FROM tbl_detresolucion AS d INNER JOIN tblresolucion AS r ON d.id_resolucion = r.id_resolucion 
+									INNER JOIN tblarea AS a ON r.id_area = a.id_area INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
+									LEFT JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE r.est_tbl = 0 AND ($sql_w)";
+
+			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, u.contacto, 
+						     d.id_detresolucion, d.estado, d.f_entrega, 
+						     r.id_resolucion, r.f_emision, r.nresolucion, r.nproyecto, a.nombre, m.descripcion 
+						     FROM tbl_detresolucion AS d INNER JOIN tblresolucion AS r ON d.id_resolucion = r.id_resolucion INNER JOIN tblarea AS a ON r.id_area = a.id_area INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE r.est_tbl = 0 AND ($sql_w)";
+
+			return Config::getConfigNext($qry, $s_qry, $pag, $p_pag);
+		}
+
+		public function getUsu(int $pag, int $p_pag) : array
+		{		    
+		    $qry = "SELECT COUNT(1) FROM tblusuarios";
+			$s_qry = "SELECT * FROM tblusuarios";
+
+ 			return Config::getConfigNext($qry, $s_qry, $pag, $p_pag);
+		}
+
 		public function pstDataDetId(int $id, string $date) : bool
 		{			
 			$dat = ['f_entrega' => [$date,'STR']];

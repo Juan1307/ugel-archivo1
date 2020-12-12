@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 	require_once '../Ajax.Ctrl.php';
 	require_once '../../models/Class.ResUsu.php';
 	require_once '../../models/Class.ResIns.php';
@@ -170,24 +171,6 @@
 							default: die; break;
 						}
 						//$outdat = ResUsu::delFiles($id, false);
-					}
-				break;
-
-				case 'DET':
-					$id = $_GET['ID'] ?? die;
-					$s_id = $_GET['IDD'] ?? die;
-					$outdat = false;
-
-					if ((int) $id > 0 && (int) $s_id > 0) {
-						settype($id, "int"); settype($s_id, "int");
-						
-						$_GET['MOD'] ?? die;
-						switch ($_GET['MOD']) {
-							case 'USU': $outdat = ResUsu::delDetData($id, $s_id); break;
-							case 'INS': $outdat = ResIns::delDetData($id, $s_id); break;
-							default: die; break;
-						}
-						//$outdat = ResUsu::delDetData($id, $s_id);
 					}
 				break;
 

@@ -2,8 +2,8 @@
 	'use strict';
 
 	a.module('users_App', ['usuForm_App', 'usuList_App']).controller('users_Ctrl', ['$scope','UsuEst.Srv', function(s, Uest){
+		console.log('MODULO USERS');
 		s.navLink(3);
-		console.log('MODULO usuarios');
 
 		s.est = {};
 		Uest.then(r => {
