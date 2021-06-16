@@ -29,7 +29,7 @@ declare(strict_types=1);
 			$qry = "SELECT COUNT(1) FROM tblresolucion WHERE est_tbl = 0 AND $sql_w";
  			$s_qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado
  											FROM tblresolucion as r INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
- 											INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 0 AND $sql_w";
+ 											INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 0 AND $sql_w ORDER BY r.id_resolucion DESC";
 
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
@@ -44,7 +44,7 @@ declare(strict_types=1);
  			return ['data' => $data, 'files' => $files];
 		}
 
-		public function pstData(array $arr, array $det, $files) : bool
+		public function postData(array $arr, array $det, $files) : bool
 		{
 			$dat_0 = Res::fullResArr($arr);
 			$dat_1 = [$det,'id_usuario','id_resolucion'];
@@ -132,7 +132,7 @@ declare(strict_types=1);
 
  			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, u.contacto, d.id_detresolucion, d.f_entrega, d.estado
  									FROM tbl_detresolucion AS d INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario 
- 									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL AND ($sql_w)";	
+ 									WHERE d.id_resolucion = $id AND d.id_institucion IS NULL AND ($sql_w) ORDER BY d.id_detresolucion DESC";	
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
 
@@ -146,7 +146,7 @@ declare(strict_types=1);
  			return ['data' => $data, 'files' => $files];
 		}
 
-		public function pstDetDataId(int $id, int $s_id) : int
+		public function postDetDataId(int $id, int $s_id) : int
 		{
 			$v_qry = "SELECT COUNT(1) FROM tbl_detresolucion WHERE id_resolucion = $s_id AND id_usuario = $id";			
 			$v_data = Config::getConfigRowCol($v_qry);

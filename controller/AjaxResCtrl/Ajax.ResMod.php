@@ -105,8 +105,8 @@
 		   				
 		   				$_GET['MOD'] ?? die;
 		   				switch ($_GET['MOD']) {
-							case 'USU': $outdat = ResUsu::pstData($data['data'], $data['arr'], $arr_fil); break;
-							case 'INS': $outdat = ResIns::pstData($data['data'], $data['arr'], $arr_fil); break;
+							case 'USU': $outdat = ResUsu::postData($data['data'], $data['arr'], $arr_fil); break;
+							case 'INS': $outdat = ResIns::postData($data['data'], $data['arr'], $arr_fil); break;
 							default: die; break;
 						}
 		   				

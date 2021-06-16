@@ -15,7 +15,7 @@ declare(strict_types=1);
 			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, u.contacto, 
 						     d.id_detresolucion, d.estado, d.f_entrega, 
 						     r.id_resolucion, r.f_emision, r.nresolucion, r.nproyecto, a.nombre, m.descripcion 
-						     FROM tbl_detresolucion AS d INNER JOIN tblresolucion AS r ON d.id_resolucion = r.id_resolucion INNER JOIN tblarea AS a ON r.id_area = a.id_area INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE r.est_tbl = 0 AND ($sql_w)";
+						     FROM tbl_detresolucion AS d INNER JOIN tblresolucion AS r ON d.id_resolucion = r.id_resolucion INNER JOIN tblarea AS a ON r.id_area = a.id_area INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo INNER JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE r.est_tbl = 0 AND ($sql_w) ORDER BY d.id_detresolucion DESC";
 
 			return Config::getConfigNext($qry, $s_qry, $pag, $p_pag);
 		}
@@ -28,7 +28,7 @@ declare(strict_types=1);
  			return Config::getConfigNext($qry, $s_qry, $pag, $p_pag);
 		}
 
-		public function pstDataDetId(int $id, string $date) : bool
+		public function postDataDetId(int $id, string $date) : bool
 		{			
 			$dat = ['f_entrega' => [$date,'STR']];
 			$qry = "UPDATE tbl_detresolucion SET f_entrega=:f_entrega, estado = 1 WHERE id_detresolucion = $id";

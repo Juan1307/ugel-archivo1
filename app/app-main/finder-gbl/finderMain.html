@@ -18,9 +18,6 @@
                 <tbody>
                     <tr ng-repeat="fd in findData">
                         <td>
-                            <button class="btn btn-warning btn-sm" ng-click="getUsuFind(fd.id_usuario)">
-                                <span class="feather icon-edit"></span>
-                            </button>
                             <button aria-label="APELLIDOS: {{::fd.apellidos}} -/- NOMBRE: {{::fd.nombres}} -/- DNI: {{::fd.ndni == null ? 'S/N DNI' : fd.ndni}} -/- CARNET: {{ ::fd.carnet == null ? 'S/N CARNET' : fd.carnet }} -/- CONTACTO: {{::fd.contacto}} {{ ::fd.contacto == null ? 'S/N TEL-CEL' : fd.contacto }}" class="btn btn-outline-primary btn-sm hint--right hint--rounded">
                                 <span class="feather icon-user"></span>
                             </button>

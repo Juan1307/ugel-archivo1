@@ -21,7 +21,7 @@ declare(strict_types=1);
 			$qry = "SELECT COUNT(1) FROM tblresolucion WHERE est_tbl = 1 AND $sql_w";
  			$s_qry = "SELECT r.id_resolucion, r.nresolucion, r.nproyecto, r.f_emision, m.descripcion, a.nombre, r.estado
  											FROM tblresolucion as r INNER JOIN tblmotivo AS m ON r.id_motivo = m.id_motivo 
- 											INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 1 AND $sql_w";
+ 											INNER JOIN tblarea AS a ON r.id_area = a.id_area WHERE r.est_tbl = 1 AND $sql_w ORDER BY r.id_resolucion DESC";
 
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
@@ -36,7 +36,7 @@ declare(strict_types=1);
  			return ['data' => $data, 'files' => $files];
 		}
 
-		public function pstData(array $arr, array $det, $files) : bool
+		public function postData(array $arr, array $det, $files) : bool
 		{
 			$dat_0 = Res::fullResArr($arr);
 			$dat_1 = [$det,'id_institucion','id_resolucion'];
@@ -114,7 +114,7 @@ declare(strict_types=1);
 									WHERE d.id_resolucion = $id AND ($sql_w)";
 
  			$s_qry = "SELECT u.id_usuario, u.nombres, u.apellidos, u.ndni, u.carnet, i.id_institucion, i.nombre, i.nivel, 
- 								d.id_detresolucion, d.f_entrega, d.estado FROM tbl_detresolucion AS d INNER JOIN tblinstitucion AS i ON d.id_institucion = i.id_institucion LEFT JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE d.id_resolucion = $id AND ($sql_w)";
+ 								d.id_detresolucion, d.f_entrega, d.estado FROM tbl_detresolucion AS d INNER JOIN tblinstitucion AS i ON d.id_institucion = i.id_institucion LEFT JOIN tblusuarios AS u ON d.id_usuario = u.id_usuario WHERE d.id_resolucion = $id AND ($sql_w) ORDER BY d.id_detresolucion DESC";
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
 
@@ -128,7 +128,7 @@ declare(strict_types=1);
  			return ['data' => $data, 'files' => $files];
 		}
 
-		public function pstDetDataId(int $id, int $s_id) : int
+		public function postDetDataId(int $id, int $s_id) : int
 		{
 			$v_qry = "SELECT COUNT(1) FROM tbl_detresolucion WHERE id_resolucion = $s_id AND id_institucion = $id";			
 			$v_data = Config::getConfigRowCol($v_qry);
@@ -144,7 +144,7 @@ declare(strict_types=1);
 		}
 
 		//RECEPTOR USER
-		public function pstUsuDetId(int $id_u, int $id, int $s_id) : bool
+		public function postUsuDetId(int $id_u, int $id, int $s_id) : bool
 		{
 			$qry = "UPDATE tbl_detresolucion SET id_usuario = $id_u WHERE id_detresolucion = $s_id AND id_resolucion = $id";
 			return Config::execConfigRow($qry);

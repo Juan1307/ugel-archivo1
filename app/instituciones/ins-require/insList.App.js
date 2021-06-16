@@ -1,7 +1,7 @@
 (function(a) {	
 	'use strict';
 
-	a.module('insList_App', []).constant('insListPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# ]{2,70}'])
+	a.module('insList_App', []).constant('insListPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# -]{2,70}'])
 	.controller('insList_Ctrl', ['$scope','$rootScope','insListPtrn','insGet.Srv','insGet.Fac', function(s, rs, ptrn, Iini, Iget){
 		//console.log('INS LIST');
 		s.insListPtrn = ptrn; 

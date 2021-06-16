@@ -9,7 +9,7 @@
 		const getFind = (prm, p = 1) => {
 			s.load_data = true;
 			Fres.getRes(prm, p).then(r => {
-				console.log('res',r);
+				//console.log('res',r);
 				s.findData = r.data;
 				//pagination
 				s.pagAct = r.pag_act;
@@ -46,35 +46,7 @@
 
   		s.hideFind = () => {
   			s.barFind = false;
-  			s.frmFind = {}; s.idFind = {};
 			rs.fd_module = false; rs.det_mod = false;
-  		};
-
-  		s.getUsuFind = (id) => {
-  			rs.det_mod = true;
-  			if (typeof parseInt(id) !== 'number' ) {
-				return console.error('number error');
-			}
-
-			Fres.getUsuId(id).then( r => {
-				s.idFind.idUser = r.id_usuario; 
-				s.frmFind.last_name = r.apellidos;
-				s.frmFind.first_name = r.nombres;
-				s.frmFind.nro_dni = r.ndni;
-				s.frmFind.nro_carnet = r.carnet;
-				s.frmFind.nro_contact = r.contacto;
-  				  			
-				$('#usu_find_edit_modal').modal('show');
-				s.focusInput('last_name');
-			}, e => {
-				console.error(e.status);
-			});
-  		};
-
-  		rs.cleanFind = () => {
-  			rs.det_mod = false;
-			$('#usu_find_edit_modal').modal('hide');
-			s.focusInput('find_gbl');
   		};
   		
   		s.getDateFind = (id, fec) => {
@@ -148,9 +120,8 @@
 		return {
 			getRes: (prm = null, p, pp = 5) => {
 				let url = `&PAG=${p}&PPAG=${pp}&STR=${prm}`;
-
 				return h.get(`../controller/AjaxResCtrl/Ajax.ResApp.php?OP=GBL${url}`).then(res => {
-					console.log('res http', res);
+					//console.log('res http', res);
 					return res.data;
 				}).catch(err => {
 					console.error(err.status);

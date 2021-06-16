@@ -16,23 +16,23 @@
 		      });
 		    }
 	  };
-	}).controller('resForm_Ctrl', ['$scope','$rootScope','resFormPtrn','iniGet.Srv','resSet.Fac', function(s, rs, ptrn, Rini, Rset){
+	}).controller('resForm_Ctrl', ['$scope','$rootScope','resFormPtrn','iniResGet.Srv','resSet.Fac', function(s, rs, ptrn, Rini, Rset){
 
 		s.resFormPtrn = ptrn;
     	s.selected = {};
     	
-    	rs.select_m = (id) => {
-    		let mot = s.arrMotiv.filter( e => e.id_motivo == id);
-    		s.selected.value = mot[0];
-    	};
-
 		Rini.then( r => {
 			s.arrMotiv = r.moti;
 			s.arrArea = r.area;
     	}, e => {
     		console.error(e.status);
     	});
-    	
+
+    	rs.select_m = (id) => {
+    		let mot = s.arrMotiv.filter( e => e.id_motivo == id);
+    		s.selected.value = mot[0];
+    	};
+
     	const sendRes = (nObj) => {
 
 			const data = nObj[0];
@@ -190,7 +190,7 @@
 			s.frmResDat.res_fec = null;
 		};
 
-	}]).factory('iniGet.Srv', ['$http', function(h){
+	}]).factory('iniResGet.Srv', ['$http', function(h){
 		return h.get('../controller/AjaxResCtrl/Ajax.ResApp.php?OP=MOT').then(res => {
 			return res.data;
 		}).catch(err => {

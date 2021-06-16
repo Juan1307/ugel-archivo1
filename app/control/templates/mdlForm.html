@@ -1,0 +1,68 @@
+<div id="con_edit_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="ConEditModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-lg" role="document">
+        <div class="modal-content" ng-controller="conForm_Ctrl">
+            <div class="modal-header">
+                <h5 class="modal-title h5">Editar Entrega {{ idEdit.idCon }}</h5>
+                <button type="button" class="close" data-dismiss="modal" ng-click="cleanCon(true)" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label for="employe">Encargado</label>
+                        <div class="input-group">
+                            <input type="text" ng-model="employe" class="form-control" id="employe" placeholder="Buscar encargado" ng-click="cleanEmp()">
+                            <button class="btn btn-primary" ng-bind="selected_0.value"></button>
+                        </div>
+                        <div ng-style="{'display': found.length == arrPers.length ? 'none' : 'block'}" class="dropdown-menu" style="overflow-x: auto; max-height: 10rem;">
+                            <a class="dropdown-item" href ng-repeat="per in arrPers | filter:employe as found" ng-click="selectEmp(per)" ng-bind="::per.persona"></a>
+                            <div class="text-center" ng-show="found.length == 0">
+                                <span class="feather icon-slash"></span>
+                                No se encontraron resultados
+                            </div>
+                        </div>
+                        <small class="text-danger" ng-show="(selected_0.id.length == 0 && valFrmCon) ? true : false">
+                            Seleccione un encargado correctamente.
+                        </small>
+                    </div>
+                    <div class="form-group col-12">
+                        <label for="area">Oficina</label>
+                        <select id="area" ng-model="frmCon.area" ng-init="frmCon.area = undefined" ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
+                            <option style="display:none" value="">Seleccione una Oficina</option>
+                        </select>
+                        <small class="text-danger" ng-show=" (frmCon.area === undefined && valFrmCon) ? true : false">
+                            Seleccione una oficina correctamente.
+                        </small>
+                    </div>
+                    <hr>
+                    <div class="form-group col-12 col-sm-6">
+                        <label for="folios">Nro Folios</label>
+                        <input type="text" ng-model="frmCon.folios" ng-pattern="conFormPtrn[0]" ng-init="frmCon.folios = ''" ng-class="{'control': frmCon.folios === '',
+                                                        'is-valid': frmCon.folios !== '' && frmCon.folios !== undefined,
+                                                        'is-invalid': frmCon.folios === undefined}" class="form-control text-center" id="folios" placeholder="Ingrese nro folios" maxlength="5">
+                        <div class="invalid-feedback">
+                            Ingrese n° folios correctamente.
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-sm-6">
+                        <label for="f_entrega">Fecha (OPCIONAL)</label>
+                        <input type="date" ng-model="frmCon.f_entrega" class="form-control text-center" id="f_entrega">
+                    </div>
+                     <div class="form-group col-12">
+                        <button class="btn btn-danger" ng-click="cleanCon(true)">
+                            <span class="feather icon-trash"></span> Cancelar
+                        </button>
+                        <button class="btn btn-success float-right" type="button" 
+                            ng-click="saveCon(frmCon,idEdit.idCon)" ng-disabled="load_con">
+                            <span class="spinner-border spinner-border-sm" role="status" ng-style="{'display': !load_con ? 'none' : ''}"></span>
+                            <span class="load-text f-11" ng-style="{'display': !load_con ? 'none' : ''}" >Cargando...</span>
+                                                
+                            <span class="btn-text" ng-style="{'display': load_con ? 'none' : ''}" >
+                                <span class="feather icon-save"></span> Editar
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

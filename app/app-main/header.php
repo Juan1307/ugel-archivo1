@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto" ng-controller="gblFind_Ctrl">
             <li class="nav-item">
-                <a class="pop-search" ng-click="showFind()">
+                <a class="pop-search" href ng-click="showFind()">
                     <i class="feather icon-search"></i>
                 </a>
                 <div class="search-bar" ng-style="{'background-color': rpStr == undefined ? '#ff8484' : '#fff'}">
@@ -104,78 +104,7 @@
 </header>
 
 <div ng-if="fd_module === true">
-    <!-- [ EDIT USU FIND ] -->
-    <div id="usu_find_edit_modal" class="modal fade bd-example-modal-md" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" ng-controller="usuForm_Ctrl">
-                <div class="modal-header">
-                    <h5 class="modal-title h5">Editar Usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cleanUser(frmUsers, frmFind); cleanFind();"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body" >
-                    <form class="needs-validation" name="frmUsers" autocomplete="off" novalidate>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label for="last_name">Apellidos</label>
-                                <input type="text" ng-model="frmFind.last_name" ng-pattern="usuFormPtrn[0]" ng-init="frmFind.last_name=''" ng-required="frmUsers.$submitted" ng-class="{ 'control': frmFind.last_name === '',
-                                                                                'is-valid': frmFind.last_name !== '' && frmFind.last_name !== undefined,
-                                                                                'is-invalid': frmFind.last_name === undefined}" class="form-control" maxlength="50" id="last_name" placeholder="Ingrese Apellidos">
-                                <div class="invalid-feedback">
-                                    <span>Complete apellidos correctamente.</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="first_name">Nombres</label>
-                                <input type="text" ng-model="frmFind.first_name" ng-pattern="usuFormPtrn[0]" ng-init="frmFind.first_name=''" ng-required="frmUsers.$submitted" ng-class="{ 'control': frmFind.first_name === '',
-                                                                                'is-valid': frmFind.first_name.length >= 2 && frmFind.first_name !== undefined,
-                                                                                'is-invalid': frmFind.first_name === undefined}" class="form-control" maxlength="35" id="first_name" placeholder="Ingrese Nombres">
-                                <div class="invalid-feedback">
-                                    <span>Complete nombres correctamente.</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="nro_dni">Nro de DNI</label>
-                                <input type="text" ng-model="frmFind.nro_dni" ng-pattern="usuFormPtrn[1]" ng-init="frmFind.nro_dni=''" ng-class="{ 'is-valid': frmFind.nro_dni === '' || frmFind.nro_dni.length === 8,
-                                                                                'is-invalid': frmFind.nro_dni === undefined}" class="form-control" maxlength="8" id="nro_dni" placeholder="Nro Identidad">
-                                <div class="invalid-feedback">
-                                    <span>Ingrese N° de DNI válido.</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="nro_carnet">C Extranjeria</label>
-                                <input type="text" ng-model="frmFind.nro_carnet" ng-pattern="usuFormPtrn[2]" ng-init="frmFind.nro_carnet=''" ng-class="{ 'is-valid': frmFind.nro_carnet === '' || frmFind.nro_carnet.length >= 2,
-                                                                                'is-invalid': frmFind.nro_carnet === undefined}" class="form-control" maxlength="15" id="nro_carnet" placeholder="Nro Carnet">
-                                <div class="invalid-feedback">
-                                    <span>Ingrese N° de Carnet válido.</span>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="nro_contact">Contacto</label>
-                                <input type="text" ng-model="frmFind.nro_contact" ng-pattern="usuFormPtrn[3]" ng-init="frmFind.nro_contact=''
-                                                                    " ng-class="{ 'is-valid': frmFind.nro_contact === '' || frmFind.nro_contact.length >= 5,
-                                                                                'is-invalid': frmFind.nro_contact === undefined}" class="form-control" maxlength="9" id="nro_contact" placeholder="Ingrese Contacto">
-                                <div class="invalid-feedback">
-                                    <span>Ingrese N° de Contacto válido.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <button class="btn btn-success" type="button" ng-click="saveUser(frmUsers, frmFind, idFind.idUser)">
-                                    <span class="feather icon-save"></span> Editar
-                                </button>
-                                <button class="btn btn-danger float-right" type="button" ng-click="cleanUser(frmUsers, frmFind); cleanFind();">
-                                    <span class="fas fa-times"></span> Cancelar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- [ EDIT USU FIND ] -->
-
+    
     <!-- [ EDIT DATE RES ] -->
     <div id="find_det_edit_modal" class="modal fade bd-example-modal-sm" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="UsuEditModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

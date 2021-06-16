@@ -7,23 +7,23 @@
 
             s.state('m_home', {
                 url: '/inicio',
-                templateUrl: '../app/dashboard/dashboard.html',
+                templateUrl: './dashboard/dashboard.html',
                 controller: 'home_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
-                        return $ocLazyLoad.load(['../app/dashboard/source/dashboard.Ctrl.js',
-                            					 '../app/dashboard/source/dashboard.Srv.js'
+                        return $ocLazyLoad.load(['./dashboard/source/dashboard.Ctrl.js',
+                            					 './dashboard/source/dashboard.Srv.js'
                         ]);
                     }
                 }
             }).state('m_graphics', {
                 url: '/graficos',
-                templateUrl: '../app/graficos/graficos.html',
+                templateUrl: './graficos/graficos.html',
                 controller: 'graphics_Ctrl',
                 resolve: {
                     module: function($ocLazyLoad) {
-                        return $ocLazyLoad.load(['../app/graficos/source/graficos.Ctrl.js',
-                                                 '../app/graficos/source/graficos.Srv.js'
+                        return $ocLazyLoad.load(['./graficos/source/graficos.Ctrl.js',
+                                                 './graficos/source/graficos.Srv.js'
                         ]);
                     }
                 }
@@ -85,6 +85,38 @@
                                                  './resolucion/resInstitucion/resIns.Ctrl.js',
                                                  './resolucion/resInstitucion/resExt.Ctrl.js'
                         ]);
+                    }
+                }
+            }).state('m_conRes', {
+                url: '/control',
+                templateUrl: './control/control.html',
+                controller: 'control_Ctrl',
+                resolve: {
+                    module: function($ocLazyLoad) {
+                        
+                        return $ocLazyLoad.load(['./control/con-require/conList.App.js',
+                                                 './control/con-require/conForm.App.js',
+                                                 './control/control.Ctrl.js'
+                        ]);
+                    }
+                }
+            }).state('m_ofiMot', {
+                url: '/oficina-motivo',
+                templateUrl: './ofimot/ofimot.html',
+                controller: 'ofimot_Ctrl',
+                resolve: {
+                    module: function($ocLazyLoad) {
+                        
+                        return $ocLazyLoad.load(['./ofimot/ofimot.Ctrl.js']);
+                    }
+                }
+            }).state('m_employes',{
+                url:'/personal',
+                templateUrl:'./personal/personal.html',
+                controller:'personal_Ctrl',
+                resolve:{
+                    module: function($ocLazyLoad) {
+                        return $ocLazyLoad.load(['./personal/personal.Ctrl.js']);
                     }
                 }
             });

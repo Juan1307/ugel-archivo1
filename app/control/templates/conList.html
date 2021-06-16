@@ -1,0 +1,168 @@
+<div ng-controller="conList_Ctrl"> 
+    <div class="row" ng-if="!con_load_det">
+        <div class="col-md-12">
+            <div class="card bg-patern">
+                <div class="card-body">
+                    <h4 class="text-primary f-16">Info Entrega</h4>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <b>Encargado</b>
+                            <p ng-class="{'hint--top hint--rounded':detInfData.persona.length > 40}" aria-label="{{ ::detInfData.persona }}" ng-bind="::detInfData.persona | stringCut : 40"></p>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <b>Oficina</b>
+                            <p ng-bind="::detInfData.nombre"></p>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <b>N° Folios</b>
+                            <p ng-bind="::detInfData.nfolios"></p>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <b>Fecha</b>
+                            <p ng-bind="::detInfData.f_entrega | dateParse"></p>
+                        </div>
+                        <div class="col-md-12 col-lg-4">
+                            <b>Estado</b>
+                            <p><span class="badge" ng-class="{'badge-success':detInfData.estado == 1,'badge-secondary':detInfData.estado == 0}" 
+                                ng-bind="::detInfData.estado == 1 ? 'Activo' : 'Inactivo'"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <button class="btn btn-primary" ng-click="outDetCon()"> 
+                    <span class="feather icon-chevrons-left"></span>
+                </button>
+                <input type="text" ng-model="findResCon" ng-pattern="'[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ ]{2,60}'" ng-init="findResCon=''" 
+                class="form-control col-sm-12" id="find_rescon" aria-label="Text input" maxlength="50" placeholder="Buscar Resolución">
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-hover m-b-0 text-center">
+                    <thead>
+                        <tr>
+                            <th>N° RES</th>
+                            <th>N° PRO</th>
+                            <th>OFICINA</th>
+                            <th>MOTIVO</th>
+                            <th class="bg-dark text-white">ACCIÓN</th>
+                            <th class="bg-dark text-white">RECEPCIÓN</th>
+                            <th class="bg-dark text-white">ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="det in detConData | filter:findResCon as found">
+                            <td ng-bind="::det.nresolucion"></td>
+                            <td ng-bind="::det.nproyecto"></td>
+                            <td class="c-pointer">
+                                <div ng-class="{'hint--top hint--rounded':det.nombre.length > 25}" aria-label="{{ ::det.nombre }}" ng-bind="::det.nombre | stringCut : 25">
+                                </div>
+                            </td>
+                            <td class="c-pointer">
+                                <div ng-class="{'hint--top hint--rounded':det.descripcion.length > 25}" aria-label="{{ ::det.descripcion }}" ng-bind="::det.descripcion | stringCut : 25">
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" ng-click="conGetDate(det.id_detcontrol, det.f_recepcion)">
+                                    <span class="fas fa-calendar"></span>
+                                </button>
+                                <button class="btn btn-danger btn-sm" ng-click="delDetCon(det.id_detcontrol)">
+                                    <span class="feather icon-trash"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <span ng-if="det.estado == 0"> S/N FECHA</span>
+                                <span ng-if="det.estado == 1" ng-bind="::det.f_recepcion | dateParse"></span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm" ng-click="steDetCon(det.id_detcontrol, det.estado)" ng-class="{'btn-outline-success p-l-10 p-r-10': det.estado == 1,'btn-outline-secondary': det.estado == 0}" ng-bind="::det.estado == 1 ? 'Recibido' : 'Enviado'">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center m-t-15" ng-show="found.length === 0">
+                    <span class="feather icon-slash"></span>
+                    No se encontraron resultados
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="con_load_det">
+        <div class="col-md-12 col-lg-12">
+            <div class="input-group mb-3">
+                <input type="text" ng-model="paramCon" ng-pattern="'[a-zA-ZáéíóúñÑÁÉÍÓÚ ]{2,60}'" ng-init="paramCon=''" ng-class="{'normal': paramCon === '' , 'is-invalid': paramCon === undefined}" class="form-control col-sm-12" id="find_con" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Entrega">
+                <div class="input-group-append">
+                    <button class="btn btn-primary dropdown-toggle form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ textPrmCon }}
+                    </button>
+                    <button type="button" class="btn btn-secondary" ng-click="allCon()">
+                        <span class="f-w-500 feather icon-refresh-cw"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href ng-click="selectPrm(0)"> Oficina  </a>
+                        <a class="dropdown-item" href ng-click="selectPrm(1)"> Encargado</a>
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                    <span>Opps este parámetro es desconocido</span>
+                </div>
+            </div>
+            <div ng-class="{'card-load':load_data}" class="table-responsive">
+                <table class="table table-sm table-bordered table-hover m-b-0  text-center">
+                    <thead>
+                        <tr>
+                            <th>ACCIÓN</th>
+                            <th>ENCARGADO</th>
+                            <th>OFICINA</th>
+                            <th>N° FOLIOS</th>
+                            <th>FECHA</th>
+                            <th>ESTADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="con in conData">
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="viewCon(con, con.id_control)">
+                                    <span class="feather icon-eye"></span>
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" ng-click="editCon(con.id_control)">
+                                    <span class="feather icon-edit"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm"  data-toggle="modal" ng-click="delCon(con.id_control)">
+                                    <span class="feather icon-trash"></span>
+                                </button>
+                            </td>
+                            <td class="c-pointer">
+                                <div ng-class="{'hint--top hint--rounded':con.persona.length > 25}" aria-label="{{ ::con.persona }}" ng-bind="::con.persona | stringCut : 25">
+                                </div>
+                            </td>
+                            <td class="c-pointer">
+                                <div ng-class="{'hint--top hint--rounded':con.nombre.length > 25}" aria-label="{{ ::con.nombre }}" ng-bind="::con.nombre | stringCut : 25">
+                                </div>
+                            </td>
+                            <td ng-bind="::con.nfolios"></td>
+                            <td ng-bind="::con.f_entrega | dateParse"></td>
+                            <td>
+                                <button class="btn btn-sm" ng-click="stateCon(con.id_control, con.estado)" ng-class="{'btn-outline-success p-l-10 p-r-10': con.estado == 1,'btn-outline-secondary': con.estado == 0}" ng-bind="::con.estado == 1 ? 'Activo' : 'Inactivo'">
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center m-t-15" ng-show="conData.length === 0">
+                    <span class="feather icon-slash"></span>
+                    No se encontraron resultados
+                </p>
+                <div ng-show="load_data" class="card-loader">
+                    <i class="pct-loader1 anim-rotate"></i>
+                </div>
+            </div>
+            <div ng-include="'app-include/pagination.html'"></div>
+        </div>
+    </div>
+</div>

@@ -83,8 +83,8 @@
 				settype($id, "int"); settype($id_r, "int");
 				
 				switch ($option) {
-					case 'USU': $outdat = ResDetUsu::pstDetDataId($id, $id_r); break;
-					case 'INS': $outdat = ResDetIns::pstDetDataId($id, $id_r); break;
+					case 'USU': $outdat = ResDetUsu::postDetDataId($id, $id_r); break;
+					case 'INS': $outdat = ResDetIns::postDetDataId($id, $id_r); break;
 					default: die; break;
 				}
 			}
@@ -114,7 +114,7 @@
 						settype($id, "int");
 						
 						$fec = date('Y-m-d',strtotime($data['fec'])); 
-						$outdat = Det::pstDataDetId($id, $fec);
+						$outdat = Det::postDataDetId($id, $fec);
 					}
 				break;
 
@@ -127,7 +127,7 @@
 								$id_u = $data['id_u']; $id = $data['id']; $s_id = $data['s_id'];
 								settype($id_u, "int"); settype($id, "int"); settype($s_id, "int");
 
-								$outdat = ResDetIns::pstUsuDetId($id_u, $id, $s_id);
+								$outdat = ResDetIns::postUsuDetId($id_u, $id, $s_id);
 							}
 						break;
 						

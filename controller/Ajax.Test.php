@@ -20,6 +20,9 @@
 	$new_date_format = date('Y-m-d', strtotime('12-07-2010'));
 	var_export($new_date_format);
 
+	date_default_timezone_set('America/Lima');
+
+	echo date("Y-m-d H:i:s");
 
 	/*if (is_numeric(($pag and $p_pag))) {
 		echo "es entero $pag - $p_pag</hr>";

@@ -1,0 +1,147 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="mb-0">Oficina Motivo</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- [ Area Motivo ] Start -->
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <h5 class="f-16 m-b-15">
+                                <span class="feather icon-edit-2"></span> Oficina
+                            </h5>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" ng-model="oficina" ng-pattern="OfMoPtrn" id="oficina" ng-init="oficina = ''"
+                                        ng-class="{ 'control': oficina === '', 'is-valid': oficina !== '' && oficina !== undefined,
+                                                    'is-invalid': oficina === undefined || oficina === '' && valOM_0}" class="form-control" placeholder="ingrese Oficina" maxlength="70">
+                                <div ng-if="module == 'A'">
+                                    <button class="btn btn-success" ng-click="saveOfMo(oficina,'A', id_edit)">Guardar
+                                        <span class="feather icon-save"></span>
+                                    </button>
+                                    <button class="btn btn-danger float-right" ng-click="cleanOfMo('A')">Cancelar 
+                                        <span class="feather icon-x"></span>
+                                    </button>
+                                </div>
+                                <button ng-if="module !== 'A'" class="btn btn-success" ng-click="saveOfMo(oficina,'A')"> Agregar
+                                    <span class="feather icon-plus"></span>
+                                </button>
+                                <div class="invalid-feedback">
+                                    <span>Complete oficina correctamente.</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <input type="text" class="form-control mb-2" ng-model="find_area" placeholder="Buscar Oficina" maxlength="30">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="table-responsive" style="height: 13rem;">
+                                        <table class="table table-sm table-bordered text-center table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ACCIÓN</th>
+                                                    <th>DESCRIPCIÓN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="a in datArea | filter:find_area as found_a">
+                                                    <td>
+                                                        <button class="btn btn-warning btn-sm" ng-click="getOfMo(a.id_area,'A')">
+                                                            <span class="feather icon-edit"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <div ng-class="{'hint--top hint--rounded': a.nombre.length > 30}" 
+                                                            aria-label="{{ ::a.nombre }}" ng-bind="::a.nombre | stringCut : 30">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="text-center m-t-15" ng-show="found_a.length === 0">
+                                            <span class="feather icon-slash"></span> No se encontró resultados.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <h5 class="f-16 m-b-15">
+                                <span class="feather icon-edit-2"></span> Motivo
+                            </h5>
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="motivo" ng-pattern="OfMoPtrn" id="motivo" ng-init="motivo = ''"
+                                        ng-class="{ 'control': motivo === '', 'is-valid': motivo !== '' && motivo !== undefined,
+                                                    'is-invalid': motivo == undefined || motivo == '' && valOM_1 }" class="form-control" placeholder="ingrese Oficina" maxlength="70">
+                                <div ng-if="module == 'M'">
+                                    <button class="btn btn-success" ng-click="saveOfMo(motivo,'M', id_edit)">Guardar
+                                        <span class="feather icon-save"></span>
+                                    </button>
+                                    <button class="btn btn-danger float-right" ng-click="cleanOfMo('M')">Cancelar 
+                                        <span class="feather icon-x"></span>
+                                    </button>
+                                </div>
+                                <button ng-if="module !== 'M'" class="btn btn-success" ng-click="saveOfMo(motivo,'M')"> Agregar
+                                    <span class="feather icon-plus"></span>
+                                </button>
+                                <div class="invalid-feedback">
+                                    <span>Complete motivo correctamente.</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <input type="text" class="form-control mb-2" ng-model="find_motivo" placeholder="Buscar Motivo" maxlength="30">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="table-responsive" style="height: 13rem;">
+                                        <table class="table table-sm table-bordered text-center table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ACCIÓN</th>
+                                                    <th>DESCRIPCIÓN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="m in datMoti | filter:find_motivo as found_m">
+                                                    <td>
+                                                        <button class="btn btn-warning btn-sm" ng-click="getOfMo(m.id_motivo,'M')">
+                                                            <span class="feather icon-edit"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <div ng-class="{'hint--top hint--rounded':m.descripcion.length > 30}" 
+                                                            aria-label="{{ ::m.descripcion }}" ng-bind="::m.descripcion | stringCut : 30">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="text-center m-t-15" ng-show="found_m.length === 0">
+                                            <span class="feather icon-slash"></span> No se encontró resultados.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ Area Motivo ] End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>

@@ -58,14 +58,14 @@
                     <li class="nav-item pcoded-hasmenu" ng-class="link_2">
                         <a class="nav-link link-hov" >
                             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
-                            <span class="pcoded-mtext">Resolucion</span>
+                            <span class="pcoded-mtext">Resolución</span>
                         </a>
                         <ul class="pcoded-submenu" ng-style="{ 'display' : styul_0 ? 'block' : 'none' }">
                             <li ng-class="link_2_sub_0">
                                 <a ui-sref="m_resUsers"  class="link-hov">Usuario</a>
                             </li>
                             <li ng-class="link_2_sub_1">
-                                <a ui-sref="m_resInsti"  class="link-hov">Institucion</a>
+                                <a ui-sref="m_resInsti"  class="link-hov">Institución</a>
                             </li>
                         </ul>
                     </li>
@@ -78,11 +78,11 @@
                     <li class="nav-item" ng-class="link_4">
                         <a ui-sref="m_institutions" class="nav-link link-hov">
                             <span class="pcoded-micon"><i class="feather icon-home"></i></span>
-                            <span class="pcoded-mtext">Institucion</span>
+                            <span class="pcoded-mtext">Institución</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link link-hov">
+                    <li class="nav-item" ng-class="link_5">
+                        <a ui-sref="m_conRes" class="nav-link link-hov">
                             <span class="pcoded-micon"><i class="feather icon-repeat"></i></span>
                             <span class="pcoded-mtext">Control</span>
                         </a>
@@ -90,14 +90,14 @@
                     <li class="nav-item pcoded-menu-caption">
                         <label>Sub Mod.</label>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link link-hov">
+                    <li class="nav-item" ng-class="link_6">
+                        <a ui-sref="m_ofiMot" class="nav-link link-hov">
                             <span class="pcoded-micon"><i class="feather icon-flag"></i></span>
                             <span class="pcoded-mtext">Oficina - Motivo</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link link-hov">
+                    <li class="nav-item" ng-class="link_7">
+                        <a ui-sref="m_employes" class="nav-link link-hov">
                             <span class="pcoded-micon"><i class="feather icon-user-check"></i></span>
                             <span class="pcoded-mtext">Personal</span>
                         </a>
@@ -106,10 +106,19 @@
                         <label>Reportes</label>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link link-hov">
+                        <a ui-sref="m_genState" class="nav-link link-hov">
                             <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
                             <span class="pcoded-mtext">Estado General</span>
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a ui-sref="m_modState" class="nav-link link-hov">
+                            <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
+                            <span class="pcoded-mtext">Estado Modular</span>
+                        </a>
+                    </li>
+                    <li class="nav-item pcoded-menu-caption">
+                        <label>Info Dev</label> <button class="btn btn-info btn-sm float-right"> <span class="fas fa-info"></span></button>
                     </li>
                 </ul>
             </div>
@@ -124,7 +133,7 @@
     </div>
 
     <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container" style="margin-top: 5rem;" ui-view>
+    <div class="pcoded-main-container" style="margin-top: 3rem;" ui-view>
     </div>
     <!-- [ Main Content ] end -->
    

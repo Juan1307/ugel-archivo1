@@ -15,7 +15,7 @@ declare(strict_types=1);
 		public function getData(int $pag, int $p_pag) : array
 		{		    
 		    $qry = "SELECT COUNT(1) FROM tblusuarios";
-			$s_qry = "SELECT * FROM tblusuarios";
+			$s_qry = "SELECT * FROM tblusuarios ORDER BY id_usuario DESC";
 
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}
@@ -35,7 +35,7 @@ declare(strict_types=1);
 		    											$prm_arr['cols'][1] .' LIKE '."'%$val%'";
 
 		    $qry = "SELECT COUNT(1) FROM tblusuarios WHERE $sql_w";
-			$s_qry = "SELECT * FROM tblusuarios WHERE $sql_w";
+			$s_qry = "SELECT * FROM tblusuarios WHERE $sql_w ORDER BY id_usuario DESC";
 
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}

@@ -1,0 +1,263 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="mb-0">Control de Resoluciones</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills mb-4" role="tablist">
+                        <li class="nav-item" ng-click="conLoad(true,'employe')">
+                            <a class="nav-link active" data-toggle="pill" href role="tab" aria-controls="pills-add" aria-selected="false">
+                                <span class="feather icon-plus-square"></span> Entregar
+                            </a>
+                        </li>
+                        <li class="nav-item" ng-click="conLoad(false,'find_con')">
+                            <a class="nav-link" data-toggle="pill" href role="tab" aria-controls="pills-list" aria-selected="false">
+                                <span class="feather icon-file-text"></span> Listar
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- [ Add Con Res ] Start -->
+                        <div ng-if="con_load" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <form class="needs-validation" autocomplete="off" novalidate>
+                                <div class="row" ng-controller="conForm_Ctrl">
+                                    <div class="form-group col-md-12 col-lg-6">
+                                        <div class="form-row">
+                                            <div class="form-group col-12">
+                                                <label for="employe">Encargado</label>
+                                                <div class="input-group">
+                                                    <input type="text" ng-model="employe" class="form-control" id="employe" 
+                                                            placeholder="Buscar encargado" ng-click="cleanEmp()">
+                                                    <button class="btn btn-primary" ng-bind="selected_0.value"></button>
+                                                </div>
+
+                                                <div ng-style="{'display': found.length == arrPers.length ? 'none' : 'block'}" 
+                                                     class="dropdown-menu" style="overflow-x: auto; max-height: 10rem;">
+                                                    <a class="dropdown-item" href ng-repeat="per in arrPers | filter:employe as found" 
+                                                        ng-click="selectEmp(per)"
+                                                        ng-bind="::per.persona"></a>
+                                                    
+                                                    <div class="text-center" ng-show="found.length == 0">
+                                                        <span class="feather icon-slash"></span>
+                                                        No se encontraron resultados
+                                                    </div>
+                                                    
+                                                </div>
+                                                <small class="text-danger" ng-show="(selected_0.id.length == 0 && valFrmCon) ? true : false">
+                                                    Seleccione un encargado correctamente.
+                                                </small>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label for="area">Oficina</label>
+                                                <select id="area" ng-model="frmCon.area" ng-init="frmCon.area = undefined" ng-options="area.id_area as area.nombre for area in arrArea" class="form-control">
+                                                    <option style="display:none" value="">Seleccione una Oficina</option>
+                                                </select>
+                                                <small class="text-danger" ng-show=" (frmCon.area === undefined && valFrmCon) ? true : false">
+                                                    Seleccione una oficina correctamente.
+                                                </small>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group col-12 col-sm-6">
+                                                <label for="folios">Nro Folios</label>
+                                                <input type="text" ng-model="frmCon.folios" ng-pattern="conFormPtrn[0]" ng-init="frmCon.folios = ''" ng-class="{'control': frmCon.folios === '',
+                                                        'is-valid': frmCon.folios !== '' && frmCon.folios !== undefined,
+                                                        'is-invalid': frmCon.folios === undefined}" class="form-control text-center" id="folios" placeholder="Ingrese nro folios" maxlength="5">
+                                                <div class="invalid-feedback">
+                                                    Ingrese n° folios correctamente.
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12 col-sm-6">
+                                                <label for="f_entrega">Fecha (OPCIONAL)</label>
+                                                <input type="date" ng-model="frmCon.f_entrega" class="form-control text-center" id="f_entrega">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12 col-lg-6">
+                                        <label>Resoluciones</label>
+                                        <button class="btn btn-secondary btn-sm float-right" ng-click="inRes()"><span class="feather icon-plus-square"></span></button>
+                                        <div class="row">
+                                            <div class="col-lg" ng-repeat="(key, rcon) in arrResCon">
+                                                <div class="card m-t-10 m-b-10" style="min-width: 200px;">
+                                                    <div class="card-body" style="padding: 10px;">
+                                                        <div class="row text-center">
+                                                            <div class="col-6">
+                                                                <b>N° Res</b>
+                                                                <p class="m-b-0" ng-bind="::rcon.nresolucion"></p>
+                                                                <b>Fecha</b>
+                                                                <p class="m-b-0" ng-bind="::res.f_emision | dateParse"></p>
+                                                                <button class="btn btn-outline-info btn-sm p-r-10 p-l-10 hint--top hint--rounded" aria-label="{{::rcon.nombre}}">
+                                                                    Area</button>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <b>N° Pro</b>
+                                                                <p class="m-b-0" ng-bind="::rcon.nproyecto"></p>
+                                                                <b>Estado</b>
+                                                                <p class="m-b-0" ng-bind="::rcon.estado == 1 ? 'Activo' : 'Inactivo'"></p>
+                                                                <button class="btn btn-outline-info btn-sm hint--top hint--rounded hint--medium" aria-label="{{::rcon.descripcion}}">Motivo</button>
+                                                            </div>
+                                                            <div class="col-12 m-t-5">
+                                                                <button class="btn btn-danger btn-sm col-12" ng-click="remRes(key)">
+                                                                    <span class="feather icon-trash"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-center m-t-15" ng-show="arrResCon.length === 0">
+                                            <span class="feather icon-slash"></span>
+                                            No se asignaron resoluciones
+                                        </p>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <button class="btn btn-danger" ng-click="cleanCon()">
+                                            <span class="feather icon-trash"></span> Limpiar
+                                        </button>
+                                        <button class="btn btn-success float-right" type="button" 
+                                                ng-click="saveCon(frmCon)" ng-disabled="load_con">
+                                                <span class="spinner-border spinner-border-sm" role="status" ng-style="{'display': !load_con ? 'none' : ''}"></span>
+                                                <span class="load-text f-11" ng-style="{'display': !load_con ? 'none' : ''}" >Cargando...</span>
+                                                
+                                                <span class="btn-text" ng-style="{'display': load_con ? 'none' : ''}" >
+                                                    <span class="feather icon-save"></span> Guardar
+                                                </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- [ Add Con Res ] End -->
+                        <!-- [ List Con Users ] Start -->
+                        <div ng-if="!con_load" class="active tab-pane animate__animated animate__fadeIn " role="tabpanel" aria-labelledby="pills-add-tab">
+                            <div ng-include="'control/templates/conList.html'"></div>
+                        </div>
+                        <!-- [ List Con Users ] End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>
+<!-- [ ADD RES CON ] -->
+<div ng-if="con_load">
+    <div id="res_add_modal" class="modal fade bd-example-modal-xl" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="ResAddModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+            <div class="modal-content" ng-controller="control_Ctrl">
+                <div class="modal-header">
+                    <h5 class="modal-title h5">Asignar Resolución</h5>
+                    <button type="button" class="close" data-dismiss="modal" ng-click="outRes()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" ng-model="paramRes" ng-pattern="'[0-9]{2,5}'" ng-init="paramRes=''" ng-class="{'normal': paramRes === '' , 'is-invalid': paramRes === undefined}" class="form-control col-sm-12" id="find_res" aria-label="Text input with filter button" placeholder="Buscar Resolución" maxlength="5">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" ng-click="allRes()">
+                                <span class="f-w-500 feather icon-refresh-cw"></span>
+                            </button>
+                        </div>
+                        <div class="invalid-feedback">
+                            <span>Opps este parámetro es desconocido</span>
+                        </div>
+                    </div>
+                    <div ng-class="{'card-load':load_data}" class="card p-0 m-0 table-responsive" style="height: 210px;">
+                        <table class="table table-sm table-bordered table-hover m-b-0  text-center">
+                            <thead>
+                                <tr>
+                                    <th>ACCIÓN</th>
+                                    <th>N° RES</th>
+                                    <th>N° PRO</th>
+                                    <th>OFICINA</th>
+                                    <th>MOTIVO</th>
+                                    <th>FECHA</th>
+                                    <th>ESTADO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="res in resData">
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" ng-click="addRes(res)"> <span class="feather icon-plus"></span>
+                                        </button>
+                                        <span class="feather" ng-class="{'icon-user':res.est_tbl == 0,'icon-home':res.est_tbl == 1}"></span>
+                                    </td>
+                                    <td ng-bind="::res.nresolucion"></td>
+                                    <td ng-bind="::res.nproyecto"></td>
+                                    <td class="c-pointer">
+                                        <div ng-class="{'hint--top hint--rounded':res.nombre.length > 25}" aria-label="{{ ::res.nombre }}" ng-bind="::res.nombre | stringCut : 25">
+                                        </div>
+                                    </td>
+                                    <td class="c-pointer">
+                                        <div ng-class="{'hint--top hint--rounded':res.descripcion.length > 25}" aria-label="{{ ::res.descripcion }}" ng-bind="::res.descripcion | stringCut : 25 ">
+                                        </div>
+                                    </td>
+                                    <td ng-bind="::res.f_emision | dateParse"></td>
+                                    <td>
+                                        <button class="btn btn-sm" ng-click="stateRes(res.id_resolucion, res.estado)" ng-class="{'btn-outline-success p-l-10 p-r-10': res.estado == 1,'btn-outline-secondary': res.estado == 0}" ng-bind="::res.estado == 1 ? 'Activo' : 'Inactivo'">
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-center m-t-15" ng-show="resData.length === 0">
+                            <span class="feather icon-slash"></span>
+                            No se encontraron resultados
+                        </p>
+                        <div ng-show="load_data" class="card-loader">
+                            <i class="pct-loader1 anim-rotate"></i>
+                        </div>
+                    </div>
+                    <div ng-include="'app-include/pagination.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- [ ADD RES CON ] -->
+<!-- [ ADD RES CON ] -->
+<div ng-if="!con_load">
+    <div ng-include="'control/templates/mdlForm.html'"></div>
+    <!-- [ EDIT DATE CON ] -->
+        <div id="con_det_edit_modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="InsEditModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title h5">Editar Recepción</h5>
+                        <button type="button" class="close" data-dismiss="modal" ng-click="conClnDate()" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="res_date">Fecha</label>
+                        <input type="date" id="con_date" class="form-control" ng-model="frmConDate.dat">
+                        <small class="text-danger" ng-show=" (frmConDate.dat == null && valConDate) ? true : false">
+                            Ingrese fecha correctamente.
+                        </small>
+                        <hr>
+                        <button class="btn btn-success" ng-click="conSavDate(frmConDate.idx, frmConDate.dat)">
+                            <span class="feather icon-save"></span> Editar</button>
+                        <button class="btn btn-danger float-right" ng-click="conClnDate()">
+                            <span class="fa fa-times"></span> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ EDIT DATE CON ] -->
+</div>
+<!-- [ ADD RES CON ] -->

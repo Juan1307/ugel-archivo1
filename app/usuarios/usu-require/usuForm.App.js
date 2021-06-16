@@ -32,7 +32,6 @@
 							console.log('det mod',rs.det_mod);
 							switch (rs.det_mod) {
 								case null: rs.allDetRes();  s.focusInput('find_det_usu'); break;
-								case true: rs.allFind(); $('#usu_find_edit_modal').modal('hide'); s.focusInput('find_gbl'); break;
 								default: s.allUsers();  s.focusInput('find_user'); break;
 							}
 							s.cleanUser(frmData,data);

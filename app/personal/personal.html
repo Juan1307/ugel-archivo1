@@ -1,0 +1,113 @@
+<div ng-hide="alertTyp === undefined" ng-class="alertTyp" class="alert alert-dismissible alert-msj" role="alert" style="position: fixed;top: 88%;right: 1.6%;left: auto;z-index: 1073;">
+    <strong ng-bind="alertTit"></strong> {{ alertTxt }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+</div>
+<div class="pcoded-content animate__animated animate__fadeIn">
+    <!-- [ Breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="page-header-title">
+                        <h5 class="mb-0">Personal</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- [ Area Motivo ] Start -->
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <h5 class="f-16 m-b-15">
+                                <span class="feather icon-edit-2"></span> Agregar
+                            </h5>
+                            <div class="form-row">
+                                <div class="form-group col-12 col-md-4">
+                                    <input type="text" class="form-control" ng-model="surname" ng-pattern="persoPtrn" id="surname" ng-init="surname = ''"ng-class="{ 'control': surname === '', 'is-valid': surname !== '' && surname !== undefined,
+                                                        'is-invalid': surname === undefined || surname === '' && valEm}" class="form-control col-md-6" placeholder="Ingrese Apellidos" maxlength="70">
+                                    <div class="invalid-feedback">
+                                        <span>Complete apellidos correctamente.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-md-5">
+                                    <input type="text" class="form-control" ng-model="name" ng-pattern="persoPtrn" id="name" ng-init="name = ''"
+                                            ng-class="{ 'control': name === '', 'is-valid': name !== '' && name !== undefined,
+                                                        'is-invalid': name === undefined || name === '' && valEm}" class="form-control col-md-6" placeholder="Ingrese Nombres" maxlength="40">
+                                    <div class="invalid-feedback">
+                                        <span>Complete nombres correctamente.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-md-3">
+                                    <div ng-if="id_edit == null">
+                                        <button class="btn btn-success form-control" ng-click="savePer([name,surname])"> Agregar
+                                            <span class="feather icon-plus"></span>
+                                        </button>
+                                    </div>
+
+                                    <div ng-if="id_edit != null">
+                                        <button class="btn btn-success" ng-click="savePer([name,surname],id_edit)"> Guardar
+                                            <span class="feather icon-save"></span>
+                                        </button>
+                                        <button class="btn btn-danger" ng-click="cleanPer(true)"> Cancelar
+                                            <span class="feather icon-x"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            
+                            <input type="text" ng-model="paramPer" ng-pattern="persoPtrn" ng-init="paramPer=''" ng-class="{'normal': paramPer === '' , 'is-invalid': paramPer === undefined}" class="form-control mb-2" id="find_perso" aria-label="Text input with filter button" maxlength="50" placeholder="Buscar Personal">
+                            
+                            <div class="invalid-feedback">
+                                <span>Ingrese parametros correctamente.</span>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered text-center table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ACCIÓN</th>
+                                                    <th>APELLIDOS</th>
+                                                    <th>NOMBRES</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="per in perData">
+                                                    <td>
+                                                        <button class="btn btn-warning btn-sm" ng-click="editPer(per.id_personal)">
+                                                            <span class="feather icon-edit"></span>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <div ng-class="{'hint--top hint--rounded': per.apellidos.length > 30}" 
+                                                            aria-label="{{ ::per.apellidos }}" ng-bind="::per.apellidos | stringCut : 30">
+                                                        </div>
+                                                    </td>
+                                                    <td ng-bind="::per.nombres"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="text-center m-t-15" ng-show="per.length === 0">
+                                            <span class="feather icon-slash"></span> No se encontró resultados.
+                                        </p>
+                                    </div>
+                                    <div ng-include="'app-include/pagination.html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ Area Motivo ] End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>

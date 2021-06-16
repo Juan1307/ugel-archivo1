@@ -18,7 +18,7 @@ declare(strict_types=1);
 			$sql_w = 'nombre LIKE '."'$val%'".' OR '.' nivel LIKE '."'$val%'";
 
 		    $qry = "SELECT COUNT(1) FROM tblinstitucion WHERE $sql_w";
-			$s_qry = "SELECT * FROM tblinstitucion WHERE $sql_w";
+			$s_qry = "SELECT * FROM tblinstitucion WHERE $sql_w ORDER BY id_institucion DESC";
 
  			return Config::getConfigPag($qry, $s_qry, $pag, $p_pag);
 		}

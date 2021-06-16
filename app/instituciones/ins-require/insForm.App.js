@@ -1,7 +1,7 @@
 (function(a) {	
 	'use strict';
 
-	a.module('insForm_App', []).constant('insFormPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# ]{2,70}'])
+	a.module('insForm_App', []).constant('insFormPtrn', ['[0-9a-zA-ZáéíóúñÑÁÉÍÓÚ°/# -]{2,70}'])
 	.controller('insForm_Ctrl', ['$scope','$rootScope','insFormPtrn', 'insSet.Fac', function(s, rs, ptrn, Iset){
 		//console.log('INS FORM');
 		s.insFormPtrn = ptrn;
