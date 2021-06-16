@@ -4,7 +4,7 @@ Este fue un sistema que se proveia de una actualizacion en base al codigo de la 
 
 En esta ocasion se plasmó reactividad con [Angular JS](https://angularjs.org/).
 
-En esta ocasion se hizo mejoras de rendimiento y capas sobre la conexion a travez aplicacndo SOLID
+En esta ocasion se hizo mejoras de rendimiento y capas sobre la conexion aplicando SOLID
 
 **Este proyecto quedo en Stop hasta nuevo aviso**.
 
